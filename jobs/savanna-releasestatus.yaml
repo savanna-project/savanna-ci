@@ -1,0 +1,48 @@
+- job:
+    name: savanna-releasestatus
+    node: ssh-key
+    project-type: freestyle
+    description: "<b>Title</b>: Release status page updater<br/>\
+                  \n<b>Description</b>: This job creates/updates <a href=\"http://jenkins.savanna.mirantis.com/job/savanna-releasestatus/Savanna_Release_Status/\">\"release status\"</a> of current Savanna milestone (based on status.o.o/release)<br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    scm:
+     - git:
+        url: https://github.com/Frostman/savanna-releasestatus.git
+        refspec:
+        name:
+        strategy: default
+        skip-tag: true
+        wipe-workspace: false
+        branches:
+         - "**"
+
+
+
+    triggers:
+        - timed: '*/5 * * * *'
+        - gerrit:
+            trigger-on-change-merged-event: true
+            silentmode: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'ANT'
+                  branch-pattern: '**'
+
+    builders:
+    - shell: "python releasestatus.py savanna.yaml > static/index.html"
+
+    publishers:
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com
+      - html_report:
+           name: "Savanna Release Status"
+           dir: "static"
+           files: "index.html"
+           keepAll: true
+           wrappername: "htmlpublisher-wrapper.html"

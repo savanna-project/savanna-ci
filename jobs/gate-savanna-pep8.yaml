@@ -1,0 +1,45 @@
+- job:
+    name: gate-savanna-pep8
+    node: master
+    project-type: freestyle
+    description: "<b>Title</b>: Part of the gating process.<br/>\
+                 \n<b>Description</b>: This job runs tox -e pep8 (pep8, pyflakes and hacking checks using flake8).<br/>\
+                 \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    defaults: global
+    disabled: true
+    concurrent: true
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        skip-tag: true
+        wipe-workspace: false
+        strategy: gerrit
+        branches:
+         - $GERRIT_BRANCH
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    wrappers:
+      - timeout:
+          timeout: 15
+          fail: true
+
+    builders:
+    - shell: "rm -rf .tox\
+      \ntox -e pep8"
+
+
+    publishers:
+      - email:
+          recipients: slukjanov@mirantis.com

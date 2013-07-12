@@ -1,0 +1,22 @@
+- job:
+    name: itests-deploy-vm
+    node: master
+    project-type: freestyle
+    description: "<b>Title</b>: Part of the integration gating process.<br/>\
+                \n<b>Description</b>: This job boots a vm and launches jenkins agent on it.<br/>\
+                \n<b>Maintainer</b>: Vadim Rovachev<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    parameters:
+      - text:
+          name: vm_name
+          default: test-vm
+          description:
+
+    builders:
+    - shell: "\
+             #!/bin/bash\
+              \n
+             \npython /tmp/ci-python-scripts/integration_prepare_vm.py create"
