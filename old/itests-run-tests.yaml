@@ -1,0 +1,59 @@
+- job:
+    name: itests-run-tests
+    node: integration-vm
+    project-type: freestyle
+    description: "<b>Title</b>: Part of the integration gating process.<br/>\
+                \n<b>Description</b>: This job runs tox -e integration (runs integration tests using nose tests and python 27).<br/>\
+                \n<b>Maintainer</b>: Vadim Rovachev<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    builders:
+    - shell: "\
+
+             #!/bin/bash\
+             \nexport ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`\
+             \necho \"OS_USERNAME = 'ci-user'  # username for nova\
+             \nOS_PASSWORD = 'swordfish'  # password for nova\
+             \nOS_TENANT_NAME = 'ci'\
+             \nOS_AUTH_URL = 'http://172.18.79.139:35357/v2.0/'\
+             \nSAVANNA_HOST = '$ADDR'\
+             \nSAVANNA_PORT = '8080'\
+             \nIMAGE_ID = '39d3d9ff-bbd7-49be-955d-8b3f01a68409'\
+             \nFLAVOR_ID = '42'\
+             \nNODE_USERNAME = 'ubuntu'\
+             \nCLUSTER_NAME_CRUD = 'ci-cluster-crud'\
+             \nCLUSTER_NAME_HADOOP = 'ci-cluster-hadoop'\
+             \nTIMEOUT = 15\
+             \nHADOOP_VERSION = '1.1.2'\
+             \nHADOOP_DIRECTORY = '/usr/share/hadoop'\
+             \nHADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'\
+             \nSSH_KEY = 'public-jenkins'\
+             \nPLUGIN_NAME = 'vanilla'\
+             \nPATH_TO_SSH = '/home/ubuntu/.ssh/id_rsa'\
+             \n\" >> /tmp/workspace/itests-configure-vm/savanna/tests/integration/config.py\
+             \ni=0\
+             \nwhile true\
+             \ndo\
+             \n        let \"i=$i+1\"\
+             \n        if [ \"$i\" -gt \"60\" ]; then\
+             \n                echo \"project does not start\" && exit 1\
+             \n        fi\
+             \n        if [ ! -f /tmp/workspace/itests-configure-vm/log.txt ]; then\
+             \n                sleep 10\
+             \n        else\
+             \n                echo \"project is started\" && break\
+             \n        fi\
+             \ndone\
+             \ncd /tmp/workspace/itests-configure-vm && tox -e integration"
+
+    publishers:
+      - trigger-parameterized-builds:
+          - project: itests-remove-vm
+            property-file: /tmp/vmname
+            failonmissing: true
+      - email:
+          recipients: savanna-team@mirantis.com
+          send-to-individuals: true
+

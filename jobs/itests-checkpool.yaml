@@ -1,0 +1,18 @@
+- job:
+    name: itests-checkpool
+    project-type: freestyle
+    description: "<b>Title</b>: This job keeps vm pool<br/>\
+                  \n<b>Maintainer</b>: Sergey Kolekonov<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    triggers:
+        - timed: '*/5 * * * *'
+
+    builders:
+    - shell: "python /var/lib/jenkins/ci-python-scripts/prepare_vm.py checkpool"
+
+    publishers:
+      - email:
+          recipients: skolekonov@mirantis.com

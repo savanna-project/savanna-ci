@@ -1,0 +1,53 @@
+- job:
+    name: gate-savanna-authors
+    project-type: freestyle
+    defaults: global
+    description: "<b>Title</b>: Part of the gating process.<br/>\
+                  \n<b>Description</b>: This job checks AUTHORS file and fails if it should be updated.<br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    disabled: true
+    concurrent: true
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        strategy: gerrit
+        skip-tag: true
+        wipe-workspace: false
+        branches:
+         - master
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    wrappers:
+      - timeout:
+          timeout: 15
+          fail: true
+          faildescription: true
+
+    builders:
+    - shell: "python setup.py sdist\
+             \ngit status --porcelain\
+             \ngit diff > all_diff\
+             \ncat all_diff"
+
+
+    publishers:
+      - email:
+          recipients: slukjanov@mirantis.com
+      - text_finder:
+          regexp: "M AUTHORS"
+          fileset:
+          alsoCheckConsoleOutput: true
+          succeedIfFound: false
+          unstableIfFound: false

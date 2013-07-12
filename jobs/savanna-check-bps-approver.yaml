@@ -1,0 +1,51 @@
+- job:
+    name: savanna-check-bps-approver
+    node: ssh-key
+    project-type: freestyle
+    description: "<b>Title</b>: Launchpad blueprints' approver checker<br/>\
+                  \n<b>Description</b>: This job checks approver of all blueprints at launchpad.net/savanna<br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    triggers:
+        - timed: '*/5 * * * *'
+        - gerrit:
+            silentmode: true
+            trigger-on-change-merged-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'ANT'
+                  branch-pattern: '**'
+
+    builders:
+    - shell: "cat > script.py << EOL\
+              \nfrom launchpadlib.launchpad import Launchpad\n\
+              \n
+             lp = Launchpad.login_anonymously('savanna-bad-bps', 'production',\n
+              \                                 '/tmp/savanna-bad-bps',\n
+              \                                 version=\"devel\", timeout=10)\n
+             savanna = lp.projects['savanna']\n
+             bps = savanna.all_specifications\n
+             \n
+             for bp in bps:\n
+             \   approver = bp.approver\n
+             \   if approver and approver.name == u'slukjanov':\n
+             \       continue\n
+             \   print \"Bad BP: %s (%s)\" % (bp.name, bp.web_link)\n
+            EOL\n
+            python script.py > report.txt"
+
+
+    publishers:
+      - email:
+          recipients: slukjanov@mirantis.com
+      - text_finder:
+          regexp: "Bad BP"
+          fileset: "report.txt"
+          alsoCheckConsoleOutput: true
+          succeedIfFound: false
+          unstableIfFound: false

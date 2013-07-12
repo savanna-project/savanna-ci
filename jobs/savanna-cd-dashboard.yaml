@@ -1,0 +1,97 @@
+- job:
+    name: savanna-cd-dashboard
+    node: savanna-cd-dashboard
+    project-type: freestyle
+    description: "<b>Title</b>: Savanna Dashboard Continuous Delivery to Saratov lab<br/>\
+                \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
+                \n<b>Maintainer</b>: Denis Egorenko<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna-dashboard.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        skip-tag: true
+        basedir: "savanna-dashboard-$GERRIT_CHANGE_NUMBER"
+        wipe-workspace: false
+        strategy: gerrit
+        branches:
+         - master
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            trigger-on-change-merged-event: true
+            failure-message:
+            successful-message: "Savanna dashboard is running successfully for this change request and available by address 172.18.79.212:<CHANGE>. For change merged you can use: 172.18.79.212:8080"
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna-dashboard'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    builders:
+    - shell: "\
+             #!/bin/bash\
+             \nBUILD_ID=dontKill\
+             \necho -e \"[global]\ 
+             \ntimeout = 60\
+             \nindex-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/\
+             \nextra-index-url = https://pypi.python.org/simple/\
+             \ndownload-cache = /home/ubuntu/.pip/cache/\
+             \n[install]\
+             \nuse-mirrors = true\
+             \nfind-links = http://savanna-ci.vm.mirantis.net:8181/simple/\" > ~/.pip/pip.conf\
+             \n
+             \ncd $WORKSPACE\
+             \nif [ -d horizon-$GERRIT_CHANGE_NUMBER/ ]\
+             \nthen\
+             \n    rm -rf horizon-$GERRIT_CHANGE_NUMBER\
+             \nfi\
+             \ngit clone https://github.com/openstack/horizon.git horizon-$GERRIT_CHANGE_NUMBER\
+             \ncd horizon-$GERRIT_CHANGE_NUMBER\
+             \ngit checkout stable/folsom\
+             \ncp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py\
+             \n
+             \ncat openstack_dashboard/local/local_settings.py | sed \"s/OPENSTACK_HOST = \\\"127.0.0.1\\\"/OPENSTACK_HOST = \\\"172.18.79.139\\\"/g\" | sed \"s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g\" | sed \"s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g\" > temp\
+             \ncat temp > openstack_dashboard/local/local_settings.py\
+             \necho -e \"SAVANNA_URL = \\\"http://172.18.79.219:8080/v1.0\\\"\" >> openstack_dashboard/local/local_settings.py\
+             \n
+             \ncat openstack_dashboard/settings.py | sed \"s/('nova', 'syspanel', 'settings',)/('nova', 'syspanel', 'settings', 'savanna')/g\" > temp\
+             \ncat temp | sed \"s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g\" > openstack_dashboard/settings.py\
+             \nrm temp\
+             \n
+             \npython tools/install_venv.py\
+             \n.venv/bin/python ../savanna-dashboard-$GERRIT_CHANGE_NUMBER/setup.py install\
+             \nln -s $WORKSPACE/savanna-dashboard-$GERRIT_CHANGE_NUMBER/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard\
+             \n
+             \nexist=`screen -ls | grep savanna-dashboard-$GERRIT_CHANGE_NUMBER`\
+             \nif ! [ -z \"$exist\" ]\
+             \nthen\
+             \n    screen -X -S savanna-dashboard-$GERRIT_CHANGE_NUMBER quit\
+             \nfi\
+             \nif [ $GERRIT_EVENT_TYPE != \"patchset-created\" ]\
+             \nthen\
+             \n    exist=`screen -ls | grep savanna-dashboard-8080`\
+             \n    if ! [ -z \"$exist\" ]\
+             \n    then\
+             \n        screen -X -S savanna-dashboard-8080 quit\
+             \n    fi\
+             \n    screen -dmS savanna-dashboard-8080\
+             \n    sleep 2\
+             \n    screen -S savanna-dashboard-8080 -p 0 -X stuff  \".venv/bin/python ./manage.py runserver 0.0.0.0:8080\
+             \n\"\
+             \nelse\
+             \n    screen -dmS savanna-dashboard-$GERRIT_CHANGE_NUMBER\
+             \n    sleep 2\
+             \n    screen -S savanna-dashboard-$GERRIT_CHANGE_NUMBER -p 0 -X stuff  \".venv/bin/python ./manage.py runserver 0.0.0.0:$GERRIT_CHANGE_NUMBER
+             \n\
+             \nfi"
+
+    publishers:
+      - email:
+          recipients: degorenko@mirantis.com
+

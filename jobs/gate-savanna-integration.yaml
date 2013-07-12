@@ -1,0 +1,48 @@
+- job:
+    name: gate-savanna-integration
+    node: integration-vm-new
+    project-type: freestyle
+    description: "<b>Title</b>: Part of the integration gating process.<br/>\
+                \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
+                \n<b>Maintainer</b>: Vadim Rovachev<br/>"
+    defaults: global
+    disabled: true
+    concurrent: true
+
+    scm:
+     - git:
+        url: https://github.com/stackforge/savanna.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        strategy: gerrit
+        skip-tag: false
+        wipe-workspace: false
+        branches:
+         - "$GERRIT_BRANCH"
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    builders:
+    - shell: "sh savanna-ci/scripts/gate-savanna-integration.sh"
+    
+    - trigger-builds:
+        - project: "gate-integration-cleanup"
+          predefined-parameters:
+            PREV_BUILD=$BUILD_NUMBER
+          block: false
+         
+    wrappers:
+    - pathignore:
+       ignored: "ERROR"
+
+    publishers:
+      - email:
+          recipients: savanna-team@mirantis.com 
