@@ -1,0 +1,49 @@
+- job:
+    name: savanna-pypimirror
+    node: main
+    project-type: freestyle
+    description: "<b>Title</b>: Pypi mirror updater<br/>\
+                  \n<b>Description</b>: This job creates/updates Pypi mirror used for testing with all Savanna requirements from all Savanna branches (based on openstack-infra jeepyb scripts). Mirror url:\
+                  \n<a href=\"http://savanna-ci.vm.mirantis.net/pypi/savanna/\">http://savanna-ci.vm.mirantis.net/pypi/savanna/</a><br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>" 
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    scm:
+     - git:
+        url: https://github.com/openstack-infra/jeepyb.git
+        refspec:
+        name:
+        strategy: default
+        skip-tag: true
+        wipe-workspace: false
+        branches:
+         - "**"
+
+
+    triggers:
+        - timed: '*/30 * * * *'
+
+
+    builders:
+    - shell: "\
+              cat <<EOF > mirror.yaml
+              \ncache-root: /var/pypimirror/cache
+              \n
+              \nmirrors:
+              \n   - name: savanna
+              \n     projects:
+              \n       - https://github.com/stackforge/savanna
+              \n     output: /var/pypimirror/savanna
+              \nEOF
+              \n
+              \necho \"==== CHECK mirror.yaml ====\"
+              \ncat mirror.yaml
+              \necho \"==== UPDATING MIRROR ====\"
+              \n
+              \ntox -e venv -- run-mirror -c mirror.yaml"
+
+    publishers:
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com

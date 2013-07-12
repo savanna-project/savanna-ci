@@ -1,0 +1,22 @@
+- job:
+    name: gate-integration-cleanup
+    project-type: freestyle
+    defaults: global
+    description: "<b>This job destroys vms which were not deleted after integration tests</b>"
+    disabled: true
+    concurrent: false
+
+    parameters:
+      - string:
+          name: PREV_BUILD
+          default: default
+          description:
+
+    builders:
+    - shell: "\
+              #!/bin/bash\
+              \npython /var/lib/jenkins/ci-python-scripts/prepare_vm.py cleanup $PREV_BUILD"
+
+    publishers:
+      - email:
+          recipients: skolekonov@mirantis.com

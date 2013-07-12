@@ -1,0 +1,54 @@
+- job:
+    name: gate-savanna-docs
+    project-type: freestyle
+    node: master
+    defaults: global
+    description: "<b>Title</b>: Part of the gating process.<br/>\
+                  \n<b>Description</b>: This job runs tox -e docs to build docs.<br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    disabled: true
+    concurrent: true
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        skip-tag: true
+        wipe-workspace: false
+        strategy: gerrit
+        branches:
+         - $GERRIT_BRANCH
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    wrappers:
+      - timeout:
+          timeout: 15
+          fail: true
+          faildescription: true
+
+    builders:
+    - shell: "rm -rf .tox\
+             \ntox -e docs"
+
+
+
+    publishers:
+      - email:
+          recipients: slukjanov@mirantis.com
+      - html_report:
+           name: "Savanna DOCS"
+           dir: "doc/build/html"
+           files: "index.html"
+           keepAll: true
+           wrappername: "htmlpublisher-wrapper.html"
+

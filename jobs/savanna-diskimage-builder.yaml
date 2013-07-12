@@ -1,0 +1,51 @@
+- job:
+    name: savanna-diskimage-builder
+    project-type: freestyle
+    description: "Continuos deployment of image with Hadoop\
+                  \n
+                  \n<b>Title</b>: DIB with Savanna elements Continuous Delivery<br/>\
+                  \n<b>Description</b>: This job builds fresh image using DIB w/ Savanna elements.<br/>\
+                  \n<b>Maintainer</b>: Denis Egorenko<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    parameters:
+      - text:
+          name: elements
+          default: base vm hadoop ubuntu
+          description: "This field for elements, which you need on image.\
+                        \n
+                        \n\"base vm hadoop ubuntu\" is set by default"
+      - text:
+          name: imageName
+          default: imageName
+          description: "The name of image."
+      - text:
+          name: Hadoop_version
+          default: 1.1.1
+          description: "Hadoop version.\ 
+                        \n1.1.1 is set by default."
+      - text:
+          name: JAVA_URL
+          default:
+          description: "Set URL if you want to download java using your link. Suppose using tar.gz or bin package."
+      - text:
+          name: JAVA_FILENAME
+          default:
+          description: "This file must be in elements/hadoop/install.d/ directory. Suppose using tar.gz or bin package."
+
+    builders:
+    - shell: "\
+             #!/bin/bash\
+             \nif [[ -z $JAVA_URL ]]\
+             \nthen\
+             \n    ssh ubuntu@172.18.79.237 -i ~/.ssh/jenkins \"~/buildImage.sh -java-file-name '$JAVA_FILENAME' -elements '$elements' -imageName '$imageName' -hadoop-version '$Hadoop_version'\"\
+             \nelse\
+             \n    ssh ubuntu@172.18.79.237 -i ~/.ssh/jenkins \"~/buildImage.sh -java-url '$JAVA_URL' -elements '$elements' -imageName '$imageName' -hadoop-version '$Hadoop_version'\"\
+             \nfi"
+
+    publishers:
+      - email:
+          recipients: degorenko@mirantis.com
+

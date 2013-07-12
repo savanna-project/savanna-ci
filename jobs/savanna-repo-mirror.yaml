@@ -1,0 +1,60 @@
+- job:
+    name: savanna-repo-mirror
+    node: ssh-key
+    project-type: freestyle
+    description: "<b>Title</b>: Savanna repo mirror<br/>\
+                  \n<b>Description</b>: This job mirros master branch of github stackforge/savanna to github Mirantis/savanna after each change merged.<br/>\                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    defaults: global
+    disabled: true
+    concurrent: true
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
+        refspec:
+        name:
+        strategy: default
+        skip-tag: true
+        wipe-workspace: false
+        branches:
+         - $GERRIT_BRANCH 
+
+    triggers:
+        - gerrit:
+            trigger-on-change-merged-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna'
+                  branch-compare-type: 'ANT'
+                  branch-pattern: '**'
+
+    wrappers:
+      - timeout:
+          timeout: 15
+          fail: true
+          faildescription: true
+
+
+    builders:
+    - shell: "\
+              #!/bin/bash\
+              \nif [ -z \"`git config remote.mirantis-savanna.url`\" ]; then\
+              \n    echo \"Remote 'mirantis-savanna': NO\"\
+              \n    git remote add mirantis-savanna git@github.com:Mirantis/savanna.git\
+              \n    echo \"Remote 'mirantis-savanna': ADDED\"\
+              \nelse\
+              \n    echo \"Remote 'mirantis-savanna': YES\"\
+              \nfi\
+              \ngit fetch origin\
+              \ngit checkout master\
+              \ngit rebase origin/master\
+              \ngit push mirantis-savanna master:master\
+              \ngit push mirantis-savanna --tags\
+              \ngit checkout -b stable/0.1 origin/stable/0.1\
+              \ngit push mirantis-savanna stable/0.1:stable/0.1\
+              \ngit push mirantis-savanna --tags"
+
+    publishers:
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com

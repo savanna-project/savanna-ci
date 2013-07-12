@@ -1,0 +1,86 @@
+- job:
+    name: diskimage-creating
+    project-type: freestyle
+    defaults: global
+    description: "<b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-extra elements</b>"
+    disabled: true
+    concurrent: false
+
+    parameters:
+      - string:
+          name: hadoop_version
+          default: 1.1.2
+          description: "Version of hadoop. Right format is \"d.d.d\" (d - digit)."
+      - string:
+          name: java_url
+          default: http://download.oracle.com/otn-pub/java/jdk/7u25-b15/jdk-7u25-linux-x64.tar.gz
+          description: "Download link for java (only '.tar.gz' or 'bin')."
+      - string:
+          name: image_size
+          default: "10"
+          description: "Size of volume of hard disk for fedora cloud image."
+      - string:
+          name: ubuntu_image_name
+          default: ubuntu_image
+          description:
+      - string:
+          name: fedora_image_name
+          default: fedora_image
+          description:
+      - string:
+          name: java_file
+          default:
+          description: "If you specifyed param 'java_url' , you should leave this parameter empty. \
+                      \nJava file name on workstation 172.18.79.177:~/DIB_work/savanna-extra/elements/hadoop_fedora/post-install/ . That file should be only '.tar.gz' or 'bin'."
+      - string:
+          name: elements
+          default:
+          description: "You can add elements to image. Elements should be from diskimage-builder or savanna-extra repository. Right value is 'element1 element2 ... elementN'."
+
+    scm:
+     - git:
+        url: https://github.com/stackforge/savanna-extra
+        refspec:
+        name:
+        strategy: default
+        skip-tag: false
+        wipe-workspace: false
+        branches:
+         - master
+
+    triggers:
+        - gerrit:
+            trigger-on-change-merged-event: true
+            failure-message:
+            successful-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna-extra'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    builders:
+    - shell: "\
+              ssh ubuntu@172.18.79.177 -i ~/.ssh/jenkins -o StrictHostKeyChecking=no \"./DIB.sh -elements '$elements' -hadoop-version '$hadoop_version' -java-file '$java_file' -java-url '$java_url' -ubuntu-image-name '$ubuntu_image_name' -fedora-image-name '$fedora_image_name' -image-size '$image_size'\"\
+              \n
+              \nscp -o StrictHostKeyChecking=no -i ~/.ssh/jenkins ubuntu@172.18.79.177:~/DIB_work/$ubuntu_image_name.qcow2 $WORKSPACE\
+              \nscp -o StrictHostKeyChecking=no -i ~/.ssh/jenkins ubuntu@172.18.79.177:~/DIB_work/$fedora_image_name.qcow2 $WORKSPACE\
+              \nssh ubuntu@172.18.79.177 -i ~/.ssh/jenkins -o StrictHostKeyChecking=no \"rm ~/DIB_work/$ubuntu_image_name.qcow2\"\
+              \nssh ubuntu@172.18.79.177 -i ~/.ssh/jenkins -o StrictHostKeyChecking=no \"rm ~/DIB_work/$fedora_image_name.qcow2\""
+
+    publishers:
+      - email:
+          recipients: iberezovskiy@mirantis.com
+      - ssh:
+          site: '172.18.79.135'
+          target: 'jenkins_DIB_$BUILD_NUMBER'
+          source: '$ubuntu_image_name.qcow2, $fedora_image_name.qcow2'
+          remove-prefix:
+          excludes:
+          timeout: "120000"
+          command: "\
+                     OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$ubuntu_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \n
+                    \nOS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$fedora_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \n
+                    \nrm -r jenkins_DIB_$BUILD_NUMBER/"
