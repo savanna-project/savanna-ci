@@ -38,22 +38,9 @@
 
     builders:
     - shell: "\
-              #!/bin/bash\
-              \nif [ -z \"`git config remote.mirantis-savanna.url`\" ]; then\
-              \n    echo \"Remote 'mirantis-savanna': NO\"\
-              \n    git remote add mirantis-savanna git@github.com:Mirantis/savanna.git\
-              \n    echo \"Remote 'mirantis-savanna': ADDED\"\
-              \nelse\
-              \n    echo \"Remote 'mirantis-savanna': YES\"\
-              \nfi\
-              \ngit fetch origin\
-              \ngit checkout master\
-              \ngit rebase origin/master\
-              \ngit push mirantis-savanna master:master\
-              \ngit push mirantis-savanna --tags\
-              \ngit checkout -b stable/0.1 origin/stable/0.1\
-              \ngit push mirantis-savanna stable/0.1:stable/0.1\
-              \ngit push mirantis-savanna --tags"
+               rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/savanna-repo-mirror.sh"
 
     publishers:
       - email:
