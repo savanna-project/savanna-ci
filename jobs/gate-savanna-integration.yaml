@@ -31,10 +31,7 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/gate-savanna-integration.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-integration.sh"
     
     - trigger-builds:
         - project: "gate-integration-cleanup"

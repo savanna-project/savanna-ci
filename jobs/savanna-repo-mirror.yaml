@@ -37,10 +37,7 @@
 
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-repo-mirror.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-repo-mirror.yaml"
 
     publishers:
       - email:

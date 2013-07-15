@@ -36,9 +36,7 @@
           faildescription: true
 
     builders:
-    - shell: "rm -rf .tox\
-             \ntox -e cover"
-
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-coverage.sh"
 
 
     publishers:

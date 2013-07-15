@@ -27,10 +27,7 @@
 
 
     builders:
-    - shell: "\
-              rm -rf savanna-ci\
-            \ngit clone https://github.com/savanna-project/savanna-ci.git\
-            \nsh savanna-ci/scripts/savanna-pypimirror.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-pypimirror.sh"
 
     publishers:
       - email:

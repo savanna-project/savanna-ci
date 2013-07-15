@@ -36,8 +36,7 @@
           fail: true
 
     builders:
-    - shell: "rm -rf .tox\
-      \ntox -e pep8"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8.sh"
 
 
     publishers:

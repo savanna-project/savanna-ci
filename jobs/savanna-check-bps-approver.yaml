@@ -22,10 +22,7 @@
                   branch-pattern: '**'
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-check-bps-approver.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-check-bps-approver.sh"
 
 
     publishers:
