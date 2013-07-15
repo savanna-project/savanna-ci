@@ -37,13 +37,9 @@
 
     builders:
     - shell: "\
-             #!/bin/bash\
-             \nif [[ -z $JAVA_URL ]]\
-             \nthen\
-             \n    ssh ubuntu@172.18.79.237 -i ~/.ssh/jenkins \"~/buildImage.sh -java-file-name '$JAVA_FILENAME' -elements '$elements' -imageName '$imageName' -hadoop-version '$Hadoop_version'\"\
-             \nelse\
-             \n    ssh ubuntu@172.18.79.237 -i ~/.ssh/jenkins \"~/buildImage.sh -java-url '$JAVA_URL' -elements '$elements' -imageName '$imageName' -hadoop-version '$Hadoop_version'\"\
-             \nfi"
+               rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/savanna-diskimage-builder.sh"
 
     publishers:
       - email:

@@ -37,9 +37,7 @@
           faildescription: true
 
     builders:
-    - shell: "rm -rf .tox\
-             \ntox -e docs"
-
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-docs.sh"
 
 
     publishers:

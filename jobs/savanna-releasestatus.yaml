@@ -35,7 +35,7 @@
                   branch-pattern: '**'
 
     builders:
-    - shell: "python releasestatus.py savanna.yaml > static/index.html"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-releasestatus.sh"
 
     publishers:
       - email:

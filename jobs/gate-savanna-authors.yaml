@@ -36,10 +36,7 @@
           faildescription: true
 
     builders:
-    - shell: "python setup.py sdist\
-             \ngit status --porcelain\
-             \ngit diff > all_diff\
-             \ncat all_diff"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-authors.sh"
 
 
     publishers:

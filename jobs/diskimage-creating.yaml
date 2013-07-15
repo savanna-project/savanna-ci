@@ -61,13 +61,9 @@
 
     builders:
     - shell: "\
-              ssh ubuntu@172.18.79.177 -i ~/.ssh/jenkins -o StrictHostKeyChecking=no \"./DIB.sh -elements '$elements' -hadoop-version '$hadoop_version' -java-file '$java_file' -java-url '$java_url' -ubuntu-image-name '$ubuntu_image_name' -fedora-image-name '$fedora_image_name' -image-size '$image_size'\"\
-              \n
-              \nscp -o StrictHostKeyChecking=no -i ~/.ssh/jenkins ubuntu@172.18.79.177:~/DIB_work/$ubuntu_image_name.qcow2 $WORKSPACE\
-              \nscp -o StrictHostKeyChecking=no -i ~/.ssh/jenkins ubuntu@172.18.79.177:~/DIB_work/$fedora_image_name.qcow2 $WORKSPACE\
-              \nssh ubuntu@172.18.79.177 -i ~/.ssh/jenkins -o StrictHostKeyChecking=no \"rm ~/DIB_work/$ubuntu_image_name.qcow2\"\
-              \nssh ubuntu@172.18.79.177 -i ~/.ssh/jenkins -o StrictHostKeyChecking=no \"rm ~/DIB_work/$fedora_image_name.qcow2\""
-
+               rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/diskimage-creating.sh" 
     publishers:
       - email:
           recipients: iberezovskiy@mirantis.com

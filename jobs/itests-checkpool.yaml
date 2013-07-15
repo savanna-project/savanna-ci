@@ -11,7 +11,7 @@
         - timed: '*/5 * * * *'
 
     builders:
-    - shell: "python /var/lib/jenkins/ci-python-scripts/prepare_vm.py checkpool"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/itests-checkpool.sh"
 
     publishers:
       - email:

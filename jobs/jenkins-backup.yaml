@@ -13,39 +13,9 @@
 
     builders:
     - shell: "\
-             #!/bin/bash\
-             \ndate=`date '+%Y_%m_%d_%H_%M'`\
-             \nname=backup_jenkins_$date\
-             \ncd /tmp\
-             \nif [ -d jenkins-backup/ ]\
-             \nthen\
-             \n    rm -rf jenkins-backup\
-             \nfi\
-             \ngit clone ssh://elastic-hadoop-jenkins@gerrit.mirantis.com:29418/savanna/jenkins-backup.git\
-             \ncd ~\
-             \ntar -C /var/lib/jenkins -cf $name.tar.gz `find . -name \"*.xml\"`\
-             \ntar -C /var/lib/jenkins -rf $name.tar.gz `find . -type l | grep last`\
-             \nmkdir /var/lib/jenkins/$name\
-             \ntar -C /var/lib/jenkins/$name -xf /var/lib/jenkins/$name.tar.gz\
-             \nrm /var/lib/jenkins/$name.tar.gz\
-             \nwget --directory-prefix=/var/lib/jenkins/$name http://localhost:8080/pluginManager/api/xml?depth=1\
-             \ncat /var/lib/jenkins/$name/xml?depth=1 | sed 's/></>\n</g' > /var/lib/jenkins/$name/plugins_info\
-             \nrm /var/lib/jenkins/$name/xml?depth=1\
-             \necho -e '#!/bin/bash\
-             \nplugins=`grep -o \"<shortName>.*</shortName>\" ./plugins_info | sed \"s/<\\/.*>//g\" | sed \"s/<.*>//g\"`\
-             \nwget http://localhost:8080/jnlpJars/jenkins-cli.jar\
-             \nfor plugin in $plugins\
-             \ndo\
-             \n\tjava -jar jenkins-cli.jar -s http://localhost:8080/ install-plugin $plugin\
-             \ndone' > /var/lib/jenkins/$name/plugins_install.sh\
-             \nchmod 755 /var/lib/jenkins/$name/plugins_install.sh\
-             \nmv /var/lib/jenkins/$name /tmp/jenkins-backup\
-             \ncd /tmp/jenkins-backup\
-             \ngit config --global user.email \"elastic-hadoop-jenkins@gerrit.mirantis.com\"\
-             \ngit config --global user.name \"elastic-hadoop-jenkins\"\
-             \ngit add $name\
-             \ngit commit -m \"New $name\"\
-             \ngit push origin master"
+               rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/jenkins-backup.sh"
 
     publishers:
       - email:
