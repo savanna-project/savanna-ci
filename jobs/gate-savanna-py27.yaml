@@ -37,8 +37,7 @@
           fail: true
 
     builders:
-    - shell: "rm -rf .tox\
-      \ntox -e py27"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-py27.sh"
 
 
     publishers:

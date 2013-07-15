@@ -31,7 +31,7 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "sh savanna-ci/scripts/gate-savanna-integration.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-integration.sh"
     
     - trigger-builds:
         - project: "gate-integration-cleanup"

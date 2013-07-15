@@ -1,5 +1,7 @@
 #!/bin/bash
 
+cd $WORKSPACE
+
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
 
@@ -66,7 +68,7 @@ NN_PORT = 50070
 TT_PORT = 50060
 DN_PORT = 50075
 ENABLE_SWIFT_TEST = True
-" >> /tmp/workspace/gate-savanna-integration/savanna/tests/integration/configs/config.py
+" >> $WORKSPACE/savanna/tests/integration/configs/config.py
 i=0
 
 while true
@@ -75,7 +77,7 @@ do
         if [ "$i" -gt "120" ]; then
                 echo "project does not start" && FAILURE=1 && break
         fi
-        if [ ! -f /tmp/workspace/gate-savanna-integration/log.txt ]; then
+        if [ ! -f $WORKSPACE/log.txt ]; then
                 sleep 10
         else
                 echo "project is started" && FAILURE=0 && break
@@ -84,13 +86,13 @@ done
 
 if [ "$FAILURE" = 0 ]; then
    
-    cd /tmp/workspace/gate-savanna-integration && tox -e integration
+    cd $WORKSPACE && tox -e integration
 fi
 
 screen -S savanna-api -X quit
 
 echo "-----------Savanna Log------------"
-cat /tmp/workspace/gate-savanna-integration/log.txt
+cat $WORKSPACE/log.txt
 rm -rf /tmp/workspace/
 rm -rf /tmp/cache/
 
