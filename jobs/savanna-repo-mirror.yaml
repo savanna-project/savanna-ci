@@ -5,7 +5,7 @@
     description: "<b>Title</b>: Savanna repo mirror<br/>\
                   \n<b>Description</b>: This job mirros master branch of github stackforge/savanna to github Mirantis/savanna after each change merged.<br/>\                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: true
 
     scm:
@@ -37,7 +37,7 @@
 
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-repo-mirror.yaml"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-repo-mirror.sh"
 
     publishers:
       - email:

@@ -6,7 +6,7 @@
                  \n<b>Description</b>: This job runs tox -e pep8 (pep8, pyflakes and hacking checks using flake8).<br/>\
                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: true
 
     scm:
@@ -34,6 +34,7 @@
       - timeout:
           timeout: 15
           fail: true
+          faildescription: true
 
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8.sh"
