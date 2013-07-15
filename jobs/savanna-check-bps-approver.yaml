@@ -6,14 +6,15 @@
                   \n<b>Description</b>: This job checks approver of all blueprints at launchpad.net/savanna<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: false
 
     triggers:
         - timed: '*/5 * * * *'
         - gerrit:
             silentmode: true
-            trigger-on-change-merged-event: true
+            trigger-on-draft-published-event: true
+            trigger-on-patchset-uploaded-event: true
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'

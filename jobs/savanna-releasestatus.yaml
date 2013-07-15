@@ -6,7 +6,7 @@
                   \n<b>Description</b>: This job creates/updates <a href=\"http://jenkins.savanna.mirantis.com/job/savanna-releasestatus/Savanna_Release_Status/\">\"release status\"</a> of current Savanna milestone (based on status.o.o/release)<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: false
 
     scm:
@@ -19,8 +19,6 @@
         wipe-workspace: false
         branches:
          - "**"
-
-
 
     triggers:
         - timed: '*/5 * * * *'

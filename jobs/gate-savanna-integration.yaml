@@ -6,7 +6,7 @@
                 \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
                 \n<b>Maintainer</b>: Vadim Rovachev<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: true
 
     scm:
@@ -31,7 +31,10 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-integration.sh"
+    - shell: "\
+                rm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci.git 
+              \nbash savanna-ci/scripts/gate-savanna-integration.sh"
     
     - trigger-builds:
         - project: "gate-integration-cleanup"
@@ -41,7 +44,7 @@
          
     wrappers:
     - pathignore:
-       ignored: "ERROR"
+       ignored: "doc*, etc*, tools*, savanna/tests/unit*, AUTHORS"
 
     publishers:
       - email:

@@ -7,7 +7,7 @@
 
 
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: true
 
     scm:
@@ -35,6 +35,7 @@
       - timeout:
           timeout: 15
           fail: true
+          faildescription: true
 
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-py27.sh"

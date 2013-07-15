@@ -7,7 +7,7 @@
                   \n<a href=\"http://savanna-ci.vm.mirantis.net/pypi/savanna/\">http://savanna-ci.vm.mirantis.net/pypi/savanna/</a><br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>" 
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: false
 
     scm:
