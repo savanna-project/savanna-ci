@@ -2,7 +2,9 @@
     name: gate-savanna-authors
     project-type: freestyle
     defaults: global
-    description: "<b>Title</b>: Part of the gating process.<br/>\
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: Part of the gating process.<br/>\
                   \n<b>Description</b>: This job checks AUTHORS file and fails if it should be updated.<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     disabled: false

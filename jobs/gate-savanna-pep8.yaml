@@ -2,7 +2,9 @@
     name: gate-savanna-pep8
     node: master
     project-type: freestyle
-    description: "<b>Title</b>: Part of the gating process.<br/>\
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                 \n<p><b>Title</b>: Part of the gating process.<br/>\
                  \n<b>Description</b>: This job runs tox -e pep8 (pep8, pyflakes and hacking checks using flake8).<br/>\
                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global

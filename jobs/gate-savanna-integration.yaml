@@ -2,7 +2,9 @@
     name: gate-savanna-integration
     node: integration-vm-new
     project-type: freestyle
-    description: "<b>Title</b>: Part of the integration gating process.<br/>\
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: Part of the integration gating process.<br/>\
                 \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
                 \n<b>Maintainer</b>: Vadim Rovachev<br/>"
     defaults: global
@@ -31,22 +33,10 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell:  "#!/bin/bash\
-              \nrm -rf savanna-ci\
-              \n
-              \nwhile true\
-              \ndo\
-              \n        let \"i=$i+1\"\
-              \n        if [ \"$i\" -gt \"20\" ]; then\
-              \n                echo \"GIT failed\" && return 1\
-              \n        fi\
-              \n        GIT=$(git clone https://github.com/savanna-project/savanna-ci.git 2>&1 1>/dev/null)\
-              \n        if [ -z \"$GIT\" ]\
-              \n           then break\
-              \n        fi\
-              \ndone\
+    - shell:  "rm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci.git\
               \nbash savanna-ci/scripts/gate-savanna-integration.sh"
-    
+ 
     - trigger-builds:
         - project: "gate-integration-cleanup"
           predefined-parameters:
@@ -61,7 +51,7 @@
       - email:
           recipients: savanna-team@mirantis.com 
       - text_finder:
-          regexp: "FAIL:"
+          regexp: "ERROR"
           fileset:
           alsoCheckConsoleOutput: true
           succeedIfFound: false

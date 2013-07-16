@@ -2,8 +2,10 @@
     name: gate-integration-cleanup
     project-type: freestyle
     defaults: global
-    description: "<b>This job destroys vms which were not deleted after integration tests</b>"
-    disabled: true
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                 \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                 \n<p>This job destroys vms which were not deleted after integration tests"
+    disabled: false
     concurrent: false
 
     parameters:
