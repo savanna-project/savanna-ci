@@ -52,7 +52,6 @@
           recipients: savanna-team@mirantis.com 
       - text_finder:
           regexp: "ERROR"
-          fileset:
           alsoCheckConsoleOutput: true
           succeedIfFound: false
           unstableIfFound: false
