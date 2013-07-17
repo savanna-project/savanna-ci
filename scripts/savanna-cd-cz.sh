@@ -1,5 +1,4 @@
 #!/bin/bash
-
 cd $WORKSPACE
 
 BUILD_ID=dontKill
@@ -19,7 +18,7 @@ echo -e "[DEFAULT]
 #port=8080
 #allow_cluster_ops=true
 # Address and credentials that will be used to check auth tokens
-os_auth_host=172.18.79.139
+os_auth_host=172.18.168.5
 os_auth_port=35357
 #os_admin_username=admin
 os_admin_password=swordfish
@@ -53,16 +52,16 @@ then
 fi
 if [ $GERRIT_EVENT_TYPE != "patchset-created" ]
 then
-    exist=`screen -ls | grep Savanna-8080`
+    exist=`screen -ls | grep Savanna-8386`
     if ! [ -z "$exist" ]
     then
         old_master=`ps aux | grep -e "config-file etc/savanna/savanna.conf -d" | grep -o "savanna_[0-9]*" | awk -F "_" '{print $2}'`
-        screen -X -S Savanna-8080 quit
+        screen -X -S Savanna-8386 quit
         rm -rf $WORKSPACE/savanna_$old_master
     fi
-    screen -dmS Savanna-8080
+    screen -dmS Savanna-8386
     sleep 2
-    screen -S Savanna-8080 -p 0 -X stuff 'tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d
+    screen -S Savanna-8386 -p 0 -X stuff 'tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d
 '
 else
     screen -dmS Savanna-$GERRIT_CHANGE_NUMBER

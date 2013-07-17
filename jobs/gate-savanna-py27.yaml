@@ -2,7 +2,7 @@
     name: gate-savanna-py27
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
-                  \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
                   \n<b>Description</b>: This job runs fox -e py27 (runs all unit tests using nose tests and python 2.7)<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
 

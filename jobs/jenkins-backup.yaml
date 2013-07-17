@@ -1,21 +1,20 @@
 - job:
     name: jenkins-backup
     project-type: freestyle
-    description: "<b>Title</b>: Jenkins scheduled backup<br/>\
-                \n<b>Description</b>: This job performs backup of jenkins configuration.<br/>\
-                \n<b>Maintainer</b>: Denis Egorenko<br/>"
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<b>Title</b>: Jenkins scheduled backup<br/>\
+                  \n<b>Description</b>: This job performs backup of jenkins configuration.<br/>\
+                  \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: false
 
     triggers:
         - timed: '@daily'
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/jenkins-backup.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/jenkins-backup.sh"
 
     publishers:
       - email:

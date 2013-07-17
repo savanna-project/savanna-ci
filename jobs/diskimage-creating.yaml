@@ -2,8 +2,10 @@
     name: diskimage-creating
     project-type: freestyle
     defaults: global
-    description: "<b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-extra elements</b>"
-    disabled: true
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-extra elements</b>"
+    disabled: false
     concurrent: false
 
     parameters:
@@ -34,7 +36,7 @@
                       \nJava file name on workstation 172.18.79.177:~/DIB_work/savanna-extra/elements/hadoop_fedora/post-install/ . That file should be only '.tar.gz' or 'bin'."
       - string:
           name: elements
-          default:
+          default: swift_hadoop
           description: "You can add elements to image. Elements should be from diskimage-builder or savanna-extra repository. Right value is 'element1 element2 ... elementN'."
 
     scm:
@@ -60,10 +62,7 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/diskimage-creating.sh" 
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/diskimage-creating.sh" 
     publishers:
       - email:
           recipients: iberezovskiy@mirantis.com
@@ -80,3 +79,6 @@
                     \nOS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$fedora_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                     \n
                     \nrm -r jenkins_DIB_$BUILD_NUMBER/"
+      - workspace-cleanup:
+          include:
+            -

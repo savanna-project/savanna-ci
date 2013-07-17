@@ -2,11 +2,13 @@
     name: savanna-cd
     node: savanna-cd
     project-type: freestyle
-    description: "<b>Title</b>: Savanna Continuous Delivery to Saratov lab<br/>\
-                \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
-                \n<b>Maintainer</b>: Denis Egorenko<br/>"
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: Savanna Continuous Delivery to Saratov lab<br/>\
+                  \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
+                  \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: false
 
     scm:

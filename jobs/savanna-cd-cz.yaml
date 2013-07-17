@@ -1,15 +1,15 @@
 - job:
-    name: gate-savanna-pep8
-    node: master
+    name: savanna-cd-cz
+    node: savanna-cd-cz
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                 \n<p><b>Title</b>: Part of the gating process.<br/>\
-                 \n<b>Description</b>: This job runs tox -e pep8 (pep8, pyflakes and hacking checks using flake8).<br/>\
-                 \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+                  \n<p><b>Title</b>: Savanna Continuous Delivery to Czech lab<br/>\
+                  \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
+                  \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
     disabled: false
-    concurrent: true
+    concurrent: false
 
     scm:
      - git:
@@ -18,30 +18,30 @@
         name:
         skip-tag: true
         wipe-workspace: false
+        basedir: "savanna_$GERRIT_CHANGE_NUMBER"
         strategy: gerrit
         branches:
-         - $GERRIT_BRANCH
+         - master
 
     triggers:
         - gerrit:
             trigger-on-patchset-uploaded-event: true
+            trigger-on-change-merged-event: true
             failure-message:
+            successful-message: "Savanna is running successfully for this change request and available by address 172.18.168.109:<CHANGE>. For change merged you can use: 172.18.168.109:8386"
             projects:
                 - project-compare-type: 'PLAIN'
                   project-pattern: 'stackforge/savanna'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
-    wrappers:
-      - timeout:
-          timeout: 15
-          fail: true
-          faildescription: true
-
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8.sh"
+    - shell: "\
+               rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/savanna-cd-cz.sh"
 
 
     publishers:
       - email:
-          recipients: slukjanov@mirantis.com
+          recipients: degorenko@mirantis.com

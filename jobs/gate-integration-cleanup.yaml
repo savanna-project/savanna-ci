@@ -3,7 +3,7 @@
     project-type: freestyle
     defaults: global
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
-                 \n<p>Please use this repository to make changes: <a href>https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
                  \n<p>This job destroys vms which were not deleted after integration tests"
     disabled: false
     concurrent: false
@@ -15,9 +15,7 @@
           description:
 
     builders:
-    - shell: "\
-              #!/bin/bash\
-              \npython /var/lib/jenkins/ci-python-scripts/prepare_vm.py cleanup $PREV_BUILD"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-integration-cleanup.sh"
 
     publishers:
       - email:

@@ -1,6 +1,5 @@
 #!/bin/bash
 cd $WORKSPACE
-
 BUILD_ID=dontKill
 echo -e "[global] 
 timeout = 60
@@ -18,12 +17,12 @@ then
 fi
 git clone https://github.com/openstack/horizon.git horizon-$GERRIT_CHANGE_NUMBER
 cd horizon-$GERRIT_CHANGE_NUMBER
-git checkout stable/folsom
+git checkout stable/grizzly
 cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py
 
-cat openstack_dashboard/local/local_settings.py | sed "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"172.18.79.139\"/g" | sed "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" | sed "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" > temp
+cat openstack_dashboard/local/local_settings.py | sed "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"172.18.168.5\"/g" | sed "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" | sed "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" > temp
 cat temp > openstack_dashboard/local/local_settings.py
-echo -e "SAVANNA_URL = \"http://172.18.79.219:8080/v1.0\"" >> openstack_dashboard/local/local_settings.py
+echo -e "SAVANNA_URL = \"http://172.18.168.109:8386/v1.0\"" >> openstack_dashboard/local/local_settings.py
 
 cat openstack_dashboard/settings.py | sed "s/('nova', 'syspanel', 'settings',)/('nova', 'syspanel', 'settings', 'savanna')/g" > temp
 cat temp | sed "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g" > openstack_dashboard/settings.py
@@ -43,7 +42,7 @@ then
     exist=`screen -ls | grep savanna-dashboard-8080`
     if ! [ -z "$exist" ]
     then
-        old_master=`ps aux | grep /tmp/workspace/savanna-cd-dashboard/ | grep "0.0.0.0:8080" | grep -o "horizon-[0-9]*" | awk -F "-" '{print $2}'`
+        old_master=`ps aux | grep /tmp/workspace/savanna-cd-dashboard | grep "0.0.0.0:8080" | grep -o "horizon-[0-9]*" | awk -F "-" '{print $2}'`
         screen -X -S savanna-dashboard-8080 quit
         rm -rf $WORKSPACE/horizon-$old_master $WORKSPACE/savanna-dashboard-$old_master
     fi

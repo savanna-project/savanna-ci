@@ -1,10 +1,10 @@
 - job:
-    name: savanna-cd-dashboard
-    node: savanna-cd-dashboard
+    name: savanna-cd-dashboard-cz
+    node: savanna-cd-dashboard-cz
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<b>Title</b>: Savanna Dashboard Continuous Delivery to Saratov lab<br/>\
+                  \n<b>Title</b>: Savanna Dashboard Continuous Delivery to Czech lab<br/>\
                   \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
                 \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
@@ -39,7 +39,7 @@
     - shell: "\
                rm -rf savanna-ci\
              \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-cd-dashboard.sh"
+             \nbash savanna-ci/scripts/savanna-cd-dashboard-cz.sh"
 
 
     publishers:

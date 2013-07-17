@@ -1,13 +1,15 @@
 - job:
     name: savanna-diskimage-builder
     project-type: freestyle
-    description: "Continuos deployment of image with Hadoop\
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p>Continuos deployment of image with Hadoop\
                   \n
                   \n<b>Title</b>: DIB with Savanna elements Continuous Delivery<br/>\
                   \n<b>Description</b>: This job builds fresh image using DIB w/ Savanna elements.<br/>\
                   \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: true
+    disabled: false
     concurrent: false
 
     parameters:
@@ -36,10 +38,7 @@
           description: "This file must be in elements/hadoop/install.d/ directory. Suppose using tar.gz or bin package."
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-diskimage-builder.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-diskimage-builder.sh"
 
     publishers:
       - email:
