@@ -58,8 +58,9 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "git clone https://github.com/savanna-project/savanna-ci\
-              \n./savanna-ci/scripts/diskimage-creating.sh -elements '$elements' -hadoop-version '$hadoop_version' -java-url '$java_url' -ubuntu-image-name '$ubuntu_image_name' -fedora-image-name '$fedora_image_name' -image-size '$image_size'\
+    - shell: "rm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci\
+              \nbash savanna-ci/scripts/diskimage-creating.sh -elements $elements -hadoop-version $hadoop_version -java-url $java_url -ubuntu-image-name $ubuntu_image_name -fedora-image-name $fedora_image_name -image-size $image_size\
               \nrm -rf savanna-ci" 
     publishers:
       - email:
