@@ -1,5 +1,6 @@
 - job:
     name: diskimage-creating
+    node: diskimage
     project-type: freestyle
     defaults: global
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
@@ -29,11 +30,6 @@
           name: fedora_image_name
           default: fedora_image
           description:
-      - string:
-          name: java_file
-          default:
-          description: "If you specifyed param 'java_url' , you should leave this parameter empty. \
-                      \nJava file name on workstation 172.18.79.177:~/DIB_work/savanna-extra/elements/hadoop_fedora/post-install/ . That file should be only '.tar.gz' or 'bin'."
       - string:
           name: elements
           default: swift_hadoop
