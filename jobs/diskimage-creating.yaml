@@ -58,7 +58,8 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/diskimage-creating.sh" 
+    - shell: "git clone https://github.com/savanna-project/savanna-ci\
+              \nbash savanna-ci/scripts/diskimage-creating.sh" 
     publishers:
       - email:
           recipients: iberezovskiy@mirantis.com
