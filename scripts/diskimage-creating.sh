@@ -57,7 +57,6 @@ echo -e "\n" | sudo apt-get install qemu
 echo -e "\n" | sudo apt-get install kpartx
 echo -e "\n" | sudo apt-get install git
 
-cd /home/$USER
 if [ ! -d "DIB_work" ]; then
    mkdir DIB_work
 fi
@@ -82,3 +81,6 @@ cp -r /home/$USER/DIB_work/savanna-extra/elements/* /home/$USER/DIB_work/diskima
 
 disk-image-create base vm fedora hadoop $elements -o $fedora_image_name
 disk-image-create base vm hadoop ubuntu $elements -o $ubuntu_image_name
+
+mv $fedora_image_name.qcow2 ../
+mv $ubuntu_image_name.qcow2 ../
