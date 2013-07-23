@@ -23,7 +23,7 @@ cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local
 
 cat openstack_dashboard/local/local_settings.py | sed "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"172.18.79.139\"/g" | sed "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" | sed "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" > temp
 cat temp > openstack_dashboard/local/local_settings.py
-echo -e "SAVANNA_URL = \"http://172.18.79.219:8080/v1.0\"" >> openstack_dashboard/local/local_settings.py
+echo -e "SAVANNA_URL = \"http://172.18.79.253:8386/v1.0\"" >> openstack_dashboard/local/local_settings.py
 
 cat openstack_dashboard/settings.py | sed "s/('nova', 'syspanel', 'settings',)/('nova', 'syspanel', 'settings', 'savanna')/g" > temp
 cat temp | sed "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g" > openstack_dashboard/settings.py
