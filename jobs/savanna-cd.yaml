@@ -28,7 +28,11 @@
             trigger-on-patchset-uploaded-event: true
             trigger-on-change-merged-event: true
             failure-message:
+<<<<<<< HEAD
             successful-message: "Savanna is running successfully for this change request and available by address 172.18.79.253:<CHANGE>. For change merged you can use: 172.18.79.253:8386"
+=======
+            successful-message: "Savanna is running successfully for this change request and available by address 172.18.79.253:<CHANGE>. For change merged you can use: 172.18.79.253:8080"
+>>>>>>> e8346d1563a9d65715d5e54efa64a017f2a9ff35
             projects:
                 - project-compare-type: 'PLAIN'
                   project-pattern: 'stackforge/savanna'
