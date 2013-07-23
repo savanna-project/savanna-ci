@@ -33,7 +33,7 @@
           recipients: elastic-hadoop-eng@mirantis.com
       - html_report:
            name: "Savanna Review Stats"
-           dir: "static"
-           files: "results/"
+           dir: "results"
+           files: "index.html"
            keepAll: true
            wrappername: "htmlpublisher-wrapper.html"
