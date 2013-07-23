@@ -1,6 +1,6 @@
 #!/bin/bash
 
-user=slukjanov
+user=savanna-ci
 project=projects/savanna.json
 
 cat > ${project} <<EOF
