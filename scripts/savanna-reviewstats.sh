@@ -1,13 +1,29 @@
 #!/bin/bash
 
+user=slukjanov
+project=projects/savanna.json
+
+cat > ${project} <<EOF
+{ 
+    "name": "savanna", 
+    "subprojects": [
+        "stackforge/savanna",  
+        "stackforge/savanna-pythonclient", 
+        "stackforge/savanna-dashboard",
+        "stackforge/savanna-extra"
+    ], 
+    "core-team": [
+        "slukjanov",
+        "aignatov"
+    ]
+}
+EOF
+
 mkdir -p results
 
 rm -f results/*-openreviews*
 rm -f results/*-openapproved*
 rm -f results/*-reviewers-*
-
-user=savanna-ci
-project=projects/savanna.json
 
 project_base=$(basename $(echo ${project} | cut -f1 -d'.'))
 (date -u && echo && ./openreviews.py -p ${project} -u ${user}) > results/${project_base}-openreviews.txt
@@ -41,4 +57,3 @@ cat > results/index.html <<EOF
 </body>
 </html>
 EOF
-
