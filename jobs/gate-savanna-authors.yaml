@@ -28,8 +28,8 @@
             projects:
                 - project-compare-type: 'PLAIN'
                   project-pattern: 'stackforge/savanna'
-                  branch-compare-type: 'PLAIN'
-                  branch-pattern: 'master'
+                  branch-compare-type: 'ANT'
+                  branch-pattern: '**'
 
     wrappers:
       - timeout:
