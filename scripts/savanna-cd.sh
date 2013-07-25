@@ -27,7 +27,7 @@ os_admin_password=swordfish
 # (Optional) Name of log file to output to. If not set,
 # logging will go to stdout. (string value)
 #log_file=<None>
-plugins=vanilla
+plugins=vanilla,hdp
 [cluster_node]
 # An existing user on Hadoop image (string value)
 #username=root
@@ -44,7 +44,9 @@ plugins=vanilla
 # URL for sqlalchemy database (string value)
 connection=sqlite:////tmp/savanna-server-$GERRIT_CHANGE_NUMBER.db
 [plugin:vanilla]
-plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider" > etc/savanna/savanna.conf
+plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
+[plugin:hdp]
+plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" > etc/savanna/savanna.conf
 
 exist=`screen -ls | grep Savanna-$GERRIT_CHANGE_NUMBER`
 if ! [ -z "$exist" ]
