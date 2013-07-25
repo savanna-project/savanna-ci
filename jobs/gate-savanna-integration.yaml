@@ -37,17 +37,15 @@
               \ngit clone https://github.com/savanna-project/savanna-ci.git\
               \nbash savanna-ci/scripts/gate-savanna-integration.sh"
  
-    - trigger-builds:
-        - project: "gate-integration-cleanup"
-          predefined-parameters:
-            PREV_BUILD=$BUILD_NUMBER
-          block: false
-         
     wrappers:
     - pathignore:
        ignored: "doc*, etc*, tools*, savanna/tests/unit*, AUTHORS"
 
     publishers:
+      - trigger-parameterized-builds:
+          - project: "gate-integration-cleanup"
+            predefined-parameters:
+              PREV_BUILD=$BUILD_NUMBER
       - email:
           recipients: savanna-team@mirantis.com 
       - text_finder:
