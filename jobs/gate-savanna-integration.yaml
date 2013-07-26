@@ -47,7 +47,7 @@
             predefined-parameters:
               PREV_BUILD=$BUILD_NUMBER
       - email:
-          recipients: savanna-team@mirantis.com 
+          recipients: elastic-hadoop-eng@mirantis.com 
       - text_finder:
           regexp: "ERROR"
           alsoCheckConsoleOutput: true
