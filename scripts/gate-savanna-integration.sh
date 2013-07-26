@@ -4,6 +4,7 @@ cd $WORKSPACE
 
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
+rm -rf /tmp/cache
 
 BUILD_ID=dontKill
 
