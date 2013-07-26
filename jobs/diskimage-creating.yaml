@@ -63,7 +63,7 @@
               \nbash savanna-ci/scripts/diskimage-creating.sh -elements $elements -hadoop-version $hadoop_version -java-url $java_url -ubuntu-image-name $ubuntu_image_name -fedora-image-name $fedora_image_name -image-size $image_size" 
     publishers:
       - email:
-          recipients: iberezovskiy@mirantis.com
+          recipients: elastic-hadoop-eng@mirantis.com
       - ssh:
           site: '172.18.79.135'
           target: 'jenkins_DIB_$BUILD_NUMBER'
