@@ -43,7 +43,7 @@
 
     publishers:
       - email:
-          recipients: slukjanov@mirantis.com
+          recipients: elastic-hadoop-eng@mirantis.com
       - text_finder:
           regexp: "M AUTHORS"
           fileset:
