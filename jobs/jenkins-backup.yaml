@@ -18,4 +18,4 @@
 
     publishers:
       - email:
-          recipients: degorenko@mirantis.com, rkamaldinov@mirantis.com
+          recipients: elastic-hadoop-eng@mirantis.com
