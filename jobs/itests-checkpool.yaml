@@ -17,4 +17,4 @@
 
     publishers:
       - email:
-          recipients: skolekonov@mirantis.com
+          recipients: elastic-hadoop-eng@mirantis.com
