@@ -92,6 +92,9 @@ if [ "$FAILURE" = 0 ]; then
     cd $WORKSPACE && tox -e integration
 fi
 
+echo "-----------Python env-----------"
+.tox/integration/bin/pip freeze
+
 screen -S savanna-api -X quit
 
 echo "-----------Savanna Log------------"
