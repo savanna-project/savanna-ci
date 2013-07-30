@@ -12,7 +12,7 @@
     concurrent: false
 
     triggers:
-        - timed: '*/5 * * * *'
+        - timed: 'H/3 * * * *'
         - gerrit:
             silentmode: true
             trigger-on-draft-published-event: true
