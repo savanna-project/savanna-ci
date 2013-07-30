@@ -23,7 +23,7 @@
          - "**"
 
     triggers:
-        - timed: '*/5 * * * *'
+        - timed: 'H/5 * * * *'
         - gerrit:
             trigger-on-change-merged-event: true
             silentmode: true
