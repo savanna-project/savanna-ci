@@ -30,7 +30,7 @@ project_base=$(basename $(echo ${project} | cut -f1 -d'.'))
 ./openreviews.py -p ${project} -u ${user} --html > results/${project_base}-openreviews.html
 (date -u && echo && ./openapproved.py -p ${project} -u ${user}) > results/${project_base}-openapproved.txt
 
-for time in 30 90 180 365 3650; do
+for time in 7 14 30 90 180 365 3650; do
     (date -u && echo && ./reviewers.py -p ${project} -d ${time} -u ${user}) > results/${project_base}-reviewers-${time}.txt
 done
 
@@ -47,6 +47,8 @@ cat > results/index.html <<EOF
     </ul>
   <li>Reviewers Stats:</li>
     <ul>
+      <li><a href="savanna-reviewers-7.txt">Reviews for the last 7 days</a></li>
+      <li><a href="savanna-reviewers-14.txt">Reviews for the last 14 days</a></li>
       <li><a href="savanna-reviewers-30.txt">Reviews for the last 30 days</a></li>
       <li><a href="savanna-reviewers-90.txt">Reviews for the last 90 days</a></li>
       <li><a href="savanna-reviewers-180.txt">Reviews for the last 180 days</a></li>
