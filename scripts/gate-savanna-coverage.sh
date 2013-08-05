@@ -1,2 +1,2 @@
 rm -rf .tox
-tox -e cover
+tox -evenv – coverage report --omit="/openstack/common/",".tox/","savanna/tests/"
