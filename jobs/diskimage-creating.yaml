@@ -24,15 +24,19 @@
           description: "Size of volume of hard disk for fedora cloud image."
       - string:
           name: ubuntu_image_name
-          default: ubuntu_image
+          default: ubuntu_savanna_image
           description:
       - string:
           name: fedora_image_name
-          default: fedora_image
+          default: fedora_savanna_image
           description:
       - string:
+          name: oozie_url
+          default: http://a8e0dce84b3f00ed7910-a5806ff0396addabb148d230fde09b7b.r31.cf1.rackcdn.com/oozie-3.3.2.tar.gz
+          description: "Download link for oozie (only '.tar.gz')"
+      - string:
           name: elements
-          default: swift_hadoop
+          default:
           description: "You can add elements to image. Elements should be from diskimage-builder or savanna-extra repository. Right value is 'element1 element2 ... elementN'."
 
     scm:
@@ -60,7 +64,7 @@
     builders:
     - shell: "rm -rf *
               \ngit clone https://github.com/savanna-project/savanna-ci\
-              \nbash savanna-ci/scripts/diskimage-creating.sh -elements $elements -hadoop-version $hadoop_version -java-url $java_url -ubuntu-image-name $ubuntu_image_name -fedora-image-name $fedora_image_name -image-size $image_size" 
+              \nbash savanna-ci/scripts/diskimage-creating.sh -elements $elements -hadoop-version $hadoop_version -java-url $java_url -ubuntu-image-name $ubuntu_image_name -fedora-image-name $fedora_image_name -image-size $image_size -oozie-url $oozie_url" 
     publishers:
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
@@ -70,11 +74,24 @@
           source: '$ubuntu_image_name.qcow2, $fedora_image_name.qcow2'
           remove-prefix:
           excludes:
-          timeout: "120000"
+          timeout: "1800000"
           command: "\
                      OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$ubuntu_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                     \n
                     \nOS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$fedora_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \n
+                    \nrm -r jenkins_DIB_$BUILD_NUMBER/"
+      - ssh:
+          site: '172.18.168.5'
+          target: 'jenkins_DIB_$BUILD_NUMBER'
+          source: '$ubuntu_image_name.qcow2, $fedora_image_name.qcow2'
+          remove-prefix:
+          excludes:
+          timeout: "1800000"
+          command: "\
+                     OS_AUTH_URL=\"http://172.18.168.5:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$ubuntu_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \n
+                    \nOS_AUTH_URL=\"http://172.18.168.5:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$fedora_image_name$BUILD_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                     \n
                     \nrm -r jenkins_DIB_$BUILD_NUMBER/"
       - workspace-cleanup:
