@@ -8,7 +8,7 @@
                   \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
                   \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
