@@ -45,7 +45,7 @@
     - shell: "\
                rm -rf savanna-ci\
              \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-cd-new.sh"
+             \nbash savanna-ci/scripts/savanna-cd.sh"
 
     publishers:
       - email:
