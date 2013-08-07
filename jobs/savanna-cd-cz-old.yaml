@@ -1,24 +1,24 @@
 - job:
-    name: savanna-cd-dashboard-cz
-    node: savanna-cd-dashboard-cz
+    name: savanna-cd-cz
+    node: savanna-cd-cz
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<b>Title</b>: Savanna Dashboard Continuous Delivery to Czech lab<br/>\
+                  \n<p><b>Title</b>: Savanna Continuous Delivery to Czech lab<br/>\
                   \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
-                \n<b>Maintainer</b>: Denis Egorenko<br/>"
+                  \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
      - git:
-        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna-dashboard.git
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
         refspec: $GERRIT_REFSPEC
         name:
         skip-tag: true
-        basedir: "savanna-dashboard-$GERRIT_CHANGE_NUMBER"
         wipe-workspace: false
+        basedir: "savanna_$GERRIT_CHANGE_NUMBER"
         strategy: gerrit
         branches:
          - master
@@ -28,10 +28,10 @@
             trigger-on-patchset-uploaded-event: true
             trigger-on-change-merged-event: true
             failure-message:
-            successful-message: "Savanna dashboard is running successfully for this change request and available by address 172.18.79.212:<CHANGE>. For change merged you can use: 172.18.79.212:8080"
+            successful-message: "Savanna is running successfully for this change request and available by address 172.18.168.109:<CHANGE>. For change merged you can use: 172.18.168.109:8386"
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna-dashboard'
+                  project-pattern: 'stackforge/savanna'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
@@ -39,10 +39,9 @@
     - shell: "\
                rm -rf savanna-ci\
              \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-cd-dashboard-cz.sh"
+             \nbash savanna-ci/scripts/savanna-cd-cz.sh"
 
 
     publishers:
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
-

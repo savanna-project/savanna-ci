@@ -1,22 +1,15 @@
 - job:
-    name: savanna-cd-dashboard-new
-    project-type: matrix
+    name: savanna-cd-dashboard
+    node: savanna-cd-dashboard
+    project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<b>Title</b>: Savanna Dashboard Continuous Delivery to Saratov and Czech lab<br/>\
-                  \n<b>Description</b>: This job configures and starts Savanna for the latest master.<br/>\
+                  \n<b>Title</b>: Savanna Dashboard Continuous Delivery to Saratov lab<br/>\
+                  \n<b>Description</b>: This job configures and starts individual Savanna per each created patch set and one Savanna for the latest master.<br/>\
                 \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: false
+    disabled: true
     concurrent: false
-
-    axes:
-     - axis:
-        type: slave
-        name: nodes
-        values:
-         - savanna-cd-dashboard
-         - savanna-cd-dashboard-cz
 
     scm:
      - git:
@@ -24,7 +17,7 @@
         refspec: $GERRIT_REFSPEC
         name:
         skip-tag: true
-        basedir: "savanna-dashboard"
+        basedir: "savanna-dashboard-$GERRIT_CHANGE_NUMBER"
         wipe-workspace: false
         strategy: gerrit
         branches:
@@ -32,9 +25,10 @@
 
     triggers:
         - gerrit:
+            trigger-on-patchset-uploaded-event: true
             trigger-on-change-merged-event: true
             failure-message:
-            successful-message: "Savanna dashboard is running successfully and available by address: 172.18.79.212:8080 - Saratov lab, 172.18.168.152:8080 - Czech lab"
+            successful-message: "Savanna dashboard is running successfully for this change request and available by address 172.18.79.212:<CHANGE>. For change merged you can use: 172.18.79.212:8080"
             projects:
                 - project-compare-type: 'PLAIN'
                   project-pattern: 'stackforge/savanna-dashboard'
@@ -47,6 +41,8 @@
              \ngit clone https://github.com/savanna-project/savanna-ci.git\
              \nbash savanna-ci/scripts/savanna-cd-dashboard.sh"
 
+
     publishers:
       - email:
           recipients: degorenko@mirantis.com
+
