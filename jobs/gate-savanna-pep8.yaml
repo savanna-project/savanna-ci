@@ -44,4 +44,4 @@
 
     publishers:
       - email:
-          recipients: slukjanov@mirantis.com
+          recipients: elastic-hadoop-eng@mirantis.com

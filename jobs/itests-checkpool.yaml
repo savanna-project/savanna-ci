@@ -10,11 +10,11 @@
     concurrent: false
 
     triggers:
-        - timed: '*/5 * * * *'
+        - timed: '*/2 * * * *'
 
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/itests-checkpool.sh"
 
     publishers:
       - email:
-          recipients: skolekonov@mirantis.com
+          recipients: elastic-hadoop-eng@mirantis.com

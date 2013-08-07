@@ -13,7 +13,7 @@
 
     scm:
      - git:
-        url: https://github.com/Frostman/savanna-releasestatus.git
+        url: https://github.com/savanna-project/releasestatus.git
         refspec:
         name:
         strategy: default
@@ -23,7 +23,7 @@
          - "**"
 
     triggers:
-        - timed: '*/5 * * * *'
+        - timed: 'H/5 * * * *'
         - gerrit:
             trigger-on-change-merged-event: true
             silentmode: true

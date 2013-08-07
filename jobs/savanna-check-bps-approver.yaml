@@ -12,18 +12,8 @@
     concurrent: false
 
     triggers:
-        - timed: '*/5 * * * *'
-        - gerrit:
-            silentmode: true
-            trigger-on-draft-published-event: true
-            trigger-on-patchset-uploaded-event: true
-            failure-message:
-            projects:
-                - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna'
-                  branch-compare-type: 'ANT'
-                  branch-pattern: '**'
-
+        - timed: 'H/3 * * * *'
+       
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-check-bps-approver.sh"
 

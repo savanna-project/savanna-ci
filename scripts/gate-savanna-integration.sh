@@ -4,6 +4,7 @@ cd $WORKSPACE
 
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
+rm -rf /tmp/cache
 
 BUILD_ID=dontKill
 
@@ -50,8 +51,10 @@ CLUSTER_NAME_CRUD = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER-crud'
 CLUSTER_NAME_HADOOP = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER-hadoop'
 CLUSTER_NAME_SWIFT = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER-swift'
 CLUSTER_NAME_SCALING = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER-scaling'
+CLUSTER_NAME_CONFIG_TEST = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER-configs'
 TIMEOUT = 15
 HADOOP_VERSION = '1.1.2'
+HADOOP_USER = 'hadoop'
 HADOOP_DIRECTORY = '/usr/share/hadoop'
 HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
 SSH_KEY = 'public-jenkins'
@@ -69,6 +72,7 @@ JT_PORT = 50030
 NN_PORT = 50070
 TT_PORT = 50060
 DN_PORT = 50075
+SEC_NN_PORT = 50090
 ENABLE_SWIFT_TEST = True
 " >> $WORKSPACE/savanna/tests/integration/configs/config.py
 i=0
@@ -90,6 +94,9 @@ if [ "$FAILURE" = 0 ]; then
    
     cd $WORKSPACE && tox -e integration
 fi
+
+echo "-----------Python env-----------"
+cd $WORKSPACE && .tox/integration/bin/pip freeze
 
 screen -S savanna-api -X quit
 

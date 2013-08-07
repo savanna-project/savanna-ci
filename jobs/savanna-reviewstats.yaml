@@ -23,7 +23,7 @@
          - "**"
 
     triggers:
-        - timed: '*/5 * * * *'
+        - timed: 'H/3 * * * *'
 
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-reviewstats.sh"
