@@ -7,7 +7,7 @@
                   \n<p><b>Title</b>: Part of the gating process.<br/>\
                   \n<b>Description</b>: This job runs tox -e cover (runs all unit tests using nose tests and python 2.7 and calculate coverage)<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
-    disabled: true
+    disabled: false
     concurrent: true
 
     scm:
@@ -19,11 +19,12 @@
         wipe-workspace: false
         strategy: gerrit
         branches:
-         - master
+         - $GERRIT_BRANCH
 
     triggers:
         - gerrit:
             trigger-on-patchset-uploaded-event: true
+            trigger-on-change-merged-event: true
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'
@@ -47,6 +48,7 @@
       - cobertura:
            report-file: "savanna/tests/coverage.xml"
            fail-no-reports: "true"
+           source-encoding: "ASCII"
            targets:
                 - line:
                     healthy: 80
@@ -65,5 +67,3 @@
            dir: "savanna/tests/cover"
            files: "index.html"
            keepAll: true
-           wrappername: "htmlpublisher-wrapper.html"
-
