@@ -61,7 +61,9 @@ echo -e "\n" | sudo apt-get install qemu
 echo -e "\n" | sudo apt-get install kpartx
 echo -e "\n" | sudo apt-get install git
 
-rm -rf /home/$USER/.cache/image-create/
+if [ -d "/home/$USER/.cache/image-create/" ]; then
+   rm -rf /home/$USER/.cache/image-create/*
+fi
 cur_dir=$(pwd)
 if [ ! -d "DIB_work" ]; then
    mkdir DIB_work
