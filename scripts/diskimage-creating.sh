@@ -1,10 +1,6 @@
 #!/bin/bash
 while true; do
   case "$1" in
-    -elements)
-      elements=$2
-      shift 2
-      ;;
     -hadoop-version)
       export DIB_HADOOP_VERSION=$2
       shift 2
@@ -88,8 +84,8 @@ sudo chown root:root /etc/sudoers.d/img-build-sudoers
 sudo chmod 0440 /etc/sudoers.d/img-build-sudoers
 cp -r $cur_dir/DIB_work/savanna-extra/elements/* $cur_dir/DIB_work/diskimage-builder/elements/
 
-disk-image-create base vm fedora hadoop swift_hadoop oozie $elements -o $fedora_image_name
-disk-image-create base vm ubuntu hadoop swift_hadoop oozie $elements -o $ubuntu_image_name
+disk-image-create base vm fedora hadoop swift_hadoop oozie -o $fedora_image_name
+disk-image-create base vm ubuntu hadoop swift_hadoop oozie -o $ubuntu_image_name
 
 mv $fedora_image_name.qcow2 ../
 mv $ubuntu_image_name.qcow2 ../
