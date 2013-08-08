@@ -1,5 +1,5 @@
 - job:
-    name: savanna-cd-dashboard-new
+    name: savanna-cd-dashboard
     project-type: matrix
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
