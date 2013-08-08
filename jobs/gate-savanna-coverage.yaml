@@ -67,3 +67,4 @@
            dir: "savanna/tests/cover"
            files: "index.html"
            keepAll: true
+           wrappername: "htmlpublisher-wrapper.html"
