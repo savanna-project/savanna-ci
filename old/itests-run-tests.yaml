@@ -1,0 +1,25 @@
+- job:
+    name: itests-run-tests
+    node: integration-vm
+    project-type: freestyle
+    description: "<b>Title</b>: Part of the integration gating process.<br/>\
+                \n<b>Description</b>: This job runs tox -e integration (runs integration tests using nose tests and python 27).<br/>\
+                \n<b>Maintainer</b>: Vadim Rovachev<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    builders:
+    - shell:  "rm -rf savanna-ci\                                               
+              \ngit clone https://github.com/savanna-project/savanna-ci.git\    
+              \nbash savanna-ci/scripts/itests-run-tests.sh"            
+
+    publishers:
+      - trigger-parameterized-builds:
+          - project: itests-remove-vm
+            property-file: /tmp/vmname
+            failonmissing: true
+      - email:
+          recipients: savanna-team@mirantis.com
+          send-to-individuals: true
+

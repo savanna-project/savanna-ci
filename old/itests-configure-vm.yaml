@@ -1,0 +1,31 @@
+- job:
+    name: itests-configure-vm
+    node: integration-vm
+    project-type: freestyle
+    description: "<b>Title</b>: Part of the integration gating process.<br/>\
+                \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
+                \n<b>Maintainer</b>: Vadim Rovachev<br/>"
+    defaults: global
+    disabled: true
+    concurrent: false
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        strategy: gerrit
+        skip-tag: false
+        wipe-workspace: false
+        branches:
+         - "$GERRIT_BRANCH"
+
+    builders:
+    - shell:  "rm -rf savanna-ci\                                               
+              \ngit clone https://github.com/savanna-project/savanna-ci.git\    
+              \nbash savanna-ci/scripts/itests-configure-vm.sh"            
+
+
+    publishers:
+      - email:
+          recipients: vrovachev@mirantis.com
