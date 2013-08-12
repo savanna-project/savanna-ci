@@ -39,7 +39,7 @@
  
     wrappers:
     - pathignore:
-       ignored: "doc*, etc*, tools*, savanna/tests/unit*, AUTHORS"
+       ignored: "doc*, etc*, tools*, savanna/tests/unit*, AUTHORS, savanna/utils/hacking*"
 
     publishers:
       - trigger-parameterized-builds:
