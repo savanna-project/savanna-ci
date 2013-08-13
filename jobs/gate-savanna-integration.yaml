@@ -35,7 +35,7 @@
     builders:
     - shell:  "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci.git\
-              \nbash savanna-ci/scripts/git-rebase.sh"
+              \nbash savanna-ci/scripts/git-rebase.sh\
               \nbash savanna-ci/scripts/gate-savanna-integration.sh"
  
     wrappers:

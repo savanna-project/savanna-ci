@@ -39,7 +39,8 @@
           faildescription: true
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-coverage.sh"
+      - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh\              
+              \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-coverage.sh"
 
 
     publishers:
