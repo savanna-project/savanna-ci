@@ -18,11 +18,13 @@ os_auth_host=172.18.168.5
 os_admin_username=admin
 os_admin_password=swordfish
 os_admin_tenant_name=admin
-plugins=vanilla
+plugins=vanilla,hdp
 [cluster_node]
 [sqlalchemy]
 [plugin:vanilla]
-plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider" >> etc/savanna/savanna.conf
+plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
+[plugin:hdp]
+plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savanna.conf
 
 echo "
 [global] 
