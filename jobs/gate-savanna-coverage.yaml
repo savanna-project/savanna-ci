@@ -8,7 +8,7 @@
                   \n<b>Description</b>: This job runs tox -e cover (runs all unit tests using nose tests and python 2.7 and calculate coverage)<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     disabled: false
-    concurrent: true
+    concurrent: false
 
     scm:
      - git:
@@ -37,9 +37,14 @@
           timeout: 15
           fail: true
           faildescription: true
+      - workspace-cleanup:                                                      
+          include:                                                              
+            - "*"                                                               
+          dirmatch: true                                                        
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-coverage.sh"
+      - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\              
+              \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-coverage.sh"
 
 
     publishers:

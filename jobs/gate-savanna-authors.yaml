@@ -8,7 +8,7 @@
                   \n<b>Description</b>: This job checks AUTHORS file and fails if it should be updated.<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     disabled: false
-    concurrent: true
+    concurrent: false
 
     scm:
      - git:
@@ -36,9 +36,14 @@
           timeout: 15
           fail: true
           faildescription: true
+      - workspace-cleanup:                                                      
+          include:                                                              
+            - "*"                                                               
+          dirmatch: true                                                        
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-authors.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
+            \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-authors.sh"
 
 
     publishers:

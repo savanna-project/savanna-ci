@@ -9,7 +9,7 @@
                   \n<b>Description</b>: This job runs tox -e docs to build docs.<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     disabled: false
-    concurrent: true
+    concurrent: false
 
     scm:
      - git:
@@ -37,9 +37,14 @@
           timeout: 15
           fail: true
           faildescription: true
+      - workspace-cleanup:
+          include:
+            - "*"
+          dirmatch: true
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-docs.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
+            \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-docs.sh"
 
 
     publishers:

@@ -35,11 +35,16 @@
     builders:
     - shell:  "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci.git\
+              \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
               \nbash savanna-ci/scripts/gate-savanna-integration.sh"
  
     wrappers:
     - pathignore:
        ignored: "doc*, etc*, tools*, savanna/tests/unit*, AUTHORS, savanna/utils/hacking*"
+    - workspace-cleanup:                                                      
+        include:                                                              
+          - "*"                                                               
+        dirmatch: true                                                        
 
     publishers:
       - trigger-parameterized-builds:

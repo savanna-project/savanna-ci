@@ -9,7 +9,7 @@
                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global
     disabled: false
-    concurrent: true
+    concurrent: false
 
     scm:
      - git:
@@ -37,9 +37,14 @@
           timeout: 15
           fail: true
           faildescription: true
+      - workspace-cleanup:                                                      
+          include:                                                              
+            - "*"                                                               
+          dirmatch: true                                                        
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8.sh"
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
+            \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8.sh"
 
 
     publishers:
