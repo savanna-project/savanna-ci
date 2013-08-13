@@ -74,6 +74,10 @@ if [ -d "diskimage-builder" ]; then
 fi
 git clone https://github.com/stackforge/diskimage-builder
 
+cd diskimage-builder
+export DIB_COMMIT_ID=`git show --format=%H | head -1`
+cd ../
+
 export PATH=$PATH:$cur_dir/DIB_work/diskimage-builder/bin
 export ELEMENTS_PATH=$cur_dir/DIB_work/diskimage-builder/elements
 
@@ -81,6 +85,10 @@ if [ -d "savanna-extra" ]; then
    rm -r savanna-extra
 fi
 git clone https://github.com/stackforge/savanna-extra
+
+cd savanna-extra
+export SAVANNA_ELEMENTS_COMMIT_ID=`git show --format=%H | head -1`
+cd ../
 
 sudo cp $cur_dir/DIB_work/diskimage-builder/sudoers.d/img-build-sudoers /etc/sudoers.d/
 sudo chown root:root /etc/sudoers.d/img-build-sudoers
