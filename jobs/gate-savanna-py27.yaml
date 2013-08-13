@@ -39,7 +39,7 @@
           faildescription: true
 
     builders:
-    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh\
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
             \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-py27.sh"
 
 

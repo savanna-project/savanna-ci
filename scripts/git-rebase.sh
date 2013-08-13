@@ -1,13 +1,13 @@
 #!/bin/bash -e
 
 cd $WORKSPACE
-git fetch origin master
+git fetch origin $1
+git rebase origin/$1
 
 if [ $? != 0 ]
 then
-    echo "ERROR. git fetch failed"
+    echo "ERROR. git rebase failed"
     return 1
 else
-   git rebase master
    git clean -x -f -d
 fi
