@@ -34,7 +34,7 @@
         - gerrit:
             trigger-on-change-merged-event: true
             failure-message:
-            successful-message: "Savanna is running successfully and available by address: 172.18.79.253:8386 - Saratov lab; 172.18.168.109:8386 - Czech lab"
+            successful-message: "Savanna is running successfully and available by address: 172.18.79.222:8386 - Saratov lab; 172.18.168.236:8386 - Czech lab"
             projects:
                 - project-compare-type: 'PLAIN'
                   project-pattern: 'stackforge/savanna'
