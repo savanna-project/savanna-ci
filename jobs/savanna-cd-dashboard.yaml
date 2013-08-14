@@ -15,8 +15,8 @@
         type: slave
         name: nodes
         values:
-         - savanna-cd-dashboard
-         - savanna-cd-dashboard-cz
+         - savanna-cd
+         - savanna-cd-cz
 
     scm:
      - git:
@@ -34,7 +34,7 @@
         - gerrit:
             trigger-on-change-merged-event: true
             failure-message:
-            successful-message: "Savanna dashboard is running successfully and available by address: 172.18.79.212:8080 - Saratov lab, 172.18.168.152:8080 - Czech lab"
+            successful-message: "Savanna dashboard is running successfully and available by address: 172.18.79.222:8080 - Saratov lab, 172.18.168.236:8080 - Czech lab"
             projects:
                 - project-compare-type: 'PLAIN'
                   project-pattern: 'stackforge/savanna-dashboard'
