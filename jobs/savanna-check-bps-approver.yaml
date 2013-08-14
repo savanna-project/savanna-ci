@@ -20,7 +20,7 @@
 
     publishers:
       - email:
-          recipients: slukjanov@mirantis.com
+          recipients: slukjanov@mirantis.com, aignatov@mirantis.com, rkamaldinov@mirantis.com
       - text_finder:
           regexp: "Bad BP"
           fileset: "report.txt"
