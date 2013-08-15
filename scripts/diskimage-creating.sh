@@ -95,7 +95,7 @@ sudo chown root:root /etc/sudoers.d/img-build-sudoers
 sudo chmod 0440 /etc/sudoers.d/img-build-sudoers
 cp -r $cur_dir/DIB_work/savanna-extra/elements/* $cur_dir/DIB_work/diskimage-builder/elements/
 
-disk-image-create base vm fedora hadoop swift_hadoop oozie -o $fedora_image_name
+disk-image-create base vm fedora selinux-permissive hadoop swift_hadoop oozie -o $fedora_image_name
 disk-image-create base vm ubuntu hadoop swift_hadoop oozie -o $ubuntu_image_name
 
 mv $fedora_image_name.qcow2 ../
