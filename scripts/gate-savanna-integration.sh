@@ -47,7 +47,7 @@ OS_AUTH_URL = 'http://172.18.168.5:35357/v2.0/'
 SAVANNA_HOST = '$ADDR'
 SAVANNA_PORT = '8386'
 FLAVOR_ID = '42'
-TIMEOUT = 30
+TIMEOUT = 25
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER'
 USER_KEYPAIR_ID = 'public-jenkins'
 PATH_TO_SSH = '/home/ubuntu/.ssh/id_rsa'
@@ -79,7 +79,7 @@ HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
 " >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
 
 echo "PLUGIN_NAME = 'vanilla'
-IMAGE_ID = 'b244500e-583a-434f-a40f-6ba87fd55e09'
+IMAGE_ID = 'c6ba6f01-0d92-44b8-8192-03204c60f85f'
 NODE_USERNAME = 'ubuntu'
 HADOOP_VERSION = '1.1.2'
 HADOOP_USER = 'hadoop'
