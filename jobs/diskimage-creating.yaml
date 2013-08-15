@@ -76,9 +76,9 @@
                     \nglance image-delete $id
                     \nid=$(glance image-list | grep $fedora_image_name | awk '{print $2}')
                     \nglance image-delete $id
-                    \nOS_AUTH_URL=\"http://172.18.168.5:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$ubuntu_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \nglance image-create --name=$ubuntu_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                     \n
-                    \nOS_AUTH_URL=\"http://172.18.168.5:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$fedora_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \nglance image-create --name=$fedora_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                     \n
                     \nrm -r jenkins_DIB_$BUILD_NUMBER/"
       - ssh:
@@ -89,13 +89,17 @@
           excludes:
           timeout: "1800000"
           command: "\
-                     id=$(glance image-list | grep $ubuntu_image_name | awk '{print $2}')
+                     export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"
+                    \nexport OS_TENANT_NAME=admin
+                    \nexport OS_USERNAME=admin
+                    \nexport OS_PASSWORD=swordfish
+                    \nid=$(glance image-list | grep $ubuntu_image_name | awk '{print $2}')
                     \nglance image-delete $id
                     \nid=$(glance image-list | grep $fedora_image_name | awk '{print $2}')
                     \nglance image-delete $id
-                    \n OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$ubuntu_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \nglance image-create --name=$ubuntu_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                     \n
-                    \nOS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\" OS_TENANT_NAME=admin OS_USERNAME=admin OS_PASSWORD=swordfish glance image-create --name=$fedora_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \nglance image-create --name=$fedora_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                     \n
                     \nrm -r jenkins_DIB_$BUILD_NUMBER/"
       - workspace-cleanup:
