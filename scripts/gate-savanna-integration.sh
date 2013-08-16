@@ -79,7 +79,7 @@ HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
 " >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
 
 echo "PLUGIN_NAME = 'vanilla'
-IMAGE_ID = '7bf5e3c9-04f7-41da-9824-b9cfa8f0f282'
+IMAGE_ID = '75615550-013c-426f-a6e5-dd3318950c20'
 NODE_USERNAME = 'ubuntu'
 HADOOP_VERSION = '1.1.2'
 HADOOP_USER = 'hadoop'
