@@ -58,7 +58,7 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "rm -rf *
+    - shell: "sudo rm -rf /home/ubuntu/.cache/image-create/*
               \ngit clone https://github.com/savanna-project/savanna-ci\
               \nbash savanna-ci/scripts/diskimage-creating.sh -hadoop-version $hadoop_version -java-url $java_url -ubuntu-image-name $ubuntu_image_name -fedora-image-name $fedora_image_name -image-size $image_size -oozie-url $oozie_url"
     publishers:
