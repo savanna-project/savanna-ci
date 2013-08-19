@@ -7,6 +7,11 @@
                   \n<p><b>Title</b>: Part of the gating process.<br/>\
                   \n<b>Description</b>: This job runs tox -e cover (runs all unit tests using nose tests and python 2.7 and calculate coverage)<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    logrotate:
+      daysToKeep: -1
+      numToKeep: -1
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
     disabled: false
     concurrent: true
 
