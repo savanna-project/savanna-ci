@@ -7,7 +7,7 @@
                   \n<b>Description</b>: This job performs backup of jenkins configuration.<br/>\
                   \n<b>Maintainer</b>: Denis Egorenko<br/>"
     defaults: global
-    disabled: false
+    disabled: true
     concurrent: false
 
     triggers:
