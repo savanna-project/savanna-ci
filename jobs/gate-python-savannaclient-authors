@@ -1,0 +1,57 @@
+- job:
+    name: gate-python-savannaclient-authors
+    project-type: freestyle
+    defaults: global
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: Part of the gating process.<br/>\
+                  \n<b>Description</b>: This job checks AUTHORS file and fails if it should be updated.<br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    disabled: false
+    concurrent: false
+
+    scm:
+     - git:
+        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/python-savannaclient.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        strategy: gerrit
+        skip-tag: true
+        wipe-workspace: false
+        branches:
+         - $GERRIT_BRANCH
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/python-savannaclient'
+                  branch-compare-type: 'ANT'
+                  branch-pattern: '**'
+
+    wrappers:
+      - timeout:
+          timeout: 15
+          fail: true
+          faildescription: true
+      - workspace-cleanup:                                                      
+          include:                                                              
+            - "*"                                                               
+          dirmatch: true                                                        
+
+    builders:
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
+            \nbash /opt/jenkins-jobs/savanna-ci/scripts/gate-savanna-authors.sh"
+
+
+    publishers:
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com
+      - text_finder:
+          regexp: "M AUTHORS"
+          fileset:
+          alsoCheckConsoleOutput: true
+          succeedIfFound: false
+          unstableIfFound: false
