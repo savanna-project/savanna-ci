@@ -121,3 +121,8 @@ cat /tmp/tox-log.txt
 rm -f /tmp/tox-log.txt
 
 rm -f /tmp/savanna-server.db
+
+
+if [ "$FAILURE" != 0 ]; then
+    exit 1
+fi

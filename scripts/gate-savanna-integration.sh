@@ -94,7 +94,7 @@ i=0
 while true
 do
         let "i=$i+1"
-        if [ "$i" -gt "240" ]; then
+        if [ "$i" -gt "480" ]; then
                 echo "project does not start" && FAILURE=1 && break
         fi
         if [ ! -f $WORKSPACE/log.txt ]; then
