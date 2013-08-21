@@ -35,8 +35,8 @@ sed -i "s/#from horizon.utils import secret_key/from horizon.utils import secret
 sed -i "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" openstack_dashboard/local/local_settings.py
 echo -e "SAVANNA_URL = \"$SAVANNA_URL\"" >> openstack_dashboard/local/local_settings.py
 
+sed -i "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g" openstack_dashboard/settings.py
 echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/settings.py
-echo "INSTALLED_APPS += ('savannadashboard',)" >> openstack_dashboard/settings.py
 
 python tools/install_venv.py
 .venv/bin/python ../savanna-dashboard/setup.py install
