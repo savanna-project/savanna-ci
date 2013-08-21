@@ -1,0 +1,48 @@
+- job:
+    name: diskimage-integration
+    node: integration-vm-new
+    project-type: freestyle
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: This job checks whether a newest Ubuntu image is suitable for integration tests. <br/>\
+                \n<b>Description</b>: This job executes integration tests on the newest Ubuntu image.<br/>\
+                \n<b>Maintainer</b>: Sergey Kolekonov<br/>"
+    defaults: global
+    disabled: false
+    concurrent: false
+
+    scm:
+     - git:
+        url: https://review.openstack.org/stackforge/savanna.git
+        refspec: 
+        name:
+        strategy: gerrit
+        skip-tag: false
+        wipe-workspace: false
+        branches:
+         - master
+
+    builders:
+    - shell:  "export $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_ubuntu_image_id | tail -1)\
+              \nrm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci.git\
+              \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_id"
+
+    wrappers:
+    - workspace-cleanup:                                                      
+        include:                                                              
+          - "*"                                                               
+        dirmatch: true                                                        
+
+    publishers:
+      - trigger-parameterized-builds:
+          - project: "gate-integration-cleanup"
+            predefined-parameters:
+              PREV_BUILD=$BUILD_NUMBER
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com 
+      - text_finder:
+          regexp: "ERROR"
+          alsoCheckConsoleOutput: true
+          succeedIfFound: false
+          unstableIfFound: false
