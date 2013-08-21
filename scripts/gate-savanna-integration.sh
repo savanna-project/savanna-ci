@@ -2,7 +2,7 @@
 
 cd $WORKSPACE
 
-TOX_LOG=$WORKSPACE/$JOB_NAME/.tox/venv/log/venv-1.log
+TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log
 TMP_LOG=/tmp/tox.log
 
 screen -S savanna-api -X quit
