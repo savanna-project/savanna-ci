@@ -10,6 +10,15 @@
     defaults: global
     disabled: false
     concurrent: false
+    parameters:
+      - string:
+          name: BUILD_JOB
+          default: 
+          description:
+      - string:
+          name: BUILD_ID
+          default: 
+          description:
 
     scm:
      - git:
