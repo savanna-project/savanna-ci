@@ -2,6 +2,9 @@
 
 cd $WORKSPACE
 
+TOX_LOG=$WORKSPACE/$JOB_NAME/.tox/venv/log/venv-1.log
+TMP_LOG=/tmp/tox.log
+
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
@@ -89,11 +92,14 @@ HADOOP_DIRECTORY = '/usr/share/hadoop'
 HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
 " >> $WORKSPACE/savanna/tests/integration/configs/vanilla_config.py
 
+touch $TMP_LOG
 i=0
 
 while true
 do
         let "i=$i+1"
+        diff $TOX_LOG $TMP_LOG
+        cp -f $TOX_LOG $TMP_LOG
         if [ "$i" -gt "480" ]; then
                 echo "project does not start" && FAILURE=1 && break
         fi
@@ -124,6 +130,7 @@ cat /tmp/tox-log.txt
 rm -f /tmp/tox-log.txt
 
 rm -f /tmp/savanna-server.db
+rm $TMP_LOG
 
 if [ "$FAILURE" != 0 ]; then
     exit 1
