@@ -50,6 +50,7 @@
           remove-prefix:
           excludes:
           timeout: "1800000"
+          pty: true
           command: "\
                      id=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")
                    \nglance image-delete $id\
