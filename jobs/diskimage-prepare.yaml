@@ -1,0 +1,35 @@
+- job:
+    name: diskimage-prepare
+    node: master
+    project-type: freestyle
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: This job is a part of diskimage-integration sequence. <br/>\
+                \n<b>Description</b>: This job takes an id of the newest ubuntu image from diskimage-create job. <br/>\
+                \n<b>Maintainer</b>: Sergey Kolekonov<br/>"
+    defaults: global
+    disabled: false
+    concurrent: false
+    parameters:
+      - string:
+          name: BUILD_JOB
+          default: 
+          description:
+      - string:
+          name: BUILD_ID
+          default: 
+          description:
+
+    builders:
+    - shell:  "\
+                 rm -f properties\
+               \necho $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_ubuntu_image_id | tail -1) > properties"
+
+    publishers:
+      - trigger-parameterized-builds:
+          - project: "diskimage-integration"
+            property-file: properties
+            failonmissing: true
+            condition: SUCCESS
+      - email:
+          recipients: skolekonov@mirantis.com 

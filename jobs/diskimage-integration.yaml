@@ -12,11 +12,7 @@
     concurrent: false
     parameters:
       - string:
-          name: BUILD_JOB
-          default: 
-          description:
-      - string:
-          name: BUILD_ID
+          name: Latest_ubuntu_image_id
           default: 
           description:
 
@@ -25,17 +21,16 @@
         url: https://review.openstack.org/stackforge/savanna.git
         refspec: 
         name:
-        strategy: gerrit
+        strategy: default
         skip-tag: false
         wipe-workspace: false
         branches:
          - master
 
     builders:
-    - shell:  "export $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_ubuntu_image_id | tail -1)\
-              \nrm -rf savanna-ci\
-              \ngit clone https://github.com/savanna-project/savanna-ci.git\
-              \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_id"
+    - shell:  "rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_id"
 
     wrappers:
     - workspace-cleanup:                                                      
@@ -48,6 +43,17 @@
           - project: "gate-integration-cleanup"
             predefined-parameters:
               PREV_BUILD=$BUILD_NUMBER
+      - ssh:
+          site: '172.18.168.5'
+          target:
+          source:
+          remove-prefix:
+          excludes:
+          timeout: "1800000"
+          command: "\
+                     id=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")
+                   \nglance image-delete $id\
+                   \nglance image-update $Latest_ubuntu_image_id --name ubuntu_savanna_latest"
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
       - text_finder:
