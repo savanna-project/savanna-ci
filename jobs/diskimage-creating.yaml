@@ -73,12 +73,11 @@
           excludes:
           timeout: "1800000"
           command: "\
-                      glance image-create --name=ubuntu-$GERRIT_CHANGE_NUMBER-test --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
-                    \necho \"Latest_ubuntu_image_id=\"$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER-test | cut -f 1 -d \" \")\
+                      glance image-create --name=ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \necho \"Latest_ubuntu_image_cz=\"$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                     \n
-                    \nid=$(glance image-list | grep $fedora_image_name | awk '{print $2}')
-                    \nglance image-delete $id
-                    \nglance image-create --name=$fedora_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \nglance image-create --name=fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \necho \"Latest_fedora_image_cz=\"$(glance index | grep fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                     \n
                     \nrm -r jenkins_DIB_$BUILD_NUMBER/"
       - ssh:
@@ -90,16 +89,14 @@
           timeout: "1800000"
           command: "\
                      export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"
-                    \nexport OS_TENANT_NAME=admin
-                    \nexport OS_USERNAME=admin
-                    \nexport OS_PASSWORD=swordfish
-                    \nid=$(glance image-list | grep $ubuntu_image_name | awk '{print $2}')
-                    \nglance image-delete $id
-                    \nid=$(glance image-list | grep $fedora_image_name | awk '{print $2}')
-                    \nglance image-delete $id
-                    \nglance image-create --name=$ubuntu_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \nexport OS_TENANT_NAME=admin\
+                    \nexport OS_USERNAME=admin\
+                    \nexport OS_PASSWORD=swordfish\
+                    \nglance image-create --name=ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                    \necho \"Latest_ubuntu_image_sar=\"$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                     \n
-                    \nglance image-create --name=$fedora_image_name --disk-format=qcow2 --container-format=bare --is-public=true < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \nglance image-create --name=fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                    \necho \"Latest_fedora_image_sar=\"$(glance index | grep fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                     \n
                     \nrm -r jenkins_DIB_$BUILD_NUMBER/"
       - trigger-parameterized-builds:

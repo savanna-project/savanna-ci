@@ -54,7 +54,7 @@
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
       - text_finder:
-          regexp: "ERROR"
+          regexp: "InvocationError"
           alsoCheckConsoleOutput: true
           succeedIfFound: false
           unstableIfFound: false
