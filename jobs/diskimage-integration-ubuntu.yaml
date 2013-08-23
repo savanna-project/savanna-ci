@@ -34,7 +34,7 @@
     builders:
     - shell:  "rm -rf savanna-ci\
              \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_id"
+             \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_cz"
 
     wrappers:
     - workspace-cleanup:                                                      
