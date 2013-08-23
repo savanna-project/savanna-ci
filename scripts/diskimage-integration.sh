@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 sudo sh -c 'grep -q controller /etc/hosts || echo 172.18.168.5 controller-13 >> /etc/hosts'
+sudo sh -c 'grep -q os4 /etc/hosts || echo 172.18.79.135 os4 >> /etc/hosts'
 cd $WORKSPACE
 
 VANILLA_IMAGE=$1

@@ -32,9 +32,13 @@
          - master
 
     builders:
-    - shell:  "rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_fedora_image_cz"
+    - shell:  "\
+               \nif [ -z $Latest_fedora_image_cz ] || [ -z $Latest_fedora_image_sar ]; then\
+               \n    exit 1;\
+               \nfi\
+               \nrm -rf savanna-ci\
+               \ngit clone https://github.com/savanna-project/savanna-ci.git\
+               \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_fedora_image_cz"
 
     wrappers:
     - workspace-cleanup:                                                      
