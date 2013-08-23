@@ -47,6 +47,11 @@
           - project: "gate-integration-cleanup"
             predefined-parameters:
               PREV_BUILD=$BUILD_NUMBER
+      - text_finder:
+          regexp: "InvocationError"
+          alsoCheckConsoleOutput: true
+          succeedIfFound: false
+          unstableIfFound: false
       - ssh:
           site: '172.18.168.5'
           target:
@@ -78,8 +83,3 @@
                    \nglance image-update $Latest_fedora_image_sar --name fedora_savanna_latest"
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
-      - text_finder:
-          regexp: "InvocationError"
-          alsoCheckConsoleOutput: true
-          succeedIfFound: false
-          unstableIfFound: false
