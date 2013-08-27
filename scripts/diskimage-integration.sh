@@ -4,6 +4,7 @@ sudo sh -c 'grep -q controller /etc/hosts || echo 172.18.168.5 controller-13 >> 
 sudo sh -c 'grep -q os4 /etc/hosts || echo 172.18.79.135 os4 >> /etc/hosts'
 cd $WORKSPACE
 
+OS_USERNAME=$2
 VANILLA_IMAGE=$1
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log
 TMP_LOG=/tmp/tox.log
@@ -55,7 +56,7 @@ SAVANNA_HOST = '$ADDR'
 SAVANNA_PORT = '8386'
 FLAVOR_ID = '42'
 TIMEOUT = 25
-CLUSTER_NAME = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER'
+CLUSTER_NAME = 'ci-$BUILD_NUMBER-diskimage'
 USER_KEYPAIR_ID = 'public-jenkins'
 PATH_TO_SSH = '/home/ubuntu/.ssh/id_rsa'
 JT_PORT = 50030
@@ -88,7 +89,7 @@ HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
 
 echo "PLUGIN_NAME = 'vanilla'
 IMAGE_ID = '$VANILLA_IMAGE'
-NODE_USERNAME = 'ubuntu'
+NODE_USERNAME = '$OS_USERNAME'
 HADOOP_VERSION = '1.1.2'
 HADOOP_USER = 'hadoop'
 HADOOP_DIRECTORY = '/usr/share/hadoop'

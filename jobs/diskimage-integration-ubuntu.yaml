@@ -38,7 +38,7 @@
                \nfi\
                \nrm -rf savanna-ci\
                \ngit clone https://github.com/savanna-project/savanna-ci.git\
-               \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_cz"
+               \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_ubuntu_image_cz ubuntu"
 
     wrappers:
     - workspace-cleanup:                                                      
@@ -47,10 +47,6 @@
         dirmatch: true                                                        
 
     publishers:
-      - trigger-parameterized-builds:
-          - project: "gate-integration-cleanup"
-            predefined-parameters:
-              PREV_BUILD=$BUILD_NUMBER
       - text_finder:
           regexp: "InvocationError"
           alsoCheckConsoleOutput: true
