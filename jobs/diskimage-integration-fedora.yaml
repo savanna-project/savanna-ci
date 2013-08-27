@@ -65,7 +65,7 @@
                    \nglance image-delete $id\
                    \nglance image-update $Latest_fedora_image_cz --name fedora_savanna_latest"
       - ssh:
-          site: '172.18.179.135'
+          site: '172.18.79.135'
           target:
           source:
           remove-prefix:
