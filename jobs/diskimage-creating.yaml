@@ -56,7 +56,7 @@
       - ssh:
           site: '172.18.79.135'
           target: 'jenkins_DIB_$BUILD_NUMBER'
-          source: '$ubuntu_image_name.qcow2, $fedora_image_name.qcow2'
+          source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.qcow2'
           remove-prefix:
           excludes:
           timeout: "1800000"
