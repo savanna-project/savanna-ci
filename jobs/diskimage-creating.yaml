@@ -23,7 +23,7 @@
     builders:
     - shell: "rm -rf *
               \ngit clone https://github.com/stackforge/savanna-extra\
-              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\""
+              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-extra/diskimage-create.sh"
     publishers:
       - ssh:
           site: '172.18.168.5'
