@@ -21,7 +21,7 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "rm -rf *
+    - shell: "sudo rm -rf *
               \ngit clone https://github.com/stackforge/savanna-extra\
               \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-extra/diskimage-create/diskimage-create.sh"
     publishers:
