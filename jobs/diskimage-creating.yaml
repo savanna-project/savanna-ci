@@ -71,19 +71,19 @@
           excludes:
           timeout: "1800000"
           command: "\
-                     Latest_ubuntu_image_cz=$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                     Latest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \n
                    \nif [ -z $Latest_ubuntu_image_cz ]; then\
-                   \n    glance image-create --name=ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
-                   \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                   \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse
                    \n    echo \"Latest_ubuntu_image_cz=\"$Latest_ubuntu_image_cz\
                    \nfi\
                    \n
-                   \nLatest_fedora_image_cz=$(glance index | grep fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \nLatest_fedora_image_cz=$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nif [ -z $Latest_fedora_image_cz ]; then\ 
-                   \n    glance image-create --name=fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
-                   \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")
+                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")
                    \nelse\
                    \n    echo \"Latest_fedora_image_cz=\"$Latest_fedora_image_cz\
                    \nfi\
@@ -103,19 +103,19 @@
                    \nexport OS_USERNAME=admin\
                    \nexport OS_PASSWORD=swordfish\
                    \n
-                   \nLatest_ubuntu_image_sar=$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \nLatest_ubuntu_image_sar=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \n
                    \nif [ -z $Latest_ubuntu_image_sar ]; then\
-                   \n    glance image-create --name=ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
-                   \n    echo \"Latest_ubuntu_image_sar=\"$(glance index | grep ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                   \n    echo \"Latest_ubuntu_image_sar=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse\
                    \n    echo \"Latest_ubuntu_image_sar=\"$Latest_ubuntu_image_sar\
                    \nfi\
                    \n
-                   \nLatest_fedora_image_sar=$(glance index | grep fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \nLatest_fedora_image_sar=$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nif [ -z $Latest_fedora_image_sar ]; then\ 
-                   \n    glance image-create --name=fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
-                   \n    echo \"Latest_fedora_image_sar=\"$(glance index | grep fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n    echo \"Latest_fedora_image_sar=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse
                    \n    echo \"Latest_fedora_image_sar=\"$Latest_fedora_image_sar\
                    \nfi

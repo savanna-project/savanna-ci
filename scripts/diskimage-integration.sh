@@ -117,6 +117,13 @@ done
 if [ "$FAILURE" = 0 ]; then
    
     cd $WORKSPACE && tox -e integration
+    STATUS=`echo $?`                                                                
+                                                                                    
+    if [[ "$STATUS" != 0 ]]                                                         
+    then                                                                            
+         exit 1                                                                      
+    fi   
+
 fi
 
 echo "-----------Python env-----------"
