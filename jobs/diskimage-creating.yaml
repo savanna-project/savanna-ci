@@ -9,43 +9,6 @@
     disabled: false
     concurrent: false
 
-    parameters:
-      - string:
-          name: hadoop_version
-          default: 1.1.2
-          description: "Version of hadoop. Right format is \"d.d.d\" (d - digit)."
-      - string:
-          name: java_url
-          default: http://download.oracle.com/otn-pub/java/jdk/7u25-b15/jdk-7u25-linux-x64.tar.gz
-          description: "Download link for java (only '.tar.gz' or 'bin')."
-      - string:
-          name: image_size
-          default: "10"
-          description: "Size of volume of hard disk for fedora cloud image."
-      - string:
-          name: ubuntu_image_name
-          default: ubuntu_savanna_latest
-          description:
-      - string:
-          name: fedora_image_name
-          default: fedora_savanna_latest
-          description:
-      - string:
-          name: oozie_url
-          default: http://a8e0dce84b3f00ed7910-a5806ff0396addabb148d230fde09b7b.r31.cf1.rackcdn.com/oozie-3.3.2.tar.gz
-          description: "Download link for oozie (only '.tar.gz')"
-
-    scm:
-     - git:
-        url: https://github.com/stackforge/savanna-extra
-        refspec:
-        name:
-        strategy: default
-        skip-tag: false
-        wipe-workspace: false
-        branches:
-         - master
-
     triggers:
         - gerrit:
             trigger-on-change-merged-event: true
@@ -58,20 +21,20 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "sudo rm -rf /home/ubuntu/.cache/image-create/*
-              \nrm -rf *
-              \ngit clone https://github.com/savanna-project/savanna-ci\
-              \nbash savanna-ci/scripts/diskimage-creating.sh -hadoop-version $hadoop_version -java-url $java_url -ubuntu-image-name $ubuntu_image_name -fedora-image-name $fedora_image_name -image-size $image_size -oozie-url $oozie_url"
+    - shell: "rm -rf *
+              \ngit clone https://github.com/stackforge/savanna-extra\
+              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\""
     publishers:
       - ssh:
           site: '172.18.168.5'
           target: 'jenkins_DIB_$BUILD_NUMBER'
-          source: '$ubuntu_image_name.qcow2, $fedora_image_name.qcow2'
+          source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.qcow2'
           remove-prefix:
           excludes:
           timeout: "1800000"
-          command: "\
-                     Latest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+          command: "\fedora_image_name=fedora_savanna_latest\
+                   \nubuntu_image_name=ubuntu_savanna_latest\
+                   \nLatest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \n
                    \nif [ -z $Latest_ubuntu_image_cz ]; then\
                    \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
@@ -97,8 +60,9 @@
           remove-prefix:
           excludes:
           timeout: "1800000"
-          command: "\
-                     export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"\ 
+          command: "\fedora_image_name=fedora_savanna_latest\
+                   \nubuntu_image_name=ubuntu_savanna_latest\
+                   \nexport OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"\ 
                    \nexport OS_TENANT_NAME=admin\
                    \nexport OS_USERNAME=admin\
                    \nexport OS_PASSWORD=swordfish\
