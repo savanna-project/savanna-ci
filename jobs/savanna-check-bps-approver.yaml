@@ -13,10 +13,15 @@
 
     triggers:
         - timed: 'H/3 * * * *'
+        
+    wrappers:
+      - timeout:
+          timeout: 10
+          fail: true
+          faildescription: true
        
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-check-bps-approver.sh"
-
 
     publishers:
       - email:
