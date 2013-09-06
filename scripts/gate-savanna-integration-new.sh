@@ -51,7 +51,7 @@ SAVANNA_PORT = '8386'
 FLAVOR_ID = '42'
 CLUSTER_CREATION_TIMEOUT = 15
 TELNET_TIMEOUT = 5
-ACTIVE_WORKER_TIMEOUT_FOR_NAMENODE = 5
+HDFS_INITIALIZATION_TIMEOUT = 5
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER'
 USER_KEYPAIR_ID = 'public-jenkins'
 PATH_TO_SSH_KEY = '/home/ubuntu/.ssh/id_rsa'
@@ -81,6 +81,7 @@ HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
 SKIP_CLUSTER_CONFIG_TEST = False
 SKIP_MAP_REDUCE_TEST = False
 SKIP_SWIFT_TEST = False
+SKIP_SCALING_TEST = False
 " >> $WORKSPACE/savanna/tests/integration_new/configs/vanilla_config.py
 
 i=0
