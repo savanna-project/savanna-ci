@@ -1,10 +1,10 @@
 - job:
-    name: gate-savanna-integration
+    name: gate-savanna-integration-new
     node: integration-vm-new
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<p><b>Title</b>: Part of the integration gating process.<br/>\
+                  \n<p><b>Title</b>: Part of the integration gating process (refactored inrtegration tests).<br/>\
                 \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
                 \n<b>Maintainer</b>: Vadim Rovachev<br/>"
     defaults: global
@@ -36,7 +36,7 @@
     - shell:  "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci.git\
               \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
-              \nbash savanna-ci/scripts/gate-savanna-integration.sh"
+              \nbash savanna-ci/scripts/gate-savanna-integration-new.sh"
  
     wrappers:
     - pathignore:
