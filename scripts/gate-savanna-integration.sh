@@ -112,7 +112,7 @@ done
 
 if [ "$FAILURE" = 0 ]; then
    
-    cd $WORKSPACE && tox -e integration
+    cd $WORKSPACE && tox -e integration -i http://savanna-ci.vm.mirantis.net/pypi/savanna/
 fi
 
 echo "-----------Python env-----------"
