@@ -39,7 +39,7 @@ download-cache = ~/.pip/cache
 use-mirrors = true
 find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 " > ~/.pip/pip.conf
-screen -dmS savanna-api /bin/bash -c "tox -i http://savanna-ci.vm.mirantis.net/pypi/savanna/ -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
+screen -dmS savanna-api /bin/bash -c "tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
@@ -112,7 +112,7 @@ done
 
 if [ "$FAILURE" = 0 ]; then
    
-    cd $WORKSPACE && tox -e integration -i http://savanna-ci.vm.mirantis.net/pypi/savanna/
+    cd $WORKSPACE && tox -e integration
 fi
 
 echo "-----------Python env-----------"
