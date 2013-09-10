@@ -17,7 +17,7 @@ cat > ${project} <<EOF
     "core-team": [
         "slukjanov",
         "aignatov",
-        "mattf",
+        "farrellee",
         "jspeidel"
     ]
 }
