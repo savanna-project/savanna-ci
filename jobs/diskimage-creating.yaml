@@ -5,7 +5,7 @@
     defaults: global
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<p><b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-extra elements</b>"
+                  \n<p><b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-image-elements</b>"
     disabled: false
     concurrent: false
 
@@ -16,14 +16,14 @@
             successful-message:
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna-extra'
+                  project-pattern: 'stackforge/savanna-image-elements'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
     builders:
     - shell: "sudo rm -rf *
-              \ngit clone https://github.com/stackforge/savanna-extra\
-              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-extra/diskimage-create/diskimage-create.sh"
+              \ngit clone https://github.com/stackforge/savanna-image-elements\
+              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-image-elements/diskimage-create/diskimage-create.sh"
     publishers:
       - ssh:
           site: '172.18.168.5'
