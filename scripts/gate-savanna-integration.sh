@@ -2,6 +2,8 @@
 
 cd $WORKSPACE
 
+HADOOP_VER=$1
+
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log
 TMP_LOG=/tmp/tox.log
 
@@ -86,7 +88,7 @@ HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
 echo "PLUGIN_NAME = 'vanilla'
 IMAGE_ID = '75615550-013c-426f-a6e5-dd3318950c20'
 NODE_USERNAME = 'ubuntu'
-HADOOP_VERSION = '1.1.2'
+HADOOP_VERSION = '$HADOOP_VER'
 HADOOP_USER = 'hadoop'
 HADOOP_DIRECTORY = '/usr/share/hadoop'
 HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
