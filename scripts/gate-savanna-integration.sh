@@ -3,6 +3,7 @@
 cd $WORKSPACE
 
 HADOOP_VER=$1
+IMG_ID=$2
 
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log
 TMP_LOG=/tmp/tox.log
@@ -86,7 +87,7 @@ HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
 " >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
 
 echo "PLUGIN_NAME = 'vanilla'
-IMAGE_ID = '75615550-013c-426f-a6e5-dd3318950c20'
+IMAGE_ID = '$IMG_ID'
 NODE_USERNAME = 'ubuntu'
 HADOOP_VERSION = '$HADOOP_VER'
 HADOOP_USER = 'hadoop'

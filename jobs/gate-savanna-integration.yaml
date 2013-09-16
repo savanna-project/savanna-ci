@@ -36,7 +36,7 @@
     - shell:  "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci.git\
               \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
-              \nbash savanna-ci/scripts/gate-savanna-integration.sh 1.1.2"
+              \nbash savanna-ci/scripts/gate-savanna-integration.sh 1.1.2 75615550-013c-426f-a6e5-dd3318950c20"
  
     wrappers:
     - pathignore:
