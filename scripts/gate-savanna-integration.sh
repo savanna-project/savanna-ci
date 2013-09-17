@@ -52,6 +52,7 @@ SAVANNA_HOST = '$ADDR'
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER'
 USER_KEYPAIR_ID = 'public-jenkins'
 PATH_TO_SSH = '/home/ubuntu/.ssh/id_rsa'
+ENABLE_HADOOP_TESTS_FOR_HDP_PLUGIN = False
 $Common_parameters
 " >> $WORKSPACE/savanna/tests/integration/configs/common_config.py
 
