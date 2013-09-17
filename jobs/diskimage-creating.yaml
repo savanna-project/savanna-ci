@@ -22,6 +22,7 @@
 
     builders:
     - shell: "sudo rm -rf *
+              \nsleep 60
               \ngit clone https://github.com/stackforge/savanna-image-elements\
               \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-image-elements/diskimage-create/diskimage-create.sh"
     publishers:
