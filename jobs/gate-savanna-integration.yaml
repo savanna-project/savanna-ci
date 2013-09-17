@@ -10,7 +10,21 @@
     defaults: global
     disabled: false
     concurrent: true
-
+    
+    parameters:
+      - text:
+          name: Common_parameters
+          default: 
+          description:
+      - text:
+          name: Vanilla_parameters
+          default: IMAGE_ID = 'e9691262-e286-46f7-aea5-9f40461b5eea'
+          description:
+      - text:
+          name: HDP_parameters
+          default: IMAGE_ID = '5ea141c3-893e-4b5c-b138-910adc09b281'
+          description:
+    
     scm:
      - git:
         url: https://review.openstack.org/stackforge/savanna.git
@@ -36,7 +50,7 @@
     - shell:  "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci.git\
               \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
-              \nbash savanna-ci/scripts/gate-savanna-integration.sh 1.2.1 e9691262-e286-46f7-aea5-9f40461b5eea"
+              \nbash savanna-ci/scripts/gate-savanna-integration.sh"
  
     wrappers:
     - pathignore:
