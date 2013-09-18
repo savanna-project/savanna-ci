@@ -19,7 +19,19 @@
           name: Latest_fedora_image_sar
           default: 
           description:
-
+      - text:
+          name: Common_parameters
+          default: 
+          description:
+      - text:
+          name: Vanilla_parameters
+          default: 
+          description:
+      - text:
+          name: HDP_parameters
+          default: 
+          description:
+    
     scm:
      - git:
         url: https://review.openstack.org/stackforge/savanna.git

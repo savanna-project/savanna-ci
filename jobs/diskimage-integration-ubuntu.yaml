@@ -19,6 +19,18 @@
           name: Latest_ubuntu_image_sar
           default: 
           description:
+      - text:
+          name: Common_parameters
+          default: 
+          description:
+      - text:
+          name: Vanilla_parameters
+          default: 
+          description:
+      - text:
+          name: HDP_parameters
+          default: 
+          description:
 
     scm:
      - git:
