@@ -11,6 +11,19 @@
     disabled: false
     concurrent: true
 
+    parameters:
+      - text:
+          name: Common_parameters
+          default: 
+          description:
+      - text:
+          name: Vanilla_parameters
+          default:
+          description:
+      - text:
+          name: HDP_parameters
+          default:
+          description:
     scm:
      - git:
         url: https://review.openstack.org/stackforge/savanna.git
