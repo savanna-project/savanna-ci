@@ -8,7 +8,7 @@
                 \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
                 \n<b>Maintainer</b>: Vadim Rovachev<br/>"
     defaults: global
-    disabled: false
+    disabled: true
     concurrent: true
 
     scm:
