@@ -1,7 +1,6 @@
 #!/bin/bash
 
 cd $WORKSPACE
-sudo rm -rf *
 
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
