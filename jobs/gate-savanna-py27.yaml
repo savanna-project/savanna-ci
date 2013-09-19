@@ -53,9 +53,3 @@
     publishers:
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
-      - text-finder:
-          regexp: "ERROR"
-          fileset:
-          also-check-console-output: true
-          succeed-if-found: false
-          unstable-if-found: false
