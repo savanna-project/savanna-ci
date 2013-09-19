@@ -89,7 +89,6 @@
 
       - trigger-parameterized-builds:
           - project: "diskimage-prepare"
-            failonmissing: true
             condition: SUCCESS
             predefined-parameters: "BUILD_JOB=$JOB_NAME\
                                    \nBUILD_ID=$BUILD_NUMBER"

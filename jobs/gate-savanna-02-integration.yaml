@@ -30,7 +30,7 @@
         url: https://review.openstack.org/stackforge/savanna.git
         refspec: $GERRIT_REFSPEC
         name:
-        strategy: gerrit
+        choosing-strategy: gerrit
         skip-tag: false
         wipe-workspace: false
         branches:
@@ -67,8 +67,8 @@
               PREV_BUILD=$BUILD_NUMBER
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
-      - text_finder:
+      - text-finder:
           regexp: "integration: commands succeeded"
-          alsoCheckConsoleOutput: true
-          succeedIfFound: true
-          unstableIfFound: false
+          also-check-console-output: true
+          succeed-if-found: true
+          unstable-if-found: false

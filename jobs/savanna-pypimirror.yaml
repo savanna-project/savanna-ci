@@ -17,7 +17,7 @@
         url: https://github.com/openstack-infra/jeepyb.git
         refspec:
         name:
-        strategy: default
+        choosing-strategy: default
         skip-tag: true
         wipe-workspace: false
         branches:

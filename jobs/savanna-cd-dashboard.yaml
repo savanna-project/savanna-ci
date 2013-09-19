@@ -26,7 +26,7 @@
         skip-tag: true
         basedir: "savanna-dashboard"
         wipe-workspace: false
-        strategy: gerrit
+        choosing-strategy: gerrit
         branches:
          - master
 

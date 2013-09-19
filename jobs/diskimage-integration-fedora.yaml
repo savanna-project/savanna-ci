@@ -37,7 +37,7 @@
         url: https://review.openstack.org/stackforge/savanna.git
         refspec: 
         name:
-        strategy: default
+        choosing-strategy: default
         skip-tag: false
         wipe-workspace: false
         branches:
@@ -59,11 +59,11 @@
         dirmatch: true                                                        
 
     publishers:
-      - text_finder:
-          regexp: "InvocationError"
-          alsoCheckConsoleOutput: true
-          succeedIfFound: false
-          unstableIfFound: false
+      - text-finder:
+          regexp: "integration: commands succeeded"
+          also-check-console-output: true
+          succeed-if-found: true
+          unstable-if-found: false
       - ssh:
           site: '172.18.168.5'
           target:
@@ -71,7 +71,7 @@
           remove-prefix:
           excludes:
           timeout: "1800000"
-          pty: true
+          use-pty: true
           command: "\
                      id=$(glance index | grep fedora_savanna_latest | cut -f 1 -d \" \")
                    \nglance image-delete $id\
@@ -83,7 +83,7 @@
           remove-prefix:
           excludes:
           timeout: "1800000"
-          pty: true
+          use-pty: true
           command: "\
                      export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"    
                    \nexport OS_TENANT_NAME=admin\                              
