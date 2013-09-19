@@ -18,7 +18,7 @@
       - timeout:
           timeout: 10
           fail: true
-          faildescription: true
+          write-description: true
        
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-check-bps-approver.sh"
@@ -26,9 +26,9 @@
     publishers:
       - email:
           recipients: slukjanov@mirantis.com, aignatov@mirantis.com, rkamaldinov@mirantis.com
-      - text_finder:
+      - text-finder:
           regexp: "Bad BP"
           fileset: "report.txt"
-          alsoCheckConsoleOutput: true
-          succeedIfFound: false
-          unstableIfFound: false
+          also-check-console-output: true
+          succeed-if-found: false
+          unstable-if-found: false

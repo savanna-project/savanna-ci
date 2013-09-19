@@ -15,7 +15,7 @@
         url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna-dashboard.git
         refspec: $GERRIT_REFSPEC
         name:
-        strategy: gerrit
+        choosing-strategy: gerrit
         skip-tag: true
         wipe-workspace: false
         branches:
@@ -35,7 +35,7 @@
       - timeout:
           timeout: 15
           fail: true
-          faildescription: true
+          write-description: true
       - workspace-cleanup:                                                      
           include:                                                              
             - "*"                                                               
@@ -49,9 +49,9 @@
     publishers:
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
-      - text_finder:
+      - text-finder:
           regexp: "M AUTHORS"
           fileset:
-          alsoCheckConsoleOutput: true
-          succeedIfFound: false
-          unstableIfFound: false
+          also-check-console-output: true
+          succeed-if-found: false
+          unstable-if-found: false

@@ -79,21 +79,13 @@ ENABLE_IR_TESTS = False
 " >> $WORKSPACE/savanna/tests/integration/configs/common_config.py
 
 echo "PLUGIN_NAME = 'hdp'
-IMAGE_ID = '5ea141c3-893e-4b5c-b138-910adc09b281'
-NODE_USERNAME = 'cloud-user'
-HADOOP_VERSION = '1.3.0'
-HADOOP_USER = 'hdfs'
-HADOOP_DIRECTORY = '/usr/lib/hadoop'
-HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
+$HDP_parameters
 " >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
 
 echo "PLUGIN_NAME = 'vanilla'
 IMAGE_ID = '$VANILLA_IMAGE'
 NODE_USERNAME = '$OS_USERNAME'
-HADOOP_VERSION = '1.1.2'
-HADOOP_USER = 'hadoop'
-HADOOP_DIRECTORY = '/usr/share/hadoop'
-HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
+$Vanilla_parameters
 " >> $WORKSPACE/savanna/tests/integration/configs/vanilla_config.py
 
 touch $TMP_LOG

@@ -31,11 +31,11 @@
       - trigger-parameterized-builds:
           - project: "diskimage-integration-ubuntu"
             property-file: properties
-            failonmissing: true
+            fail-on-missing: true
             condition: SUCCESS
           - project: "diskimage-integration-fedora"
             property-file: properties
-            failonmissing: true
+            fail-on-missing: true
             condition: SUCCESS
       - email:
           recipients: skolekonov@mirantis.com 

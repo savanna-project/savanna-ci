@@ -16,17 +16,17 @@
         url: https://github.com/savanna-project/releasestatus.git
         refspec:
         name:
-        strategy: default
+        choosing-strategy: default
         skip-tag: true
         wipe-workspace: false
         branches:
          - "**"
 
     triggers:
-        - timed: 'H/5 * * * *'
+        - timed: 'H/15 * * * *'
         - gerrit:
             trigger-on-change-merged-event: true
-            silentmode: true
+            silent: true
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'
@@ -38,7 +38,7 @@
       - timeout:
           timeout: 10
           fail: true
-          faildescription: true
+          write-description: true
 
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-releasestatus.sh"
@@ -46,9 +46,8 @@
     publishers:
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
-      - html_report:
+      - html-publisher:
            name: "Savanna Release Status"
            dir: "static"
            files: "index.html"
-           keepAll: true
-           wrappername: "htmlpublisher-wrapper.html"
+           keep-all: true

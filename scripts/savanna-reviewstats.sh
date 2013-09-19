@@ -10,11 +10,15 @@ cat > ${project} <<EOF
         "stackforge/savanna",  
         "stackforge/savanna-pythonclient", 
         "stackforge/savanna-dashboard",
-        "stackforge/savanna-extra"
+        "stackforge/savanna-extra",
+        "stackforge/savanna-image-elements",
+        "stackforge/puppet-savanna"
     ], 
     "core-team": [
         "slukjanov",
-        "aignatov"
+        "aignatov",
+        "farrellee",
+        "jspeidel"
     ]
 }
 EOF

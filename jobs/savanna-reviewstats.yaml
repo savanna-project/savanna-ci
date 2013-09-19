@@ -16,20 +16,20 @@
         url: https://github.com/openstack-infra/reviewstats
         refspec:
         name:
-        strategy: default
+        choosing-strategy: default
         skip-tag: true
         wipe-workspace: false
         branches:
          - "**"
 
     triggers:
-        - timed: 'H/3 * * * *'
+        - timed: 'H/10 * * * *'
 
     wrappers:
       - timeout:
           timeout: 10
           fail: true
-          faildescription: true
+          write-description: true
     
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-reviewstats.sh"
@@ -37,9 +37,8 @@
     publishers:
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
-      - html_report:
+      - html-publisher:
            name: "Savanna Review Stats"
            dir: "results"
            files: "index.html"
-           keepAll: true
-           wrappername: "htmlpublisher-wrapper.html"
+           keep-all: true

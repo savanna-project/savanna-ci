@@ -5,7 +5,7 @@
     defaults: global
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<p><b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-extra elements</b>"
+                  \n<p><b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-image-elements</b>"
     disabled: false
     concurrent: false
 
@@ -16,14 +16,15 @@
             successful-message:
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna-extra'
+                  project-pattern: 'stackforge/savanna-image-elements'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
     builders:
     - shell: "sudo rm -rf *
-              \ngit clone https://github.com/stackforge/savanna-extra\
-              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-extra/diskimage-create/diskimage-create.sh"
+              \nsleep 60
+              \ngit clone https://github.com/stackforge/savanna-image-elements\
+              \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-image-elements/diskimage-create/diskimage-create.sh"
     publishers:
       - ssh:
           site: '172.18.168.5'
@@ -37,7 +38,7 @@
                    \nLatest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \n
                    \nif [ -z $Latest_ubuntu_image_cz ]; then\
-                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                    \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse
                    \n    echo \"Latest_ubuntu_image_cz=\"$Latest_ubuntu_image_cz\
@@ -45,7 +46,7 @@
                    \n
                    \nLatest_fedora_image_cz=$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nif [ -z $Latest_fedora_image_cz ]; then\ 
-                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                    \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")
                    \nelse\
                    \n    echo \"Latest_fedora_image_cz=\"$Latest_fedora_image_cz\
@@ -70,7 +71,7 @@
                    \nLatest_ubuntu_image_sar=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \n
                    \nif [ -z $Latest_ubuntu_image_sar ]; then\
-                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                    \n    echo \"Latest_ubuntu_image_sar=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse\
                    \n    echo \"Latest_ubuntu_image_sar=\"$Latest_ubuntu_image_sar\
@@ -78,7 +79,7 @@
                    \n
                    \nLatest_fedora_image_sar=$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nif [ -z $Latest_fedora_image_sar ]; then\ 
-                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                    \n    echo \"Latest_fedora_image_sar=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse
                    \n    echo \"Latest_fedora_image_sar=\"$Latest_fedora_image_sar\
@@ -88,7 +89,6 @@
 
       - trigger-parameterized-builds:
           - project: "diskimage-prepare"
-            failonmissing: true
             condition: SUCCESS
             predefined-parameters: "BUILD_JOB=$JOB_NAME\
                                    \nBUILD_ID=$BUILD_NUMBER"

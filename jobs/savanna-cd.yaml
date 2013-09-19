@@ -26,7 +26,7 @@
         skip-tag: true
         wipe-workspace: false
         basedir: "savanna"
-        strategy: gerrit
+        choosing-strategy: gerrit
         branches:
          - master
 
