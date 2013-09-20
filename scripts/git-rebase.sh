@@ -11,4 +11,4 @@ then
     exit 1
 fi
 
-git clean -x -f -d
+#git clean -x -f -d
