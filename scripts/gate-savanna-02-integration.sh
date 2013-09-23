@@ -54,6 +54,7 @@ $Common_parameters
 " >> $WORKSPACE/savanna/tests/integration/configs/common_config.py
 
 echo "PLUGIN_NAME = 'hdp'
+IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
 $HDP_parameters
 " >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
 
