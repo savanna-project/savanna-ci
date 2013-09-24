@@ -55,6 +55,7 @@ $Common_parameters
 
 echo "PLUGIN_NAME = 'hdp'
 IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
+NODE_USERNAME = 'root'
 $HDP_parameters
 " >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
 
