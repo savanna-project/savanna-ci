@@ -2,6 +2,10 @@
 
 cd $WORKSPACE
 
+if [ ! -f $WORKSPACE/savanna/tests/integration_new/configs/itest.conf.sample ]; then
+     exit 0
+fi
+
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
