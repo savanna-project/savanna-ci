@@ -52,7 +52,8 @@
             predefined-parameters:
               PREV_BUILD=$BUILD_NUMBER
       - email:
-          recipients: elastic-hadoop-eng@mirantis.com 
+          recipients: elastic-hadoop-eng@mirantis.com
+          notify-every-unstable-build: false
       - text-finder:
           regexp: "integration: commands succeeded"
           also-check-console-output: true
