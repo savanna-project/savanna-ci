@@ -37,11 +37,11 @@
           command: "\
                    \n   fedora_image_name=ci-fedora-$CHANGE_NUMBER\
                    \n   ubuntu_image_name=ci-ubuntu-$CHANGE_NUMBER\
-                   \nif [ \"$OS_TYPE\" == \"ubuntu\" ]; then\
                    \n   export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"\ 
                    \n   export OS_TENANT_NAME=admin\
                    \n   export OS_USERNAME=admin\
                    \n   export OS_PASSWORD=swordfish\
+                   \nif [ \"$OS_TYPE\" = \"ubuntu\" ]; then\
                    \n
                    \n   Latest_ubuntu_image_sar=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")\
                    \n
