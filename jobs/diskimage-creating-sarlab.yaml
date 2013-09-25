@@ -20,9 +20,12 @@
 
     builders:
     - shell: "\
-            \nsudo rm -rf *\ 
-            \ncp /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
-            \ncp /home/ubuntu/images/ci-fedora-$CHANGE_NUMBER.qcow2 $WORKSPACE"
+            \nnsudo rm -rf *
+            \nif [ \"$OS_TYPE\" == \"ubuntu\" ]; then\
+            \n    cp /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
+            \nelse 
+            \n    cp /home/ubuntu/images/ci-fedora-$CHANGE_NUMBER.qcow2 $WORKSPACE\  
+            \nfi"
     publishers:
       - ssh:
           site: '172.18.79.135'
@@ -34,7 +37,7 @@
           command: "\
                    \n   fedora_image_name=ci-fedora-$CHANGE_NUMBER\
                    \n   ubuntu_image_name=ci-ubuntu-$CHANGE_NUMBER\
-                   \nif [ \"$os_type\" == \"ubuntu\" ]; then\
+                   \nif [ \"$OS_TYPE\" == \"ubuntu\" ]; then\
                    \n   export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"\ 
                    \n   export OS_TENANT_NAME=admin\
                    \n   export OS_USERNAME=admin\
@@ -51,7 +54,7 @@
                    \n   if [ ! -z $Latest_fedora_image_sar ]; then\ 
                    \n       glance image-delete $Latest_fedora_image_sar\
                    \n   fi\
-                   \    glance image-create --name=ubuntu_savanna_latest --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n   glance image-create --name=ubuntu_savanna_latest --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                    \nfi\
                    \nrm -r jenkins_DIB_$BUILD_NUMBER/"
 
