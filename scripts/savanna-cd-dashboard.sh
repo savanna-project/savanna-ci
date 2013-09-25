@@ -39,7 +39,7 @@ sed -i "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g
 echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/settings.py
 
 python tools/install_venv.py
-.venv/bin/python ../savanna-dashboard/setup.py install
+.venv/bin/pip install ../savanna-dashboard/
 ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
 
 exist=`screen -ls | grep savanna-dashboard-master`
