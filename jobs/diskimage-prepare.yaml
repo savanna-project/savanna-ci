@@ -19,6 +19,10 @@
           name: BUILD_ID
           default: 
           description:
+      - string:
+          name: CHANGE_NUMBER
+          default: 
+          description:
 
     builders:
     - shell:  "\
@@ -26,7 +30,8 @@
                \necho $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_ubuntu_image_cz | tail -1) >> properties\
                \necho $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_fedora_image_cz | tail -1) >> properties\
                \necho $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_ubuntu_image_sar | tail -1) >> properties\
-               \necho $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_fedora_image_sar | tail -1) >> properties"
+               \necho $(cat $JENKINS_HOME/jobs/$BUILD_JOB/builds/$BUILD_ID/log | grep Latest_fedora_image_sar | tail -1) >> properties\
+               \necho CHANGE_NUMBER=$CHANGE_NUMBER >> properties"
     publishers:
       - trigger-parameterized-builds:
           - project: "diskimage-integration-ubuntu"

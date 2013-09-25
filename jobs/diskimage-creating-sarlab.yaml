@@ -1,0 +1,57 @@
+- job:
+    name: diskimage-creating-sarlab
+    node: diskimage
+    project-type: freestyle
+    defaults: global
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>The part of Diskimage Integration jobs sequence. It updates latest Ubuntu and Fedora images on the Saratov Lab </b>"
+    disabled: false
+    concurrent: false
+    parameters:
+      - string:
+          name: CHANGE_NUMBER
+          default: 
+          description:
+      - string:                                                                 
+          name: OS_TYPE                                                        
+          default:                                                              
+          description: 
+
+    builders:
+    - shell: "mv /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
+            \nmv /home/ubuntu/images/ci-fedora-$CHANGE_NUMBER.qcow2 $WORKSPACE"
+    publishers:
+      - ssh:
+          site: '172.18.79.135'
+          target: 'jenkins_DIB_$BUILD_NUMBER'
+          source: 'ci-ubuntu-$CHANGE_NUMBER.qcow2, ci-fedora-$CHANGE_NUMBER.qcow2'
+          remove-prefix:
+          excludes:
+          timeout: "1800000"
+          command: "\
+                   \n   fedora_image_name=ci-fedora-$CHANGE_NUMBER\
+                   \n   ubuntu_image_name=ci-ubuntu-$CHANGE_NUMBER\
+                   \nif [ \"$os_type\" == \"ubuntu\" ]; then\
+                   \n   export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"\ 
+                   \n   export OS_TENANT_NAME=admin\
+                   \n   export OS_USERNAME=admin\
+                   \n   export OS_PASSWORD=swordfish\
+                   \n
+                   \n   Latest_ubuntu_image_sar=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")\
+                   \n
+                   \n   if [ ! -z $Latest_ubuntu_image_sar ]; then\
+                   \n       glance image-delete $Latest_ubuntu_image_sar\
+                   \n   fi\
+                   \n   glance image-create --name=ubuntu_savanna_latest --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                   \nelse\
+                   \n   Latest_fedora_image_sar=$(glance index | grep fedora_savanna_latest | cut -f 1 -d \" \")\
+                   \n   if [ ! -z $Latest_fedora_image_sar ]; then\ 
+                   \n       glance image-delete $Latest_fedora_image_sar\
+                   \n   fi\
+                   \    glance image-create --name=ubuntu_savanna_latest --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \nfi\
+                   \nrm -r jenkins_DIB_$BUILD_NUMBER/"
+
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com

@@ -19,6 +19,10 @@
           name: Latest_ubuntu_image_sar
           default: 
           description:
+      - string:                                                                 
+          name: CHANGE_NUMBER                                        
+          default:                                                              
+          description:    
       - text:
           name: Common_parameters
           default: 
@@ -93,5 +97,10 @@
                    \nid=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")\
                    \nglance image-delete $id\
                    \nglance image-update $Latest_ubuntu_image_sar --name ubuntu_savanna_latest"
+      - trigger-parameterized-builds:
+          - project: "diskimage-creating-sarlab"
+            condition: SUCCESS
+            predefined-parameters: "CHANGE_NUMBER=$CHANGE_NUMBER\
+                                   \nOS_TYPE=ubuntu"
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
