@@ -20,7 +20,7 @@
 
     builders:
     - shell: "\
-            \nnsudo rm -rf *
+            \nsudo rm -rf *
             \nif [ \"$OS_TYPE\" == \"ubuntu\" ]; then\
             \n    cp /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
             \nelse 
