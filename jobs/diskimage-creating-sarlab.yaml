@@ -54,7 +54,7 @@
                    \n   if [ ! -z $Latest_fedora_image_sar ]; then\ 
                    \n       glance image-delete $Latest_fedora_image_sar\
                    \n   fi\
-                   \n   glance image-create --name=ubuntu_savanna_latest --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n   glance image-create --name=fedora_savanna_latest --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                    \nfi\
                    \nrm -r jenkins_DIB_$BUILD_NUMBER/"
 
