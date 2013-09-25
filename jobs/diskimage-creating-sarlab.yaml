@@ -21,7 +21,7 @@
     builders:
     - shell: "\
             \nsudo rm -rf *
-            \nif [ \"$OS_TYPE\" == \"ubuntu\" ]; then\
+            \nif [ \"$OS_TYPE\" = \"ubuntu\" ]; then\
             \n    cp /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
             \nelse 
             \n    cp /home/ubuntu/images/ci-fedora-$CHANGE_NUMBER.qcow2 $WORKSPACE\  
