@@ -25,7 +25,6 @@
               \nsleep 60
               \ngit clone https://github.com/stackforge/savanna-image-elements\
               \nsudo USE_MIRRORS=true UBUNTU_MIRROR=\"http://172.18.168.98:3142\" FEDORA_MIRROR=\"http://172.18.168.238/fedora19\" bash savanna-image-elements/diskimage-create/diskimage-create.sh\
-              \nmkdir ~/images/
               \ncp ubuntu_savanna_latest.qcow2 ~/images/ci-ubuntu-$GERRIT_CHANGE_NUMBER.qcow2
               \ncp fedora_savanna_latest.selinux-permissive.qcow2 ~/images/ci-fedora-$GERRIT_CHANGE_NUMBER.qcow2"
     publishers:
