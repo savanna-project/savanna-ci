@@ -49,7 +49,7 @@
 
     builders:
     - shell:  "\
-               \nif [ -z $Latest_ubuntu_image_cz ] || [ -z $Latest_ubuntu_image_sar ]; then\
+               \nif [ -z $Latest_ubuntu_image_cz ]; then\
                \n    exit 1;\
                \nfi\
                \nrm -rf savanna-ci\

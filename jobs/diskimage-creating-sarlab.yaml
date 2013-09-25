@@ -19,8 +19,10 @@
           description: 
 
     builders:
-    - shell: "mv /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
-            \nmv /home/ubuntu/images/ci-fedora-$CHANGE_NUMBER.qcow2 $WORKSPACE"
+    - shell: "\
+            \nsudo rm -rf *\ 
+            \ncp /home/ubuntu/images/ci-ubuntu-$CHANGE_NUMBER.qcow2 $WORKSPACE\
+            \ncp /home/ubuntu/images/ci-fedora-$CHANGE_NUMBER.qcow2 $WORKSPACE"
     publishers:
       - ssh:
           site: '172.18.79.135'
