@@ -80,23 +80,6 @@
                      id=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")
                    \nglance image-delete $id\
                    \nglance image-update $Latest_ubuntu_image_cz --name ubuntu_savanna_latest"
-      - ssh:
-          site: '172.18.79.135'
-          target:
-          source:
-          remove-prefix:
-          excludes:
-          timeout: "1800000"
-          use-pty: true
-          command: "\
-                     export OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"    
-                   \nexport OS_TENANT_NAME=admin\                              
-                   \nexport OS_USERNAME=admin\                                 
-                   \nexport OS_PASSWORD=swordfish\                             
-                   \n
-                   \nid=$(glance index | grep ubuntu_savanna_latest | cut -f 1 -d \" \")\
-                   \nglance image-delete $id\
-                   \nglance image-update $Latest_ubuntu_image_sar --name ubuntu_savanna_latest"
       - trigger-parameterized-builds:
           - project: "diskimage-creating-sarlab"
             condition: SUCCESS

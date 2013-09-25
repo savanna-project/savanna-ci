@@ -57,38 +57,6 @@
                    \n
                    \nrm -r jenkins_DIB_$BUILD_NUMBER/"
                     
-      - ssh:
-          site: '172.18.79.135'
-          target: 'jenkins_DIB_$BUILD_NUMBER'
-          source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.selinux-permissive.qcow2'
-          remove-prefix:
-          excludes:
-          timeout: "1800000"
-          command: "fedora_image_name=fedora_savanna_latest.selinux-permissive\
-                   \nubuntu_image_name=ubuntu_savanna_latest\
-                   \nexport OS_AUTH_URL=\"http://172.18.79.139:5000/v2.0/\"\ 
-                   \nexport OS_TENANT_NAME=admin\
-                   \nexport OS_USERNAME=admin\
-                   \nexport OS_PASSWORD=swordfish\
-                   \n
-                   \nLatest_ubuntu_image_sar=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
-                   \n
-                   \nif [ -z $Latest_ubuntu_image_sar ]; then\
-                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
-                   \n    echo \"Latest_ubuntu_image_sar=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
-                   \nelse\
-                   \n    echo \"Latest_ubuntu_image_sar=\"$Latest_ubuntu_image_sar\
-                   \nfi\
-                   \n
-                   \nLatest_fedora_image_sar=$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
-                   \nif [ -z $Latest_fedora_image_sar ]; then\ 
-                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
-                   \n    echo \"Latest_fedora_image_sar=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
-                   \nelse
-                   \n    echo \"Latest_fedora_image_sar=\"$Latest_fedora_image_sar\
-                   \nfi
-                   \n
-                   \nrm -r jenkins_DIB_$BUILD_NUMBER/"
 
       - trigger-parameterized-builds:
           - project: "diskimage-prepare"
