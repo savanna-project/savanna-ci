@@ -23,6 +23,13 @@ find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
 cd $WORKSPACE/savanna
 
+lab=$(pwd | grep cz)
+if [ -z $lab ]; then
+    os_auth_host=172.18.79.139
+else
+    os_auth_host=172.18.168.5
+fi
+
 echo -e "[DEFAULT]
 os_auth_host=$os_auth_host
 os_auth_port=$os_auth_port
