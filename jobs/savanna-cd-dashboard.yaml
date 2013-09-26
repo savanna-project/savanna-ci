@@ -18,6 +18,13 @@
          - savanna-cd
          - savanna-cd-cz
 
+    parameters:                                                                 
+      - text:                                                                   
+          name: SAVANNA_UI_CONF                                               
+          default: "SAVANNA_URL=http://127.0.0.1:8386/v1.0\
+                  \nBRANCH=stable/grizzly"                                                             
+          description: 
+
     scm:
      - git:
         url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna-dashboard.git
@@ -42,10 +49,10 @@
                   branch-pattern: 'master'
 
     builders:
-    - shell: "\
-               rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
-             \nbash savanna-ci/scripts/savanna-cd-dashboard.sh"
+    - shell: "echo $SAVANNA_UI_CONF > $WORKSPACE/params\
+            \nrm -rf savanna-ci\
+            \ngit clone https://github.com/savanna-project/savanna-ci.git\
+            \nbash savanna-ci/scripts/savanna-cd-dashboard.sh"
 
     publishers:
       - email:

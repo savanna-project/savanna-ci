@@ -18,6 +18,13 @@
          - savanna-cd
          - savanna-cd-cz
 
+    parameters:                                                                 
+      - text:                                                                   
+          name: SAVANNA_CONF                                               
+          default: "os_admin_password=swordfish\
+                  \nos_auth_port=35357\
+                  \ndb_name=savanna-server.db"                                                             
+          description: 
     scm:
      - git:
         url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna.git
@@ -43,7 +50,8 @@
 
     builders:
     - shell: "\
-               rm -rf savanna-ci\
+             \necho $SAVANNA_CONF > $WORKSPACE/params
+             \nrm -rf savanna-ci\
              \ngit clone https://github.com/savanna-project/savanna-ci.git\
              \nbash savanna-ci/scripts/savanna-cd.sh"
 
