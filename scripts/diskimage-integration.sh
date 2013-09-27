@@ -91,7 +91,7 @@ PROCESS_NAMES = nn: NAMENODE, tt: TASKTRACKER, dn: DATANODE
 SKIP_ALL_TESTS_FOR_PLUGIN = True
 SKIP_MAP_REDUCE_TEST = False
 SKIP_SCALING_TEST = False
-" >> $WORKSPACE/savanna/tests/integration_new/configs/itest.conf
+" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
 i=0
