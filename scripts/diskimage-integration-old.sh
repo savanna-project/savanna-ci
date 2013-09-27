@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 
 sudo sh -c 'grep -q controller /etc/hosts || echo 172.18.168.5 controller-13 >> /etc/hosts'
 sudo sh -c 'grep -q os4 /etc/hosts || echo 172.18.79.135 os4 >> /etc/hosts'
@@ -48,50 +48,45 @@ screen -dmS savanna-api /bin/bash -c "tox -evenv -- savanna-api --config-file et
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
-echo "[COMMON]
-OS_USERNAME = 'ci-user'
+echo "OS_USERNAME = 'ci-user'
 OS_PASSWORD = 'swordfish'
 OS_TENANT_NAME = 'ci'
 OS_AUTH_URL = 'http://172.18.168.5:35357/v2.0/'
 SAVANNA_HOST = '$ADDR'
 SAVANNA_PORT = '8386'
-SAVANNA_API_VERSION = 'v1.1'
 FLAVOR_ID = '42'
-CLUSTER_CREATION_TIMEOUT = 45
-TELNET_TIMEOUT = 5
-HDFS_INITIALIZATION_TIMEOUT = 5
+TIMEOUT = 25
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-diskimage'
 USER_KEYPAIR_ID = 'public-jenkins'
-PATH_TO_SSH_KEY = '/home/ubuntu/.ssh/id_rsa'
-[VANILLA]
-PLUGIN_NAME = 'vanilla'
+PATH_TO_SSH = '/home/ubuntu/.ssh/id_rsa'
+JT_PORT = 50030
+NN_PORT = 50070
+TT_PORT = 50060
+DN_PORT = 50075
+SEC_NN_PORT = 50090
+ENABLE_CLUSTER_CL_TEMPLATE_CRUD_TESTS = False
+ENABLE_CLUSTER_NGT_NODE_PROCESS_CRUD_TESTS = False
+ENABLE_CLUSTER_NGT_CRUD_TESTS = False
+ENABLE_CLUSTER_NODE_PROCESS_CRUD_TESTS = False
+ENABLE_CL_TEMPLATE_CRUD_TESTS = False
+ENABLE_NGT_CRUD_TESTS = False
+ENABLE_HADOOP_TESTS_FOR_VANILLA_PLUGIN = True
+ENABLE_HADOOP_TESTS_FOR_HDP_PLUGIN = False
+ENABLE_SWIFT_TESTS = False
+ENABLE_SCALING_TESTS = False
+ENABLE_CONFIG_TESTS = False
+ENABLE_IR_TESTS = False
+" >> $WORKSPACE/savanna/tests/integration/configs/common_config.py
+
+echo "PLUGIN_NAME = 'hdp'
+$HDP_parameters
+" >> $WORKSPACE/savanna/tests/integration/configs/hdp_config.py
+
+echo "PLUGIN_NAME = 'vanilla'
 IMAGE_ID = '$VANILLA_IMAGE'
 NODE_USERNAME = '$OS_USERNAME'
-HADOOP_VERSION = '1.2.1'
-HADOOP_USER = 'hadoop'
-HADOOP_DIRECTORY = '/usr/share/hadoop'
-HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
-HADOOP_PROCESSES_WITH_PORTS = jobtracker: 50030, namenode: 50070, tasktracker: 50060, datanode: 50075, secondarynamenode: 50090
-PROCESS_NAMES = nn: namenode, tt: tasktracker, dn: datanode
-SKIP_ALL_TESTS_FOR_PLUGIN = False
-SKIP_CLUSTER_CONFIG_TEST = True
-SKIP_MAP_REDUCE_TEST = False
-SKIP_SWIFT_TEST = True
-SKIP_SCALING_TEST = True
-[HDP]
-PLUGIN_NAME = 'hdp'
-IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
-NODE_USERNAME = 'root'
-HADOOP_VERSION = '1.3.0'
-HADOOP_USER = 'hdfs'
-HADOOP_DIRECTORY = '/usr/lib/hadoop'
-HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
-HADOOP_PROCESSES_WITH_PORTS = JOBTRACKER: 50030, NAMENODE: 50070, TASKTRACKER: 50060, DATANODE: 50075, SECONDARY_NAMENODE: 50090
-PROCESS_NAMES = nn: NAMENODE, tt: TASKTRACKER, dn: DATANODE
-SKIP_ALL_TESTS_FOR_PLUGIN = True
-SKIP_MAP_REDUCE_TEST = False
-SKIP_SCALING_TEST = False
-" >> $WORKSPACE/savanna/tests/integration_new/configs/itest.conf
+$Vanilla_parameters
+" >> $WORKSPACE/savanna/tests/integration/configs/vanilla_config.py
 
 touch $TMP_LOG
 i=0
@@ -101,7 +96,7 @@ do
         let "i=$i+1"
         diff $TOX_LOG $TMP_LOG
         cp -f $TOX_LOG $TMP_LOG
-        if [ "$i" -gt "240" ]; then
+        if [ "$i" -gt "480" ]; then
                 echo "project does not start" && FAILURE=1 && break
         fi
         if [ ! -f $WORKSPACE/log.txt ]; then
@@ -111,14 +106,16 @@ do
         fi
 done
 
-if [ "$FAILURE" = 0 ]; then 
+if [ "$FAILURE" = 0 ]; then
+   
     cd $WORKSPACE && tox -e integration
-    STATUS=`echo $?`               
-                                   
-    if [[ "$STATUS" != 0 ]]        
-    then                               
-         exit 1                    
+    STATUS=`echo $?`                                                                
+                                                                                    
+    if [[ "$STATUS" != 0 ]]                                                         
+    then                                                                            
+         exit 1                                                                      
     fi   
+
 fi
 
 echo "-----------Python env-----------"
