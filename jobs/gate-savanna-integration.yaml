@@ -4,27 +4,13 @@
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
-                  \n<p><b>Title</b>: Part of the integration gating process.<br/>\
+                  \n<p><b>Title</b>: Part of the integration gating process (refactored inrtegration tests).<br/>\
                 \n<b>Description</b>: This job installs tox, configures savanna, configures pip parameters for integration tests.<br/>\
                 \n<b>Maintainer</b>: Vadim Rovachev<br/>"
     defaults: global
     disabled: false
     concurrent: true
-    
-    parameters:
-      - text:
-          name: Common_parameters
-          default: 
-          description:
-      - text:
-          name: Vanilla_parameters
-          default: IMAGE_ID = 'e9691262-e286-46f7-aea5-9f40461b5eea'
-          description:
-      - text:
-          name: HDP_parameters
-          default: IMAGE_ID = '5ea141c3-893e-4b5c-b138-910adc09b281'
-          description:
-    
+
     scm:
      - git:
         url: https://review.openstack.org/stackforge/savanna.git
@@ -66,7 +52,7 @@
             predefined-parameters:
               PREV_BUILD=$BUILD_NUMBER
       - email:
-          recipients: elastic-hadoop-eng@mirantis.com 
+          recipients: elastic-hadoop-eng@mirantis.com
       - text-finder:
           regexp: "integration: commands succeeded"
           also-check-console-output: true
