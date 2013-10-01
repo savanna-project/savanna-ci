@@ -10,6 +10,20 @@
     defaults: global
     disabled: false
     concurrent: true
+    
+    parameters:
+      - text:
+          name: COMMON_PARAMS
+          default:
+          description:
+      - text:
+          name: VANILLA_PARAMS
+          default:
+          description:
+      - text:
+          name: HDP_PARAMS
+          default:
+          description:    
 
     scm:
      - git:
