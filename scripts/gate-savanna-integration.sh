@@ -2,6 +2,9 @@
 
 cd $WORKSPACE
 
+TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log 
+TMP_LOG=/tmp/tox.log 
+
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
@@ -86,11 +89,14 @@ SKIP_MAP_REDUCE_TEST = False
 SKIP_SCALING_TEST = False
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
+touch $TMP_LOG
 i=0
 
 while true
 do
         let "i=$i+1"
+        diff $TOX_LOG $TMP_LOG
+        cp -f $TOX_LOG $TMP_LOG
         if [ "$i" -gt "240" ]; then
                 echo "project does not start" && FAILURE=1 && break
         fi
@@ -121,6 +127,7 @@ cat /tmp/tox-log.txt
 rm -f /tmp/tox-log.txt
 
 rm -f /tmp/savanna-server.db
+rm $TMP_LOG
 
 if [ "$FAILURE" != 0 ]; then
     exit 1
