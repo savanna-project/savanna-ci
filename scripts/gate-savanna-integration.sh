@@ -58,34 +58,17 @@ HDFS_INITIALIZATION_TIMEOUT = 5
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER'
 USER_KEYPAIR_ID = 'public-jenkins'
 PATH_TO_SSH_KEY = '/home/ubuntu/.ssh/id_rsa'
-[VANILLA]
-PLUGIN_NAME = 'vanilla'
+$COMMON_PARAMS
+" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+
+echo "[VANILLA]
 IMAGE_ID = 'e9691262-e286-46f7-aea5-9f40461b5eea'
-NODE_USERNAME = 'ubuntu'
-HADOOP_VERSION = '1.2.1'
-HADOOP_USER = 'hadoop'
-HADOOP_DIRECTORY = '/usr/share/hadoop'
-HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
-HADOOP_PROCESSES_WITH_PORTS = jobtracker: 50030, namenode: 50070, tasktracker: 50060, datanode: 50075, secondarynamenode: 50090
-PROCESS_NAMES = nn: namenode, tt: tasktracker, dn: datanode
-SKIP_ALL_TESTS_FOR_PLUGIN = False
-SKIP_CLUSTER_CONFIG_TEST = False
-SKIP_MAP_REDUCE_TEST = False
-SKIP_SWIFT_TEST = False
-SKIP_SCALING_TEST = False
-[HDP]
-PLUGIN_NAME = 'hdp'
+$VANILLA_PARAMS
+" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+echo "[HDP]
 IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
-NODE_USERNAME = 'root'
-HADOOP_VERSION = '1.3.0'
-HADOOP_USER = 'hdfs'
-HADOOP_DIRECTORY = '/usr/lib/hadoop'
-HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
-HADOOP_PROCESSES_WITH_PORTS = JOBTRACKER: 50030, NAMENODE: 50070, TASKTRACKER: 50060, DATANODE: 50075, SECONDARY_NAMENODE: 50090
-PROCESS_NAMES = nn: NAMENODE, tt: TASKTRACKER, dn: DATANODE
 SKIP_ALL_TESTS_FOR_PLUGIN = False
-SKIP_MAP_REDUCE_TEST = False
-SKIP_SCALING_TEST = False
+$HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
