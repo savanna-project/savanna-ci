@@ -67,6 +67,7 @@ $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 echo "[HDP]
 IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
+NODE_USERNAME = 'root'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
