@@ -1,0 +1,54 @@
+- job:
+    name: gate-ui-tests
+    project-type: freestyle
+    defaults: global
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: Tests for savanna dashboard<br/>\
+                  \n<b>Description</b>: This job installs savanna-dashboars and run selenium tests.<br/>\
+                  \n<b>Maintainer</b>: Vadim Rovachev<br/>"
+    node: ui
+    disabled: false
+    concurrent: false
+
+    scm:
+     - git:
+        url: https://review.openstack.org/stackforge/savanna-dashboard.git
+        refspec: $GERRIT_REFSPEC
+        name:
+        choosing-strategy: gerrit
+        skip-tag: false
+        wipe-workspace: false
+        branches:
+         - $GERRIT_BRANCH
+
+    triggers:
+        - gerrit:
+            trigger-on-patchset-uploaded-event: true
+            failure-message:
+            projects:
+                - project-compare-type: 'PLAIN'
+                  project-pattern: 'stackforge/savanna-dashboard'
+                  branch-compare-type: 'PLAIN'
+                  branch-pattern: 'master'
+
+    builders:
+    - shell:  "rm -rf savanna-ci\
+             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
+             \nbash savanna-ci/scripts/gate-ui-tests.sh"
+
+    publishers:
+      - workspace-cleanup:                                                      
+          include:                                                              
+            - "*"                                                               
+          dirmatch: false
+          fail-build: true
+          clean-if:
+            - success: true
+            - not-built: true
+            - unstable: true
+            - failure: true
+            - aborted: true
+      - email:
+          recipients: elastic-hadoop-eng@mirantis.com
