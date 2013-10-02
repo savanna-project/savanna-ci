@@ -4,10 +4,14 @@ sudo pip install $WORKSPACE
 
 SAVANNA_LOG=/tmp/savanna.log 
 
-SCR_CHECK=$(ps aux | grep screen)
+SCR_CHECK=$(ps aux | grep screen | grep display)
+if [ -n "$SCR_CHECK" ]; then
+     screen -S display -X quit
+fi
+
+SCR_CHECK=$(ps aux | grep screen | grep savanna)
 if [ -n "$SCR_CHECK" ]; then
      screen -S savanna -X quit
-     screen -S display -X quit
 fi
 
 rm -f /tmp/savanna-server.db
