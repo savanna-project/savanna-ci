@@ -27,7 +27,7 @@
 
     scm:
      - git:
-        url: https://review.openstack.org/stackforge/savanna.git
+        url: https://git.openstack.org/openstack/savanna
         refspec: $GERRIT_REFSPEC
         name:
         choosing-strategy: gerrit
@@ -42,13 +42,13 @@
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna'
+                  project-pattern: 'openstack/savanna'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: master
 
     builders:
     - shell:  "rm -rf savanna-ci\
-              \ngit clone https://github.com/savanna-project/savanna-ci.git\
+              \ngit clone https://github.com/savanna-project/savanna-ci\
               \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
               \nbash savanna-ci/scripts/gate-savanna-integration.sh"
  

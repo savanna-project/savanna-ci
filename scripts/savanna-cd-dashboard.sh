@@ -25,7 +25,7 @@ if [ -d horizon/ ]
 then
     rm -rf horizon
 fi
-git clone https://github.com/openstack/horizon.git
+git clone https://git.openstack.org/openstack/horizon
 cd horizon
 git checkout $BRANCH
 cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py

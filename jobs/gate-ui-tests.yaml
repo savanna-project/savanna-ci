@@ -13,7 +13,7 @@
 
     scm:
      - git:
-        url: https://review.openstack.org/stackforge/savanna-dashboard.git
+        url: https://git.openstack.org/openstack/savanna-dashboard
         refspec: $GERRIT_REFSPEC
         name:
         choosing-strategy: gerrit
@@ -28,13 +28,13 @@
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna-dashboard'
+                  project-pattern: 'openstack/savanna-dashboard'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
     builders:
     - shell:  "rm -rf savanna-ci\
-             \ngit clone https://github.com/savanna-project/savanna-ci.git\
+             \ngit clone https://github.com/savanna-project/savanna-ci\
              \nbash savanna-ci/scripts/git-rebase.sh $GERRIT_BRANCH\
              \nbash savanna-ci/scripts/gate-ui-tests.sh"
 

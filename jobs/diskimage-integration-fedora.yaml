@@ -38,7 +38,7 @@
     
     scm:
      - git:
-        url: https://review.openstack.org/stackforge/savanna.git
+        url: https://git.openstack.org/openstack/savanna
         refspec: 
         name:
         choosing-strategy: default
@@ -53,7 +53,7 @@
                \n    exit 1;\
                \nfi\
                \nrm -rf savanna-ci\
-               \ngit clone https://github.com/savanna-project/savanna-ci.git\
+               \ngit clone https://github.com/savanna-project/savanna-ci\
                \nbash savanna-ci/scripts/diskimage-integration.sh $Latest_fedora_image_cz fedora"
 
     wrappers:

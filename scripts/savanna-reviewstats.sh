@@ -7,11 +7,11 @@ cat > ${project} <<EOF
 { 
     "name": "savanna", 
     "subprojects": [
-        "stackforge/savanna",  
-        "stackforge/savanna-pythonclient", 
-        "stackforge/savanna-dashboard",
-        "stackforge/savanna-extra",
-        "stackforge/savanna-image-elements",
+        "openstack/savanna",
+        "openstack/savanna-pythonclient",
+        "openstack/savanna-dashboard",
+        "openstack/savanna-extra",
+        "openstack/savanna-image-elements",
         "stackforge/puppet-savanna"
     ], 
     "core-team": [

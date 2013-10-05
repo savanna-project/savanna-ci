@@ -6,11 +6,11 @@ cache-root: /var/pypimirror/cache
 mirrors:
    - name: savanna
      projects:
-       - https://github.com/stackforge/savanna
-       - https://github.com/stackforge/savanna-dashboard
-       - https://github.com/stackforge/savanna-image-elements
-       - https://github.com/stackforge/savanna-extra
-       - https://github.com/stackforge/python-savannaclient
+       - https://git.openstack.org/openstack/savanna
+       - https://git.openstack.org/openstack/savanna-dashboard
+       - https://git.openstack.org/openstack/savanna-image-elements
+       - https://git.openstack.org/openstack/savanna-extra
+       - https://git.openstack.org/openstack/python-savannaclient
      output: /var/pypimirror/savanna
 EOF
 

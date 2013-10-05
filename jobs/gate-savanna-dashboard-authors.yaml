@@ -12,7 +12,7 @@
 
     scm:
      - git:
-        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/savanna-dashboard.git
+        url: https://git.openstack.org/openstack/savanna-dashboard
         refspec: $GERRIT_REFSPEC
         name:
         choosing-strategy: gerrit
@@ -27,7 +27,7 @@
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/savanna-dashboard'
+                  project-pattern: 'openstack/savanna-dashboard'
                   branch-compare-type: 'ANT'
                   branch-pattern: '**'
 

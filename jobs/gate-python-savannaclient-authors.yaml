@@ -12,7 +12,7 @@
 
     scm:
      - git:
-        url: ssh://savanna-ci@review.openstack.org:29418/stackforge/python-savannaclient.git
+        url: https://git.openstack.org/openstack/python-savannaclient
         refspec: $GERRIT_REFSPEC
         name:
         choosing-strategy: gerrit
@@ -27,7 +27,7 @@
             failure-message:
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'stackforge/python-savannaclient'
+                  project-pattern: 'openstack/python-savannaclient'
                   branch-compare-type: 'ANT'
                   branch-pattern: '**'
 
