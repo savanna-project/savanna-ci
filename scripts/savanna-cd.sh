@@ -23,6 +23,16 @@ find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
 cd $WORKSPACE/savanna
 
+git fetch origin $GERRIT_BRANCH
+git rebase origin/$GERRIT_BRANCH
+
+if [ $? != 0 ]
+then
+    git rebase --abort
+    echo "ERROR. git rebase failed"
+    exit 1
+fi
+
 lab=$(pwd | grep cz)
 if [ -z $lab ]; then
     os_auth_host=172.18.79.139
