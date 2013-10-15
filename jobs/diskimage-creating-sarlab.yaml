@@ -6,7 +6,7 @@
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
                   \n<p><b>The part of Diskimage Integration jobs sequence. It updates latest Ubuntu and Fedora images on the Saratov Lab </b>"
-    disabled: false
+    disabled: true
     concurrent: false
     parameters:
       - string:
