@@ -32,14 +32,14 @@ plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savanna.conf
 
 echo "
-[global] 
-timeout = 60
-index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
-extra-index-url = https://pypi.python.org/simple/
-download-cache = /home/ubuntu/.pip/cache/
-[install]
-use-mirrors = true
-find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
+#[global] 
+#timeout = 60
+#index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
+#extra-index-url = https://pypi.python.org/simple/
+#download-cache = /home/ubuntu/.pip/cache/
+#[install]
+#use-mirrors = true
+#find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 " > ~/.pip/pip.conf
 screen -dmS savanna-api /bin/bash -c "tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
