@@ -34,6 +34,7 @@ echo "
 timeout = 60
 index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
 extra-index-url = https://pypi.python.org/simple/
+download-cache = /home/ubuntu/.pip/cache/
 [install]
 use-mirrors = true
 find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
