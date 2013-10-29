@@ -3,7 +3,8 @@
 cd $WORKSPACE
 
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log 
-TMP_LOG=/tmp/tox.log 
+TMP_LOG=/tmp/tox.log
+LOG_FILE=/tmp/tox_log.log
 
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
@@ -79,9 +80,10 @@ i=0
 while true
 do
         let "i=$i+1"
-        diff $TOX_LOG $TMP_LOG
+        diff $TOX_LOG $TMP_LOG >> $LOG_FILE
         cp -f $TOX_LOG $TMP_LOG
         if [ "$i" -gt "240" ]; then
+                cat $LOG_FILE
                 echo "project does not start" && FAILURE=1 && break
         fi
         if [ ! -f $WORKSPACE/log.txt ]; then
