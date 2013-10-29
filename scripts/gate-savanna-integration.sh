@@ -9,6 +9,7 @@ LOG_FILE=/tmp/tox_log.log
 screen -S savanna-api -X quit
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
+rm -f $LOG_FILE
 
 BUILD_ID=dontKill
 
@@ -114,6 +115,7 @@ rm -f /tmp/tox-log.txt
 
 rm -f /tmp/savanna-server.db
 rm $TMP_LOG
+rm -f $LOG_FILE
 
 if [ "$FAILURE" != 0 ]; then
     exit 1
