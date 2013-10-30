@@ -43,7 +43,9 @@
                    \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                    \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nelse
-                   \n    echo \"Latest_ubuntu_image_cz=\"$Latest_ubuntu_image_cz\
+                   \n    glance image-delete $Latest_ubuntu_image_cz
+                   \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
+                   \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nfi\
                    \n
                    \nLatest_fedora_image_cz=$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
@@ -51,7 +53,9 @@
                    \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
                    \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")
                    \nelse\
-                   \n    echo \"Latest_fedora_image_cz=\"$Latest_fedora_image_cz\
+                   \n    glance image-delete $Latest_fedora_image_cz
+                   \n    glance image-create --name=ci-fedora-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
+                   \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep ci-fedora-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")
                    \nfi\
                    \n
                    \nrm -r jenkins_DIB_$BUILD_NUMBER/"
