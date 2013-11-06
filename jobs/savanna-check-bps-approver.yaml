@@ -1,5 +1,10 @@
 - job:
     name: savanna-check-bps-approver
+    logrotate:
+      daysToKeep: 7
+      numToKeep: -1
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
     node: ssh-key
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\

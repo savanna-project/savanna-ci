@@ -1,5 +1,10 @@
 - job:
     name: gate-savanna-docs
+    logrotate:
+      daysToKeep: 7
+      numToKeep: -1
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
     project-type: freestyle
     node: master
     defaults: global
