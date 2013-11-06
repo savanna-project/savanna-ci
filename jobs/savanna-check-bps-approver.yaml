@@ -17,7 +17,7 @@
     concurrent: false
 
     triggers:
-        - timed: 'H/3 * * * *'
+        - timed: '0 * * * *'
         
     wrappers:
       - timeout:

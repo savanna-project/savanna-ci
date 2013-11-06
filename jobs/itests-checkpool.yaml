@@ -10,7 +10,7 @@
     concurrent: false
 
     triggers:
-        - timed: '*/2 * * * *'
+        - timed: '0 * * * *'
 
     builders:
     - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/itests-checkpool.sh"
