@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 sudo pip install $WORKSPACE
-
+sudo pip install -r $WORKSPACE/test-requirements.txt
 SAVANNA_LOG=/tmp/savanna.log 
 
 SCR_CHECK=$(ps aux | grep screen | grep display)
