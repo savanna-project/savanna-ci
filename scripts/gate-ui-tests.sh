@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
 sudo pip install $WORKSPACE
-sudo pip install -r $WORKSPACE/test-requirements.txt
+
 SAVANNA_LOG=/tmp/savanna.log 
 
 SCR_CHECK=$(ps aux | grep screen | grep display)
@@ -39,12 +39,17 @@ echo "
 base_url = 'http://127.0.0.1/horizon'
 user = 'ci-user'
 password = 'swordfish'
+tenant = 'ci'
+keystone_url = 'http://127.0.0.1:5000/v2.0'
 await_element = 30
 image_name_for_register = 'fedora-18-hadoop'
 [vanilla]
 skip_plugin_tests = False
+skip_edp_test = False
 [hdp]
 skip_plugin_tests = True
 " >> $WORKSPACE/savannadashboard/tests/configs/config.conf
 
 cd $WORKSPACE && tox -e tests
+
+cd /tmp/ && rm -rf keystone-signing* tmp* workspace/
