@@ -40,7 +40,7 @@ base_url = 'http://127.0.0.1/horizon'
 user = 'ci-user'
 password = 'swordfish'
 tenant = 'ci'
-keystone_url = 'http://127.0.0.1:5000/v2.0'
+keystone_url = 'http://172.18.168.5:5000/v2.0'
 await_element = 30
 image_name_for_register = 'fedora-18-hadoop'
 [vanilla]
