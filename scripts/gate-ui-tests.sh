@@ -48,6 +48,7 @@ skip_plugin_tests = False
 skip_edp_test = False
 [hdp]
 skip_plugin_tests = True
+hadoop_version = '1.3.2'
 " >> $WORKSPACE/savannadashboard/tests/configs/config.conf
 
 cd $WORKSPACE && tox -e tests
