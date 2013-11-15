@@ -40,10 +40,8 @@
 
     publishers:
       - workspace-cleanup:                                                      
-          include:                                                              
-            - "*"                                                               
-          dirmatch: false
-          fail-build: true
+          dirmatch: true
+          fail-build: false
           clean-if:
             - success: true
             - not-built: true
