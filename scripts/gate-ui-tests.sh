@@ -51,5 +51,3 @@ skip_plugin_tests = True
 " >> $WORKSPACE/savannadashboard/tests/configs/config.conf
 
 cd $WORKSPACE && tox -e tests
-
-cd /tmp/ && rm -rf keystone-signing* tmp* workspace/
