@@ -8,7 +8,7 @@ lp = Launchpad.login_anonymously('savanna-bad-bps', 'production',
                                  '/tmp/savanna-bad-bps',
                                  version="devel", timeout=10)
 
-function check_bps_approver(project_name):
+def check_bps_approver(project_name):
     bps = lp.projects[project_name].all_specifications 
 
     print "Total BPs: %s" % len(bps)
