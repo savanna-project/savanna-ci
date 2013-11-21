@@ -8,8 +8,8 @@ lp = Launchpad.login_anonymously('savanna-bad-bps', 'production',
                                  '/tmp/savanna-bad-bps',
                                  version="devel", timeout=10)
 
-savanna = lp.projects['savanna']
-bps = savanna.all_specifications
+bps = (lp.projects['savanna'].all_specifications 
+        + lp.projects['python-savannaclient'].all_specifications)
 
 for bp in bps:
     approver = bp.approver
