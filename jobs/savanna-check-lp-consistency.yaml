@@ -1,0 +1,38 @@
+- job:
+    name: savanna-check-lp-consistency
+    logrotate:
+      daysToKeep: 7
+      numToKeep: -1
+      artifactDaysToKeep: -1
+      artifactNumToKeep: -1
+    node: ssh-key
+    project-type: freestyle
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                  \n<p><b>Title</b>: Launchpad blueprints and issues consistency checker<br/>\
+                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
+    defaults: global
+    disabled: false
+    concurrent: false
+
+    triggers:
+        - timed: '0 * * * *'
+        
+    wrappers:
+      - timeout:
+          timeout: 10
+          fail: true
+          write-description: true
+       
+    builders:
+    - shell: "bash /opt/jenkins-jobs/savanna-ci/scripts/savanna-check-lp-consistency.sh"
+
+    publishers:
+      - email:
+          recipients: slukjanov@mirantis.com, aignatov@mirantis.com, rkamaldinov@mirantis.com
+      - text-finder:
+          regexp: "(Needs|error)"
+          fileset: "report.txt"
+          also-check-console-output: true
+          succeed-if-found: false
+          unstable-if-found: false
