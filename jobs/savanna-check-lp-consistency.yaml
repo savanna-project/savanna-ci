@@ -14,6 +14,17 @@
     defaults: global
     disabled: false
     concurrent: false
+    
+    scm:
+     - git:
+        url: https://github.com/ttx/bp-issues.git
+        refspec:
+        name:
+        choosing-strategy: default
+        skip-tag: true
+        wipe-workspace: false
+        branches:
+         - "**"
 
     triggers:
         - timed: '0 * * * *'
