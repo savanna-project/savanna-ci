@@ -1,1 +1,11 @@
-git clone https://github.com/ttx/bp-issues.git
+#!/bin/bash
+
+cd $WORKSPACE
+
+export PYTHONUNBUFFERED=1
+
+echo "============= SAVANNA ============="
+./ttx.sh -N savanna icehouse
+
+echo "========= SAVANNA CLIENT =========="
+./ttx.sh -N python-savannaclient 0.4.x
