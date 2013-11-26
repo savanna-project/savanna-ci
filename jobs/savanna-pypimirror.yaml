@@ -14,7 +14,7 @@
 
     scm:
      - git:
-        url: https://git.openstack.org/openstack-infra/jeepyb
+        url: https://git.openstack.org/openstack-infra/pypi-mirror
         refspec:
         name:
         choosing-strategy: default
