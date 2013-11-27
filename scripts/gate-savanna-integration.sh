@@ -19,9 +19,9 @@ mkdir /tmp/cache
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
-os_auth_host=172.18.168.5
+os_auth_host=172.18.168.2
 os_admin_username=admin
-os_admin_password=swordfish
+os_admin_password=admin
 os_admin_tenant_name=admin
 plugins=vanilla,hdp
 [cluster_node]
@@ -50,7 +50,7 @@ echo "[COMMON]
 OS_USERNAME = 'ci-user'
 OS_PASSWORD = 'swordfish'
 OS_TENANT_NAME = 'ci'
-OS_AUTH_URL = 'http://172.18.168.5:35357/v2.0/'
+OS_AUTH_URL = 'http://172.18.168.2:35357/v2.0/'
 SAVANNA_HOST = '$ADDR'
 SAVANNA_PORT = '8386'
 SAVANNA_API_VERSION = 'v1.1'
@@ -65,11 +65,11 @@ $COMMON_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[VANILLA]
-IMAGE_ID = '1a0b8bc1-5ede-4eb1-bedf-e0eb89d4cc64'
+IMAGE_ID = '2f1fb24e-18e0-4727-97f7-c01e9adff8f0'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 echo "[HDP]
-IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
+IMAGE_ID = '690e7bd0-0aea-4c94-a1ee-9f6471f73100'
 NODE_USERNAME = 'root'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
