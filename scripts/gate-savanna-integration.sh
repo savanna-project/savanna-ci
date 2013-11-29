@@ -20,9 +20,11 @@ export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
 os_auth_host=172.18.168.2
-os_admin_username=admin
-os_admin_password=admin
-os_admin_tenant_name=admin
+os_auth_port=5000
+os_admin_username=ci-user
+os_admin_password=swordfish
+os_admin_tenant_name=ci
+use_neutron=true
 plugins=vanilla,hdp
 [cluster_node]
 [sqlalchemy]
@@ -50,27 +52,22 @@ echo "[COMMON]
 OS_USERNAME = 'ci-user'
 OS_PASSWORD = 'swordfish'
 OS_TENANT_NAME = 'ci'
-OS_AUTH_URL = 'http://172.18.168.2:35357/v2.0/'
+OS_AUTH_URL = 'http://172.18.168.2:5000/v2.0'
 SAVANNA_HOST = '$ADDR'
-SAVANNA_PORT = '8386'
-SAVANNA_API_VERSION = 'v1.1'
-FLAVOR_ID = '42'
+FLAVOR_ID = '22'
 CLUSTER_CREATION_TIMEOUT = 45
-TELNET_TIMEOUT = 5
-HDFS_INITIALIZATION_TIMEOUT = 5
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-$GERRIT_PATCHSET_NUMBER'
-USER_KEYPAIR_ID = 'public-jenkins'
-PATH_TO_SSH_KEY = '/home/ubuntu/.ssh/id_rsa'
+FLOATING_IP_POOL = 'net04_ext'
+NEUTRON_ENABLED = True
+INTERNAL_NEUTRON_NETWORK = 'net04'
 $COMMON_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[VANILLA]
-IMAGE_ID = 'a68e5adb-1f07-46e7-a483-4184a0b4753c'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+
 echo "[HDP]
-IMAGE_ID = '13b77c53-7dab-4e0a-bccf-5134612f035c'
-NODE_USERNAME = 'root'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
@@ -96,7 +93,7 @@ done
 
 if [ "$FAILURE" = 0 ]; then
    
-    cd $WORKSPACE && tox -e integration
+    cd $WORKSPACE && sed -i "s/python-savannaclient.*/-f http:\/\/tarballs.openstack.org\/python-savannaclient\/python-savannaclient-master.tar.gz#egg=python-savannaclient-master\npython-savannaclient>=master/g" test-requirements.txt && tox -e integration
 fi
 
 echo "-----------Python env-----------"
