@@ -65,18 +65,26 @@ def boot_vm():
 
 
     CONF["vm_name"] = CONF["vm_name"]+str(randint(1, 1000))
-    name = CONF["vm_name"]
-
+    name = CONF["vm_name"] 
+ 
     print CONF["key_name"]
+    print CONF["vm_name"]
 
 #    if sys.argv[2] != "":
 #       CONF["vm_name"] = sys.argv[2]
 #       name = sys.argv[2]
 
+#    vm = client.servers.create(name,
+#                    flavor = CONF["flavor_id"],
+#                    image = CONF["image_id"],
+#                    key_name = CONF["key_name"])
+#
+    nics = [{"net-id": CONF["network_id"], "v4-fixed-ip": ""}]
     vm = client.servers.create(name,
                     flavor = CONF["flavor_id"],
                     image = CONF["image_id"],
-                    key_name = CONF["key_name"])
+                    key_name = CONF["key_name"],
+		    nics=nics)
 
     print "Waiting ACTIVE state"
 
@@ -86,6 +94,9 @@ def boot_vm():
         print "Status is " + vm.status
         vm = client.servers.get(id)
         time.sleep(2)
+
+    floating_ip = client.floating_ips.create(CONF["floating_pool"])
+    client.servers.get(id).add_floating_ip(floating_ip)
 
     print "Getting addresses"
     addresses = []
@@ -117,11 +128,16 @@ def boot_vm():
     _execute_command_on_node(ip,
         'echo "vm_name=' + CONF["vm_name"] +'" > /tmp/vmname')
 
-    #download jenkins slave jar
-    _execute_command_on_node(ip,
-        'wget -P /tmp http://' + CONF["jenkins_host_port"] + '/jnlpJars/slave.jar')
-
     #bypass proxy
+    #_execute_command_on_node(ip,
+    #    "sudo bash -c 'echo " + CONF["jenkins_ip"] + " jenkins.savanna.mirantis.com >> /etc/hosts'")
+
+
+    _execute_command_on_node(ip,
+        "sudo bash -c 'echo " + CONF["jenkins_ip"] + " savanna-ci.vm.mirantis.net >> /etc/hosts'")
+
+    time.sleep(2)
+
     _execute_command_on_node(ip,
         "sudo bash -c 'echo " + CONF["jenkins_ip"] + " jenkins.savanna.mirantis.com >> /etc/hosts'")
 
@@ -155,6 +171,12 @@ def boot_vm():
     _execute_command_on_node(ip,
         'echo "index-url = ' + CONF["pip_index_url"] +'" >> /home/ubuntu/.pip/pip.conf')
 
+    time.sleep(30)
+
+    #download jenkins slave jar
+    _execute_command_on_node(ip,
+        'wget -P /tmp http://' + CONF["jenkins_host_port"] + '/jnlpJars/slave.jar')
+
     #launch agent
     _execute_command_on_node(ip,
         'screen -dmS agent java -jar /tmp/slave.jar' + ' -jnlpCredentials ' + CONF["jenkins_username"] + ":" + CONF["jenkins_password"]+ ' -jnlpUrl http://' + CONF["jenkins_jnlp_ip_port"] + '/computer/' + CONF["vm_name"] + '/slave-agent.jnlp')
@@ -177,7 +199,7 @@ def cleanup():
     client = get_nova_client()
     servers = client.servers.list()
 
-    current_name = sys.argv[2]
+    current_name = sys.argv[2] 
 
     for server in servers:
         if current_name in server.name :
