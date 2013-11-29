@@ -2,11 +2,6 @@
 
 cd $WORKSPACE
 
-if [ -d "$WORKSPACE/.tox" ]; then
-  echo "Cleaning up .tox folder"
-  rm -rf .tox
-fi
-
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log 
 TMP_LOG=/tmp/tox.log
 LOG_FILE=/tmp/tox_log.log
@@ -98,7 +93,7 @@ done
 
 if [ "$FAILURE" = 0 ]; then
    
-    cd $WORKSPACE && sed -i "s/python-savannaclient.*/-f http:\/\/tarballs.openstack.org\/python-savannaclient\/python-savannaclient-master.tar.gz#egg=python-savannaclient-master\npython-savannaclient>=master/g" test-requirements.txt && tox -e integration
+    cd $WORKSPACE && sed -i "s/python-savannaclient.*/-f http:\/\/tarballs.openstack.org\/python-savannaclient\/python-savannaclient-master.tar.gz#egg=python-savannaclient-master\npython-savannaclient>=master/g" test-requirements.txt && cat test-requirements.txt && tox -e integration
 fi
 
 echo "-----------Python env-----------"
