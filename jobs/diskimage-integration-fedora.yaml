@@ -69,7 +69,7 @@
           succeed-if-found: true
           unstable-if-found: false
       - ssh:
-          site: '172.18.168.5'
+          site: '172.18.168.2'
           target:
           source:
           remove-prefix:
