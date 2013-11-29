@@ -94,7 +94,7 @@ done
 if [ "$FAILURE" = 0 ]; then
    
     cd $WORKSPACE && \
-    sed -i asd "/python-savannaclient.*/d" test-requirements.txt && \
+    sed -i "/python-savannaclient.*/d" test-requirements.txt && \
     echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && \
     echo "python-savannaclient==master" >> test-requirements.txt && \
     tox -e integration
