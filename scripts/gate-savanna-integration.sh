@@ -93,13 +93,20 @@ done
 
 if [ "$FAILURE" = 0 ]; then
    
-    cd $WORKSPACE && sed -i "s/python-savannaclient.*/-f http:\/\/tarballs.openstack.org\/python-savannaclient\/python-savannaclient-master.tar.gz#egg=python-savannaclient-master\npython-savannaclient>=master/g" test-requirements.txt && cat test-requirements.txt && tox -e integration
+    cd $WORKSPACE && \
+    sed -i asd "/python-savannaclient.*/d" test-requirements.txt
+    echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && \
+    echo "python-savannaclient==master" >> test-requirements.txt
+    tox -e integration
 fi
 
-echo "-----------Python env-----------"
+echo "-----------Python integration env-----------"
 cd $WORKSPACE && .tox/integration/bin/pip freeze
 
 screen -S savanna-api -X quit
+
+echo "-----------Python savanna env-----------"
+cd $WORKSPACE && .tox/venv/bin/pip freeze
 
 echo "-----------Savanna Log------------"
 cat $WORKSPACE/log.txt
