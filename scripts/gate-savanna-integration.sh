@@ -2,6 +2,11 @@
 
 cd $WORKSPACE
 
+if [ -d "$WORKSPACE/.tox" ]; then
+  echo "Cleaning up .tox folder"
+  rm -rf .tox
+fi
+
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log 
 TMP_LOG=/tmp/tox.log
 LOG_FILE=/tmp/tox_log.log
