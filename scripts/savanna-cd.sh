@@ -45,6 +45,7 @@ os_auth_host=$os_auth_host
 os_auth_port=$os_auth_port
 os_admin_password=$os_admin_password
 plugins=vanilla,hdp
+use_neutron=True
 [database]
 connection=sqlite:////$WORKSPACE/$db_name
 [plugin:vanilla]
