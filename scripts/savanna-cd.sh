@@ -40,6 +40,8 @@ else
     os_auth_host=172.18.168.2
 fi
 
+cd $WORKSPACE
+
 echo -e "[DEFAULT]
 os_auth_host=$os_auth_host
 os_auth_port=$os_auth_port
