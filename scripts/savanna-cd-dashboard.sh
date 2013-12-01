@@ -50,7 +50,7 @@ echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/setti
 
 python tools/install_venv.py
 .venv/bin/pip install ../
-.venv/bin/pip uninstall Django
+.venv/bin/pip uninstall Django -y
 .venv/bin/pip install Django==1.5
 ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
 
