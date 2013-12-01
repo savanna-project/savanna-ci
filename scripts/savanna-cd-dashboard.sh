@@ -10,7 +10,6 @@
 
 cd $WORKSPACE
 
-git clone https://git.openstack.org/openstack/savanna-dashboard
 
 BUILD_ID=dontKill
 echo -e "[global] 
@@ -50,7 +49,7 @@ sed -i "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g
 echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/settings.py
 
 python tools/install_venv.py
-.venv/bin/pip install ../savanna-dashboard/
+.venv/bin/pip install ../
 .venv/bin/pip uninstall Django
 .venv/bin/pip install Django==1.5
 ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
