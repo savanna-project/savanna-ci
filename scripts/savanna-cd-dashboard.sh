@@ -10,6 +10,8 @@
 
 cd $WORKSPACE
 
+git clone https://git.openstack.org/openstack/savanna-dashboard
+
 BUILD_ID=dontKill
 echo -e "[global] 
 timeout = 60
