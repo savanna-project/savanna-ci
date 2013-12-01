@@ -21,11 +21,12 @@ mkdir /tmp/cache
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
-os_auth_host=172.18.168.5
+os_auth_host=172.18.168.2
 os_admin_username=admin
 os_admin_password=swordfish
 os_admin_tenant_name=admin
 plugins=vanilla,hdp
+use_neutron=true
 [cluster_node]
 [sqlalchemy]
 [plugin:vanilla]
@@ -52,11 +53,14 @@ echo "[COMMON]
 OS_USERNAME = 'ci-user'
 OS_PASSWORD = 'swordfish'
 OS_TENANT_NAME = 'ci'
-OS_AUTH_URL = 'http://172.18.168.5:35357/v2.0/'
+OS_AUTH_URL = 'http://172.18.168.2:35357/v2.0/'
 SAVANNA_HOST = '$ADDR'
 SAVANNA_PORT = '8386'
 SAVANNA_API_VERSION = 'v1.1'
-FLAVOR_ID = '42'
+FLAVOR_ID = '22'
+FLOATING_IP_POOL = 'net04_ext'
+NEUTRON_ENABLED = True
+INTERNAL_NEUTRON_NETWORK = 'net04'
 CLUSTER_CREATION_TIMEOUT = 45
 TELNET_TIMEOUT = 5
 HDFS_INITIALIZATION_TIMEOUT = 5
