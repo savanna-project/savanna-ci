@@ -12,3 +12,10 @@ then
 fi
 
 #git clean -x -f -d
+
+echo "================== REBASED =================="
+echo "============== LATEST COMMITS ==============="
+git log -10 --stat > latest_commits
+cat latest_commits
+echo "============================================="
+echo "^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^"
