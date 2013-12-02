@@ -110,7 +110,9 @@ do
 done
 
 if [ "$FAILURE" = 0 ]; then 
-    cd $WORKSPACE && tox -e integration
+#    cd $WORKSPACE && tox -e integration
+    cd $WORKSPACE && sed -i "/python-savannaclient.*/d" test-requirements.txt && echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && echo "python-savannaclient==master" >> test-requirements.txt
+    tox -e integration    
     STATUS=`echo $?`               
                                    
     if [[ "$STATUS" != 0 ]]        
