@@ -12,14 +12,14 @@
 cd $WORKSPACE
 
 BUILD_ID=dontKill
-echo -e "[global] 
-timeout = 60
-index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
-extra-index-url = https://pypi.python.org/simple/
-download-cache = /home/ubuntu/.pip/cache/
-[install]
-use-mirrors = true
-find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
+#echo -e "[global] 
+#timeout = 60
+#index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
+#extra-index-url = https://pypi.python.org/simple/
+#download-cache = /home/ubuntu/.pip/cache/
+#[install]
+#use-mirrors = true
+#find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
 cd $WORKSPACE/savanna
 
