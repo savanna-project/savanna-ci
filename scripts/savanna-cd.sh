@@ -40,7 +40,8 @@ else
     os_auth_host=172.18.168.2
 fi
 
-cd $WORKSPACE
+cd $WORKSPACE/savanna
+
 
 echo -e "[DEFAULT]
 os_admin_username=ci-user
