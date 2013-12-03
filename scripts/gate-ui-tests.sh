@@ -36,7 +36,7 @@ done
 
 echo "
 [common]
-base_url = 'http://127.0.0.1/horizon'
+base_url = 'http://127.0.0.1'
 user = 'ci-user'
 password = 'swordfish'
 tenant = 'ci'
