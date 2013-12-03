@@ -21,7 +21,7 @@ BUILD_ID=dontKill
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
-cd $WORKSPACE
+cd $WORKSPACE/savanna-dashboard
 if [ -d horizon/ ]
 then
     rm -rf horizon
@@ -51,8 +51,8 @@ echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/setti
 
 python tools/install_venv.py
 .venv/bin/pip install ../
-.venv/bin/pip uninstall Django -y
-.venv/bin/pip install Django==1.5
+#.venv/bin/pip uninstall Django -y
+#.venv/bin/pip install Django==1.5
 ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
 
 exist=`screen -ls | grep savanna-dashboard-master`
