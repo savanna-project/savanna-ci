@@ -41,7 +41,7 @@ user = 'ci-user'
 password = 'swordfish'
 tenant = 'ci'
 keystone_url = 'http://172.18.168.2:5000/v2.0'
-await_element = 30
+await_element = 120
 image_name_for_register = 'ci-workers'
 [vanilla]
 skip_plugin_tests = False
