@@ -61,12 +61,7 @@ cd horizon
 git checkout $BRANCH
 cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py
 
-lab=$(pwd | grep cz)
-if [ -z $lab ]; then
-    OPENSTACK_HOST=172.18.79.139
-else
-    OPENSTACK_HOST=172.18.168.2
-fi
+OPENSTACK_HOST=172.18.168.2
 
 sed -i "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"$OPENSTACK_HOST\"/g" openstack_dashboard/local/local_settings.py
 sed -i "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" openstack_dashboard/local/local_settings.py
