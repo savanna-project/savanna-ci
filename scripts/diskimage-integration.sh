@@ -22,9 +22,10 @@ export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
 os_auth_host=172.18.168.2
-os_admin_username=admin
+os_auth_port=5000
+os_admin_username=ci-user
 os_admin_password=swordfish
-os_admin_tenant_name=admin
+os_admin_tenant_name=ci
 plugins=vanilla,hdp
 use_neutron=true
 [cluster_node]
@@ -65,12 +66,6 @@ INTERNAL_NEUTRON_NETWORK = 'net04'
 PLUGIN_NAME = 'vanilla'
 IMAGE_ID = '$VANILLA_IMAGE'
 NODE_USERNAME = '$OS_USERNAME'
-HADOOP_VERSION = '1.2.1'
-HADOOP_USER = 'hadoop'
-HADOOP_DIRECTORY = '/usr/share/hadoop'
-HADOOP_LOG_DIRECTORY = '/mnt/log/hadoop/hadoop/userlogs'
-HADOOP_PROCESSES_WITH_PORTS = jobtracker: 50030, namenode: 50070, tasktracker: 50060, datanode: 50075, secondarynamenode: 50090
-PROCESS_NAMES = nn: namenode, tt: tasktracker, dn: datanode
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 SKIP_CLUSTER_CONFIG_TEST = True
 SKIP_MAP_REDUCE_TEST = False
@@ -110,9 +105,13 @@ do
 done
 
 if [ "$FAILURE" = 0 ]; then 
-#    cd $WORKSPACE && tox -e integration
-    cd $WORKSPACE && sed -i "/python-savannaclient.*/d" test-requirements.txt && echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && echo "python-savannaclient==master" >> test-requirements.txt
-    tox -e integration    
+
+    cd $WORKSPACE && \
+    sed -i "/python-savannaclient.*/d" test-requirements.txt && \
+    echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && \
+    echo "python-savannaclient==master" >> test-requirements.txt && \
+    tox -e integration
+
     STATUS=`echo $?`               
                                    
     if [[ "$STATUS" != 0 ]]        
