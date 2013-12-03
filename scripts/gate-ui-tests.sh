@@ -86,6 +86,8 @@ python tools/install_venv.py
 .venv/bin/pip install Django==1.5
 ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
 
+sudo service apache2 restart
+
 cd $WORKSPACE && tox -e tests
 STATUS=`echo $?`               
 rm -r /tmp/savanna.db                              
