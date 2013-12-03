@@ -85,7 +85,10 @@ sudo service apache2 restart
 
 cd $WORKSPACE && tox -e tests
 STATUS=`echo $?`               
-rm -r /tmp/savanna.db                              
+rm -r /tmp/savanna.db   
+screen -S display -X quit
+screen -S savanna -X quit
+
 if [[ "$STATUS" != 0 ]]        
 then                               
     exit 1                    
