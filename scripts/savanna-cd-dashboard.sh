@@ -51,8 +51,9 @@ echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/setti
 
 python tools/install_venv.py
 .venv/bin/pip install ../
-#.venv/bin/pip uninstall Django -y
-#.venv/bin/pip install Django==1.5
+# Horizon doesn't start with Django==1.6 which is installed by default
+.venv/bin/pip uninstall Django -y
+.venv/bin/pip install Django==1.5
 ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
 
 exist=`screen -ls | grep savanna-dashboard-master`
