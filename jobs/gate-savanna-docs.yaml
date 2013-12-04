@@ -13,7 +13,7 @@
                   \n<p><b>Title</b>: Part of the gating process.<br/>\
                   \n<b>Description</b>: This job runs tox -e docs to build docs.<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
