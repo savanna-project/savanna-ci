@@ -11,7 +11,7 @@
       numToKeep: -1
       artifactDaysToKeep: -1
       artifactNumToKeep: -1
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
