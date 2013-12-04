@@ -1,5 +1,5 @@
 - job:
-    name: jobs_updater
+    name: jobs-updater
     node: master
     project-type: freestyle
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
@@ -14,7 +14,7 @@
     properties:
       - build-blocker:
           blocking-jobs:
-             - "*"
+             - ".*"
 
     builders:
     - shell:  "bash -e /opt/jenkins-jobs/update_jobs.sh"
