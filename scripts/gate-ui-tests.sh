@@ -43,6 +43,7 @@ tenant = 'ci'
 keystone_url = 'http://172.18.168.2:5000/v2.0'
 await_element = 120
 image_name_for_register = 'ci-workers'
+image_name_for_edit = "savanna-itests-ci-vanilla-image"
 [vanilla]
 skip_plugin_tests = False
 skip_edp_test = False
