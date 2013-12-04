@@ -46,6 +46,7 @@ image_name_for_register = 'ci-workers'
 [vanilla]
 skip_plugin_tests = False
 skip_edp_test = False
+base_image = "savanna-itests-ci-vanilla-image"
 [hdp]
 skip_plugin_tests = True
 hadoop_version = '1.3.2'
