@@ -8,7 +8,7 @@
                  \n<b>Description</b>: This job runs tox -e pep8 (pep8, pyflakes and hacking checks using flake8).<br/>\
                  \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
     defaults: global
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
