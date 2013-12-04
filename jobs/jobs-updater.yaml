@@ -21,4 +21,4 @@
 
     publishers:
       - email:
-          recipients: skolekonov@mirantis.com 
+          recipients: skolekonov@mirantis.com, slukjanov@mirantis.com
