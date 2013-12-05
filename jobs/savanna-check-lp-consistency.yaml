@@ -27,7 +27,7 @@
          - "**"
 
     triggers:
-        - timed: '0 * * * *'
+        - timed: '0 0 * * *'
         
     wrappers:
       - timeout:
