@@ -25,7 +25,7 @@
 
 
     triggers:
-        - timed: 'H/20 * * * *'
+        - timed: '0 */1 * * *'
 
 
     builders:
