@@ -33,6 +33,9 @@ plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 [plugin:hdp]
 plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savanna.conf
 
+mkdir ~/.pip/
+touch ~/.pip/pip.conf
+
 echo "
 [global] 
 timeout = 60
