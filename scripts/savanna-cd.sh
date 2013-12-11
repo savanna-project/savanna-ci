@@ -58,6 +58,8 @@ plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 [plugin:hdp]
 plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" > etc/savanna/savanna.conf
 
+rm -rf .tox
+
 exist=`screen -ls | grep savanna-master`
 if ! [ -z "$exist" ]
 then
