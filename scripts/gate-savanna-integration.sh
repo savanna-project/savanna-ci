@@ -1,5 +1,7 @@
 #!/bin/bash
 
+export PYTHONUNBUFFERED=1
+
 cd $WORKSPACE
 
 TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log 
@@ -45,7 +47,7 @@ plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savan
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 #" > ~/.pip/pip.conf
-screen -dmS savanna-api /bin/bash -c "tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
+screen -dmS savanna-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
@@ -98,6 +100,8 @@ do
 done
 
 if [ "$FAILURE" = 0 ]; then
+   
+    export PYTHONUNBUFFERED=1
    
     cd $WORKSPACE && \
     sed -i "/python-savannaclient.*/d" test-requirements.txt && \
