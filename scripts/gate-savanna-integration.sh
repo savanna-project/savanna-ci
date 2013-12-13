@@ -68,7 +68,7 @@ $COMMON_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[VANILLA]
-IMAGE_NAME = 'savanna-itests-ci-vanilla-image' 
+IMAGE_NAME = 'savanna-itests-ci-hdp-image-jdk'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
