@@ -103,11 +103,7 @@ if [ "$FAILURE" = 0 ]; then
    
     export PYTHONUNBUFFERED=1
    
-    cd $WORKSPACE && \
-    sed -i "/python-savannaclient.*/d" test-requirements.txt && \
-    echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && \
-    echo "python-savannaclient==master" >> test-requirements.txt && \
-    tox -e integration
+    cd $WORKSPACE && tox -e integration
 fi
 
 echo "-----------Python integration env-----------"
