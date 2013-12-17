@@ -7,7 +7,7 @@
                   \n<p><b>Title</b>: Part of the gating process.<br/>\
                   \n<b>Description</b>: This job checks AUTHORS file and fails if it should be updated.<br/>\
                   \n<b>Maintainer</b>: Sergey Lukjanov<br/>"
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
