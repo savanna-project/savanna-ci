@@ -23,7 +23,11 @@ screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x
 
 export DISPLAY=:22
 
-cd /home/ubuntu && screen -dmS savanna /bin/bash -c "savanna-venv/bin/python savanna-venv/bin/savanna-api --config-file savanna-venv/etc/savanna/savanna.conf -d --log-file /tmp/savanna.log"
+cd /home/ubuntu
+rm -rf savanna-venv
+virtualenv savanna-venv
+savanna-venv/bin/pip install -e git://github.com/openstack/savanna.git#egg=savanna
+screen -dmS savanna /bin/bash -c "savanna-venv/bin/python savanna-venv/bin/savanna-api --config-file /home/ubuntu/savanna.conf -d --log-file /tmp/savanna.log"
 
 while true
 do
