@@ -74,7 +74,7 @@ $VANILLA_PARAMS
 
 echo "[HDP]
 IMAGE_NAME = 'savanna-itests-ci-hdp-image-jdk'
-SKIP_ALL_TESTS_FOR_PLUGIN = True
+SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
