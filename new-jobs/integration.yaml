@@ -1,0 +1,21 @@
+- job-template:
+    name: 'gate-savanna-integration-{plugin}'
+    defaults:
+    builders:
+      - gerrit-git-prep
+      - shell: "rm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci\
+              \nbash savanna-ci/scripts/gate-savanna-integration-new.sh"
+    node: 'precise-itests'
+
+- project:
+    name: gate-savanna-integration
+    github-org: openstack
+    plugin:
+     - vanilla
+     - hdp
+     - heat-vanilla
+     - heat-hdp
+    jobs:
+     - 'gate-savanna-integration-{plugin}'
+
