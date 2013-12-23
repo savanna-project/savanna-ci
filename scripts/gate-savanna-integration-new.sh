@@ -4,20 +4,25 @@ JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
-    HEAT_JOB=True                                                        
+    HEAT_JOB=True    
+    echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
     if [ $JOB_TYPE == 'hdp'  ]                                                  
     then                                                                        
-        HDP_JOB=True                                                     
+        HDP_JOB=True
+        echo "HDP detected"
     else                                                                        
-        VANILLA_JOB=True                                                 
+        VANILLA_JOB=True
+        echo "Vanilla detected"
     fi                                                                          
 else                                                                            
     if [ $JOB_TYPE == 'hdp' ]                                                   
     then                                                                        
-       HDP_JOB=True                                                      
+       HDP_JOB=True      
+       echo "HDP detected"
     else                                                                        
-       VANILLA_JOB=True                                                      
+       VANILLA_JOB=True   
+       echo "Vanilla detected"
     fi                                                                          
 fi 
 
