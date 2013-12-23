@@ -143,8 +143,12 @@ if [ "$FAILURE" = 0 ]; then
     if [ $HDP_JOB ]
     then
         tox -e integration -- hdp
+        STATUS=`echo $?`               
+                                   
+
     else
         tox -e integration -- vanilla
+        STATUS=`echo $?`
     fi
 fi
 
@@ -172,3 +176,8 @@ rm -f $LOG_FILE
 if [ "$FAILURE" != 0 ]; then
     exit 1
 fi
+
+if [[ "$STATUS" != 0 ]]        
+then                               
+    exit 1                    
+fi   
