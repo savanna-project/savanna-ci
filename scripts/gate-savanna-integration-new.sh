@@ -1,5 +1,26 @@
 #!/bin/bash
 
+JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
+                                                                                
+if [ $JOB_TYPE == 'heat' ]                                                      
+then                                                                            
+    HEAT_JOB=True                                                        
+    JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
+    if [ $JOB_TYPE == 'hdp'  ]                                                  
+    then                                                                        
+        HDP_JOB=True                                                     
+    else                                                                        
+        VANILLA_JOB=True                                                 
+    fi                                                                          
+else                                                                            
+    if [ $JOB_TYPE == 'hdp' ]                                                   
+    then                                                                        
+       HDP_JOB=True                                                      
+    else                                                                        
+       VANILLA_JOB=True                                                      
+    fi                                                                          
+fi 
+
 export PYTHONUNBUFFERED=1
 
 cd $WORKSPACE
@@ -20,7 +41,19 @@ mkdir /tmp/cache
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
+infrastructure_engine=heat
+
 echo "[DEFAULT]
+" >> etc/savanna/savanna.conf
+
+if [ $HEAT_JOB ]
+then
+    echo "infrastructure_engine=heat
+    " >> etc/savanna/savanna.conf
+    git fetch https://review.openstack.org/openstack/savanna refs/changes/12/63112/1 && git checkout FETCH_HEAD
+fi
+
+echo "
 os_auth_host=172.18.168.42
 os_auth_port=5000
 os_admin_username=ci-user
@@ -101,7 +134,13 @@ if [ "$FAILURE" = 0 ]; then
    
     export PYTHONUNBUFFERED=1
    
-    cd $WORKSPACE && tox -e integration
+    cd $WORKSPACE
+    if [ $HDP_JOB ]
+    then
+        tox -e integration -- hdp
+    else
+        tox -e integration -- vanilla
+    fi
 fi
 
 echo "-----------Python integration env-----------"
