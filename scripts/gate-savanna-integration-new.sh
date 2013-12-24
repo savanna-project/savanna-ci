@@ -4,7 +4,9 @@ JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
-    HEAT_JOB=True    
+    HEAT_JOB=True
+    VANILLA_PARAMS="NODE_USERNAME = 'ec2-user'"
+    HDP_PARAMS="NODE_USERNAME = 'ec2-user'"
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
     if [ $JOB_TYPE == 'hdp'  ]                                                  
@@ -107,13 +109,11 @@ $COMMON_PARAMS
 
 echo "[VANILLA]
 IMAGE_NAME = 'savanna-itests-ci-vanilla-image'
-NODE_USERNAME = 'ec2-user'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[HDP]
 IMAGE_NAME = 'savanna-itests-ci-hdp-image-jdk'
-NODE_USERNAME = 'ec2-user'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
