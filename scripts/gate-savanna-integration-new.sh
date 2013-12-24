@@ -1,12 +1,13 @@
 #!/bin/bash
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
+
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
     HEAT_JOB=True
-    VANILLA_PARAMS="NODE_USERNAME = 'ec2-user'"
-    HDP_PARAMS="NODE_USERNAME = 'ec2-user'"
+    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-heat
+    VANILLA_IMAGE=savanna-itests-ci-vanilla-image-heat
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
     if [ $JOB_TYPE == 'hdp'  ]                                                  
@@ -20,10 +21,12 @@ then
 else                                                                            
     if [ $JOB_TYPE == 'hdp' ]                                                   
     then                                                                        
-       HDP_JOB=True      
+       HDP_JOB=True
+       HDP_IMAGE=savanna-itests-ci-hdp-image-jdk
        echo "HDP detected"
     else                                                                        
-       VANILLA_JOB=True   
+       VANILLA_JOB=True 
+       VANILLA_IMAGE=savanna-itests-ci-vanilla-image
        echo "Vanilla detected"
     fi                                                                          
 fi 
@@ -108,12 +111,12 @@ $COMMON_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[VANILLA]
-IMAGE_NAME = 'savanna-itests-ci-vanilla-image'
+IMAGE_NAME = '$VANILLA_IMAGE'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[HDP]
-IMAGE_NAME = 'savanna-itests-ci-hdp-image-jdk'
+IMAGE_NAME = '$HDP_IMAGE'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
