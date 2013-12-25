@@ -1,0 +1,46 @@
+pipelines:
+  - name: check
+    manager: IndependentPipelineManager
+    trigger:
+      gerrit:
+        - event: patchset-created
+        - event: change-restored
+        - event: comment-added
+          comment_filter: (?i)^\s*recheck savanna-ci\s*$
+    success:
+      gerrit:
+        force-message: true
+    failure:
+      gerrit:
+        force-message: true
+
+projects:
+  - name: openstack/savanna
+    check:
+      - gate-savanna-pep8
+      - gate-savanna-python27
+      - savanna-coverage
+      - gate-savanna-requirements
+      - gate-savanna-integration-hdp
+      - gate-savanna-integration-vanilla
+      - gate-savanna-integration-heat-vanilla
+  - name: openstack/python-savannaclient
+    check:
+      - gate-python-savannaclient-pep8
+      - gate-python-savannaclient-python27
+      - gate-python-savannaclient-requirements
+  - name: openstack/savanna-dashboard
+    check:
+      - gate-savanna-dashboard-pep8
+      - gate-savanna-dashboard-python27
+      - gate-savanna-dashboard-requirements
+  - name: openstack/savanna-extra
+    check:
+      - gate-savanna-extra-pep8
+      - gate-savanna-extra-python27
+      - gate-savanna-extra-requirements
+  - name: openstack/savanna-image-elements
+    check:
+      - gate-savanna-image-elements-pep8
+      - gate-savanna-image-elements-python27
+      - gate-savanna-image-elements-requirements
