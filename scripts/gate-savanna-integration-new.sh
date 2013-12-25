@@ -60,7 +60,6 @@ if [ $HEAT_JOB ]
 then
     echo "infrastructure_engine=heat
     " >> etc/savanna/savanna.conf
-    git fetch https://review.openstack.org/openstack/savanna refs/changes/12/63112/1 && git checkout FETCH_HEAD
 fi
 
 echo "
