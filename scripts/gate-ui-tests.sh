@@ -2,6 +2,7 @@
 
 sudo pip install $WORKSPACE
 
+
 SAVANNA_LOG=/tmp/savanna.log 
 
 SCR_CHECK=$(ps aux | grep screen | grep display)
@@ -37,6 +38,9 @@ do
                 echo "project is started" && FAILURE=0 && break
         fi
 done
+
+sudo service apache2 restart
+sleep 20
 
 echo "
 [common]
