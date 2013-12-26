@@ -39,7 +39,11 @@ TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log
 TMP_LOG=/tmp/tox.log
 LOG_FILE=/tmp/tox_log.log
 
-screen -S savanna-api -X quit
+SCR_CHECK=$(ps aux | grep screen | grep savanna)
+if [ -n "$SCR_CHECK" ]; then
+     screen -S savanna-api -X quit
+fi
+
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 rm -f $LOG_FILE
