@@ -5,7 +5,9 @@
       - gerrit-git-prep
       - shell: "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci\
-              \nbash savanna-ci/scripts/gate-savanna-integration-new.sh"
+              \nbash -x savanna-ci/scripts/gate-savanna-integration-new.sh"
+    publishers:
+      - console-log
     node: 'precise-itests'
 
 - project:
