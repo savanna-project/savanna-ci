@@ -15,4 +15,4 @@
       - github
 
     builders:
-    - shell:  "bash -e /opt/ci/jenkins-jobs/update_jobs.sh"
+      - shell:  "bash -e /opt/ci/jenkins-jobs/update_jobs.sh"
