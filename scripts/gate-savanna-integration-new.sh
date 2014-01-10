@@ -6,7 +6,7 @@ JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
     HEAT_JOB=True
-    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-heat
+    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk
     VANILLA_IMAGE=savanna-itests-ci-vanilla-image-heat
     SSH_USERNAME=ec2-user
     echo "Heat detected"
