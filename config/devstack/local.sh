@@ -44,6 +44,7 @@ glance image-create --name savanna-itests-ci-hdp-image-jdk --file $HDP_IMAGE_PAT
 #nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 
 # enable auto assigning of floating ips
+
 #ps -ef | grep -i "nova-network" | grep -v grep | awk '{print $2}' | xargs sudo kill -9
 #sudo sed -i -e "s/default_floating_pool = public/&\nauto_assign_floating_ip = True/g" /etc/nova/nova.conf
 #screen -dmS nova-network /bin/bash -c "/usr/local/bin/nova-network --config-file /etc/nova/nova.conf || touch /opt/stack/status/stack/n-net.failure"
