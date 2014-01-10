@@ -10,9 +10,13 @@
     defaults: global
     disabled: false
     concurrent: false
+    
+    scm:
+     - git:
+        url: https://github.com/savanna-project/savanna-ci.git
 
     triggers:
-      - github
+      - pollscm: "* * * * * "
 
     builders:
       - shell:  "bash -e /opt/ci/jenkins-jobs/update_jobs.sh"
