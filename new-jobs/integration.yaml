@@ -9,6 +9,11 @@
               \nbash -x savanna-ci/scripts/gate-savanna-integration-new.sh"
     publishers:
       - console-log
+      - trigger-parameterized-builds:
+          - project: "integration-cleanup"
+            predefined-parameters:
+              PREV_BUILD=$BUILD_NUMBER-$ZUUL_CHANGE-$ZUUL_PATCHSET
+              PREV_JOB=$JOB_NAME
     node: 'precise-itests'
 
 - project:
@@ -22,3 +27,26 @@
     jobs:
      - 'gate-savanna-integration-{plugin}'
 
+- job:                                                                          
+    name: integration-cleanup                                              
+    project-type: freestyle                                                     
+    defaults: global                                                            
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                 \n<p>This job destroys vms which were not deleted after integration tests"
+    disabled: false                                                             
+    concurrent: false
+    node: 'master'                                                           
+                                                                                
+    parameters:                                                                 
+      - string:                                                                 
+          name: PREV_BUILD                                                      
+          default: default                                                      
+          description:
+      - string:
+          name: PREV_JOB
+          default:
+          description:                                                          
+                                                                                
+    builders:                                                                   
+    - shell: "bash /opt/ci/jenkins-jobs/savanna-ci/scripts/integration-cleanup.sh"
