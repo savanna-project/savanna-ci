@@ -8,6 +8,8 @@ from novaclient.v1_1 import client as nc
 from jenkinsapi.jenkins import Jenkins
 import requests
 from random import randint
+from keystoneclient.v2_0 import client as kc
+from heatclient import client as hc
 
 CONF = dict()
 CONF_FILE = '/var/lib/jenkins/ci-python-scripts/resources/credentials.conf'
@@ -34,6 +36,15 @@ def get_nova_client():
         auth_url = CONF["os_auth_url"],
         project_id = CONF["os_tenant_name"]
     )
+def get_auth_token():
+    keystone = kc.Client(username = CONF["os_username"],
+        password = CONF["os_password"],
+        tenant_name = CONF["os_tenant_name"],
+        auth_url = CONF["os_auth_url"]
+    )
+    return keystone.auth_token
+def get_heat_client():
+    return hc.Client('1', endpoint=CONF["os_image_endpoint"], token=get_auth_token())
 def get_jenkins():
     return Jenkins(baseurl="http://" + CONF["jenkins_host_port"],
         username=CONF["jenkins_username"],
@@ -195,15 +206,22 @@ def delete_vm():
     jen = get_jenkins()
     jen.delete_node(current_name)
 
+def cleanup_heat():
+    current_name = sys.argv[2]
+    client = get_heat_client()
+    client.stacks.delete(current_name)
+
 def cleanup():
     client = get_nova_client()
     servers = client.servers.list()
-
     current_name = sys.argv[2] 
 
     for server in servers:
         if current_name in server.name :
             print server.name
+            fl_ips = client.floating_ips.findall(instance_id=server.id)
+            for fl_ip in fl_ips:
+                    client.floating_ips.delete(fl_ip.id)
             client.servers.delete(server.id)
 
 def wait_vm_up(ip):
@@ -250,6 +268,9 @@ def main(argv):
 
     if "cleanup" in argv:
         cleanup()
+
+    if "cleanup-heat" in argv:
+        cleanup_heat()
 
 
 if __name__ == "__main__":
