@@ -38,6 +38,15 @@ nova flavor-create --is-public true qa-flavor 20 2048 40 2
 glance image-create --name savanna-itests-ci-vanilla-image --file $VANILLA_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu'
 glance image-create --name savanna-itests-ci-hdp-image-jdk --file $HDP_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.3.2'='True' --property '_savanna_tag_hdp'='True' --property '_savanna_username'='root'
 
+# make Neutron networks shared
+
+PRIVATE_NET_ID=$(neutron net-list | grep private | awk '{print $2}')
+PUBLIC_NET_ID=$(neutron net-list | grep public | awk '{print $2}')
+FORMAT=" --request-format xml"
+
+neutron net-update $FORMAT $PRIVATE_NET_ID --shared True
+neutron net-update $FORMAT $PUBLIC_NET_ID --shared True
+
 # setup security groups (nova-network only)
 
 #nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
