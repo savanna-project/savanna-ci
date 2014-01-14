@@ -22,13 +22,13 @@ keystone user-role-add --user $ADMIN_USER_ID --role $ADMIN_ROLE_ID --tenant $CI_
 
 # setup quota for ci tenant
 
-nova-manage project quota $CI_TENANT_ID --key floating_ips --value 64
 nova-manage project quota $CI_TENANT_ID --key ram --value 200000
 nova-manage project quota $CI_TENANT_ID --key instances --value 100
 nova-manage project quota $CI_TENANT_ID --key cores --value 150
 cinder quota-update --volumes 100 $CI_TENANT_ID
 cinder quota-update --gigabytes 2000 $CI_TENANT_ID
-
+neutron quota-update --tenant_id $CI_TENANT_ID --port 64
+neutron quota-update --tenant_id $CI_TENANT_ID --floatingip 64
 # create qa flavor
 
 nova flavor-create --is-public true qa-flavor 20 2048 40 2
