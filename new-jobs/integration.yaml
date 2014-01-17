@@ -49,4 +49,4 @@
           description:                                                          
                                                                                 
     builders:                                                                   
-    - shell: "bash /opt/ci/jenkins-jobs/savanna-ci/scripts/integration-cleanup.sh"
+    - shell: "bash -x /opt/ci/jenkins-jobs/savanna-ci/scripts/integration-cleanup.sh"
