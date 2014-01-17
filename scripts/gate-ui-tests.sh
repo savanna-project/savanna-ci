@@ -20,6 +20,8 @@ if [ -n "$DETECT_XVFB" ]; then
      sudo killall Xvfb
 fi
 
+ps aux | grep Xvfb
+
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 
