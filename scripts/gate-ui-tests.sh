@@ -15,6 +15,11 @@ if [ -n "$SCR_CHECK" ]; then
      screen -S savanna -X quit
 fi
 
+DETECT_XVFB=$(ps aux | grep Xvfb | grep -v grep)
+if [ -n "$DETECT_XVFB" ]; then
+     sudo killall Xvfb
+fi
+
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 
