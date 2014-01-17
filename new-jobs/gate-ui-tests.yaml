@@ -12,11 +12,13 @@
     concurrent: false
 
     builders:
+    - gerrit-git-prep
     - shell:  "rm -rf savanna-ci\
              \ngit clone https://github.com/savanna-project/savanna-ci\
              \nbash -x savanna-ci/scripts/gate-ui-tests.sh"
 
     publishers:
+      - console-log
       - workspace-cleanup:                                                      
           dirmatch: true
           fail-build: false

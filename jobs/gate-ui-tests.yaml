@@ -8,7 +8,7 @@
                   \n<b>Description</b>: This job installs savanna-dashboars and run selenium tests.<br/>\
                   \n<b>Maintainer</b>: Vadim Rovachev<br/>"
     node: ui
-    disabled: false
+    disabled: true
     concurrent: false
 
     scm:
