@@ -2,7 +2,7 @@
     name: diskimage-creating
     node: diskimage
     project-type: freestyle
-    defaults: global
+    defaults:
     description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
                   \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
                   \n<p><b>Creating ubuntu and fedora cloud images for Savanna using diskimage-builder and savanna-image-elements</b>"
@@ -84,11 +84,11 @@
                     
 
       - trigger-parameterized-builds:
-          - project: "diskimage-integration-ubuntu"
+          - project: "diskimage-integration"
             condition: SUCCESS
             predefined-parameters: "IMAGE_NAME=$JOB_NAME\
                                   \nUSERNAME=ubuntu"
-          - project: "diskimage-integration-fedora"
+          - project: "diskimage-integration"
             condition: SUCCESS
             predefined-parameters: "IMAGE_NAME=$JOB_NAME\
                                   \nUSERNAME=fedora"

@@ -7,7 +7,7 @@
                   \n<p><b>Title</b>: This job checks whether a newest Ubuntu image is suitable for integration tests. <br/>\
                 \n<b>Description</b>: This job executes integration tests on the newest Ubuntu image.<br/>\
                 \n<b>Maintainer</b>: Sergey Kolekonov<br/>"
-    defaults: global
+    defaults:
     disabled: false
     concurrent: false
     parameters:
