@@ -13,7 +13,7 @@
     - shell: "sudo rm -rf *"
     - gerrit-git-prep
     - shell: "sleep 60\
-            \nsudo bash savanna-image-elements/diskimage-create/diskimage-create.sh"
+            \nsudo bash diskimage-create/diskimage-create.sh"
     publishers:
       - ssh:
           site: '172.18.168.2'
