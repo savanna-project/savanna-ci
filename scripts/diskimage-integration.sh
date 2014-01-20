@@ -21,10 +21,10 @@ mkdir /tmp/cache
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
-os_auth_host=172.18.168.2
+os_auth_host=172.18.168.42
 os_auth_port=5000
 os_admin_username=ci-user
-os_admin_password=swordfish
+os_admin_password=nova
 os_admin_tenant_name=ci
 plugins=vanilla,hdp
 use_neutron=true
@@ -35,55 +35,32 @@ plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 [plugin:hdp]
 plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savanna.conf
 
-echo "
-#[global] 
-#timeout = 60
-#index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
-#extra-index-url = https://pypi.python.org/simple/
-#download-cache = ~/.pip/cache
-#[install]
-#use-mirrors = true
-#find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
-" > ~/.pip/pip.conf
-screen -dmS savanna-api /bin/bash -c "tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
+screen -dmS savanna-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[COMMON]
 OS_USERNAME = 'ci-user'
-OS_PASSWORD = 'swordfish'
+OS_PASSWORD = 'nova'
 OS_TENANT_NAME = 'ci'
-OS_AUTH_URL = 'http://172.18.168.2:5000/v2.0/'
+OS_AUTH_URL = 'http://172.18.168.42:5000/v2.0/'
 SAVANNA_HOST = '$ADDR'
-FLAVOR_ID = '22'
-CLUSTER_CREATION_TIMEOUT = 45
+FLAVOR_ID = '20'
+CLUSTER_CREATION_TIMEOUT = 60
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-diskimage'
-FLOATING_IP_POOL = 'net04_ext'
+FLOATING_IP_POOL = 'public'
 NEUTRON_ENABLED = True
-INTERNAL_NEUTRON_NETWORK = 'net04'
+INTERNAL_NEUTRON_NETWORK = 'private'
 [VANILLA]
 PLUGIN_NAME = 'vanilla'
-IMAGE_ID = '$VANILLA_IMAGE'
+IMAGE_NAME = '$VANILLA_IMAGE'
 NODE_USERNAME = '$OS_USERNAME'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 SKIP_CLUSTER_CONFIG_TEST = True
 SKIP_MAP_REDUCE_TEST = False
 SKIP_SWIFT_TEST = True
 SKIP_SCALING_TEST = True
-[HDP]
-PLUGIN_NAME = 'hdp'
-IMAGE_ID = 'cd63f719-006e-4541-a523-1fed7b91fa8c'
-NODE_USERNAME = 'root'
-HADOOP_VERSION = '1.3.0'
-HADOOP_USER = 'hdfs'
-HADOOP_DIRECTORY = '/usr/lib/hadoop'
-HADOOP_LOG_DIRECTORY = '/hadoop/mapred/userlogs'
-HADOOP_PROCESSES_WITH_PORTS = JOBTRACKER: 50030, NAMENODE: 50070, TASKTRACKER: 50060, DATANODE: 50075, SECONDARY_NAMENODE: 50090
-PROCESS_NAMES = nn: NAMENODE, tt: TASKTRACKER, dn: DATANODE
-SKIP_ALL_TESTS_FOR_PLUGIN = True
-SKIP_MAP_REDUCE_TEST = False
-SKIP_SCALING_TEST = False
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
@@ -106,24 +83,18 @@ done
 
 if [ "$FAILURE" = 0 ]; then 
 
-    cd $WORKSPACE && \
-    sed -i "/python-savannaclient.*/d" test-requirements.txt && \
-    echo "-f http://tarballs.openstack.org/python-savannaclient/python-savannaclient-master.tar.gz#egg=python-savannaclient-master" >> test-requirements.txt && \
-    echo "python-savannaclient==master" >> test-requirements.txt && \
-    tox -e integration
-
+    cd $WORKSPACE
+    tox -e integration -- vanilla
     STATUS=`echo $?`               
-                                   
-    if [[ "$STATUS" != 0 ]]        
-    then                               
-         exit 1                    
-    fi   
 fi
 
-echo "-----------Python env-----------"
+echo "-----------Python integration env-----------"
 cd $WORKSPACE && .tox/integration/bin/pip freeze
 
 screen -S savanna-api -X quit
+
+echo "-----------Python savanna env-----------"
+cd $WORKSPACE && .tox/venv/bin/pip freeze
 
 echo "-----------Savanna Log------------"
 cat $WORKSPACE/log.txt
@@ -136,7 +107,13 @@ rm -f /tmp/tox-log.txt
 
 rm -f /tmp/savanna-server.db
 rm $TMP_LOG
+rm -f $LOG_FILE
 
 if [ "$FAILURE" != 0 ]; then
+    exit 1
+fi
+
+if [[ "$STATUS" != 0 ]]
+then
     exit 1
 fi
