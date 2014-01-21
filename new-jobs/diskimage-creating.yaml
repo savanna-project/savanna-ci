@@ -16,38 +16,6 @@
             \nsudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh"
     publishers:
       - ssh:
-          site: '172.18.168.2'
-          target: 'jenkins_DIB_$BUILD_NUMBER'
-          source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.selinux-permissive.qcow2'
-          use-pty: true
-          remove-prefix:
-          excludes:
-          timeout: "18000000"
-          command: "fedora_image_name=fedora_savanna_latest.selinux-permissive\
-                   \nubuntu_image_name=ubuntu_savanna_latest\
-                   \nLatest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$ZUUL_CHANGE | cut -f 1 -d \" \")\
-                   \n
-                   \nif [ -z $Latest_ubuntu_image_cz ]; then\
-                   \n    glance image-create --name=ci-ubuntu-$ZUUL_CHANGE --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
-                   \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$ZUUL_CHANGE | cut -f 1 -d \" \")\
-                   \nelse
-                   \n    glance image-delete $Latest_ubuntu_image_cz
-                   \n    glance image-create --name=ci-ubuntu-$ZUUL_CHANGE --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
-                   \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$ZUUL_CHANGE | cut -f 1 -d \" \")\
-                   \nfi\
-                   \n
-                   \nLatest_fedora_image_cz=$(glance index | grep ci-fedora-$ZUUL_CHANGE | cut -f 1 -d \" \")\
-                   \nif [ -z $Latest_fedora_image_cz ]; then\ 
-                   \n    glance image-create --name=ci-fedora-$ZUUL_CHANGE --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
-                   \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep ci-fedora-$ZUUL_CHANGE | cut -f 1 -d \" \")
-                   \nelse\
-                   \n    glance image-delete $Latest_fedora_image_cz
-                   \n    glance image-create --name=ci-fedora-$ZUUL_CHANGE --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='fedora' < jenkins_DIB_$BUILD_NUMBER/$fedora_image_name.qcow2\
-                   \n    echo \"Latest_fedora_image_cz=\"$(glance index | grep ci-fedora-$ZUUL_CHANGE | cut -f 1 -d \" \")
-                   \nfi\
-                   \n
-                   \nrm -r jenkins_DIB_$BUILD_NUMBER/"
-      - ssh:
           site: '172.18.168.42'
           target: 'jenkins_DIB_$BUILD_NUMBER'
           source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.selinux-permissive.qcow2'
