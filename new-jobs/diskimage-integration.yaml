@@ -29,7 +29,7 @@
 
     publishers:
       - ssh:
-          site: '172.18.168.2'
+          site: '172.18.168.42'
           target:
           source:
           remove-prefix:
@@ -37,7 +37,11 @@
           timeout: "1800000"
           use-pty: true
           command: "\
-                     id=$(glance index | grep $USERNAME_savanna_latest | cut -f 1 -d \" \")
-                   \nglance image-delete $id\
-                   \nid_new=$(glance index | grep $IMAGE_NAME | cut -f 1 -d \" \")
-                   \nglance image-update $id_new --name $USERNAME_savanna_latest"
+                    \nexport OS_AUTH_URL=\"http://127.0.0.1:5000/v2.0/\"\ 
+                    \nexport OS_TENANT_NAME=ci\
+                    \nexport OS_USERNAME=ci-user\
+                    \nexport OS_PASSWORD=nova\
+                    \nid=$(glance index | grep $USERNAME_savanna_latest | cut -f 1 -d \" \")
+                    \nglance image-delete $id\
+                    \nid_new=$(glance index | grep $IMAGE_NAME | cut -f 1 -d \" \")
+                    \nglance image-update $id_new --name $USERNAME_savanna_latest"
