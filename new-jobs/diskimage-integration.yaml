@@ -22,7 +22,7 @@
 
     builders:
     - shell:  "\
-               \nrm -rf *\
+               \nrm -rf * .???*\
                \ngit clone https://github.com/openstack/savanna .\
                \ngit clone https://github.com/savanna-project/savanna-ci\
                \nbash savanna-ci/scripts/diskimage-integration.sh $IMAGE_NAME $USERNAME"
