@@ -22,7 +22,7 @@
           use-pty: true
           remove-prefix:
           excludes:
-          timeout: "1800000"
+          timeout: "18000000"
           command: "fedora_image_name=fedora_savanna_latest.selinux-permissive\
                    \nubuntu_image_name=ubuntu_savanna_latest\
                    \nLatest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$ZUUL_CHANGE | cut -f 1 -d \" \")\
