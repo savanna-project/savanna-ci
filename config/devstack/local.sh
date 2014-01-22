@@ -47,6 +47,8 @@ FORMAT=" --request-format xml"
 neutron net-update $FORMAT $PRIVATE_NET_ID --shared True
 neutron net-update $FORMAT $PUBLIC_NET_ID --shared True
 
+neutron subnet-update private-subnet --dns_nameservers list=true 8.8.8.8 8.8.4.4
+
 # setup security groups (nova-network only)
 
 #nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
