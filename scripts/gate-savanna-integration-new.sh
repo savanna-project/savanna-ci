@@ -80,8 +80,9 @@ plugins=vanilla,hdp
 [plugin:vanilla]
 plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 [plugin:hdp]
-plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savanna.conf
-
+plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
+[database]
+connection=sqlite://///tmp/savanna-server.db" >> etc/savanna/savanna.conf
 #touch ~/.pip/pip.conf
 
 #echo "
