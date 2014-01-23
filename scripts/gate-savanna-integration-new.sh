@@ -94,6 +94,8 @@ plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" >> etc/savanna/savan
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 #" > ~/.pip/pip.conf
+tox -evenv -- savanna-db-manage --config-file etc/savanna/savanna.conf upgrade head
+
 screen -dmS savanna-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
 
