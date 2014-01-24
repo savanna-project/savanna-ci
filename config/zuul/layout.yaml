@@ -1,3 +1,6 @@
+includes:
+  - python-file: openstack_functions.py
+
 pipelines:
   - name: check
     manager: IndependentPipelineManager
@@ -6,45 +9,36 @@ pipelines:
         - event: patchset-created
         - event: change-restored
         - event: comment-added
-          comment_filter: (?i)^\s*recheck savanna-ci\s*$
+          comment_filter: (?i)^\s*recheck(( (?:bug|lp)[\s#:]*(\d+))|( no bug)|( savanna-ci))\s*$
         - event: comment-added
           require-approval:
             - username: savanna-ci
-              older-than: 36h
+              older-than: 48h
     success:
       gerrit:
-        force-message: true
+        verified: 1
     failure:
       gerrit:
-        force-message: true
+        verified: -1
 
 projects:
   - name: openstack/savanna
     check:
-      - gate-savanna-pep8
-      - gate-savanna-python27
-      - savanna-coverage
-      - gate-savanna-requirements
       - gate-savanna-integration-hdp
       - gate-savanna-integration-vanilla
       - gate-savanna-integration-heat-vanilla
-  - name: openstack/python-savannaclient
-    check:
-      - gate-python-savannaclient-pep8
-      - gate-python-savannaclient-python27
-      - gate-python-savannaclient-requirements
+      - gate-savanna-integration-heat-hdp
+
   - name: openstack/savanna-dashboard
     check:
-      - gate-savanna-dashboard-pep8
-      - gate-savanna-dashboard-python27
-      - gate-savanna-dashboard-requirements
-  - name: openstack/savanna-extra
-    check:
-      - gate-savanna-extra-pep8
-      - gate-savanna-extra-python27
-      - gate-savanna-extra-requirements
-  - name: openstack/savanna-image-elements
-    check:
-      - gate-savanna-image-elements-pep8
-      - gate-savanna-image-elements-python27
-      - gate-savanna-image-elements-requirements
+      - gate-ui-tests
+
+jobs:
+  - name: ^.*$
+    parameter-function: set_log_url
+  - name: gate-savanna-integration-heat-hdp
+    voting: false
+  - name: gate-savanna-python27
+    voting: true
+  - name: savanna-coverage
+    voting: true
