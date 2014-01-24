@@ -6,7 +6,7 @@ JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
     HEAT_JOB=True
-    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk
+    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
     VANILLA_IMAGE=savanna-itests-ci-vanilla-image-heat
     SSH_USERNAME=ec2-user
     echo "Heat detected"
@@ -23,7 +23,7 @@ else
     if [ $JOB_TYPE == 'hdp' ]                                                   
     then                                                                        
        HDP_JOB=True
-       HDP_IMAGE=savanna-itests-ci-hdp-image-jdk
+       HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
        echo "HDP detected"
     else                                                                        
        VANILLA_JOB=True 
