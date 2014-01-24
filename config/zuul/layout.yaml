@@ -7,6 +7,10 @@ pipelines:
         - event: change-restored
         - event: comment-added
           comment_filter: (?i)^\s*recheck savanna-ci\s*$
+        - event: comment-added
+          require-approval:
+            - username: savanna-ci
+              older-than: 36h
     success:
       gerrit:
         force-message: true
