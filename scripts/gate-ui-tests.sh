@@ -60,7 +60,7 @@ neutron_management_network = 'private'
 floationg_ip_pool = 'public'
 keystone_url = 'http://172.18.168.42:5000/v2.0'
 await_element = 120
-image_name_for_register = 'ubuntu-12.04-latest'
+image_name_for_register = 'ubuntu-12.04'
 image_name_for_edit = "savanna-itests-ci-vanilla-image"
 [vanilla]
 skip_plugin_tests = False
