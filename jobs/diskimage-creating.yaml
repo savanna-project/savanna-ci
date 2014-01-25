@@ -24,7 +24,7 @@
     - shell: "sudo rm -rf *
               \nsleep 60
               \ngit clone https://git.openstack.org/openstack/savanna-image-elements\
-              \nsudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh\
+              \nsudo bash savanna-image-elements/diskimage-create/diskimage-create.sh\
               \ncp ubuntu_savanna_latest.qcow2 ~/images/ci-ubuntu-$GERRIT_CHANGE_NUMBER.qcow2
               \ncp fedora_savanna_latest.selinux-permissive.qcow2 ~/images/ci-fedora-$GERRIT_CHANGE_NUMBER.qcow2"
     publishers:
