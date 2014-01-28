@@ -45,6 +45,8 @@ if [ -n "$SCR_CHECK" ]; then
      screen -S savanna-api -X quit
 fi
 
+sudo killall savanna-api
+
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 rm -f $LOG_FILE
