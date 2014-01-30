@@ -9,7 +9,7 @@ enable_service swift
 SWIFT_HASH=66a3d6b56c1f479c8b4e70ab5c2000f5
 SWIFT_REPLICAS=1
 SWIFT_DATA_DIR=$DEST/data
-SWIFT_LOOPBACK_DISK_SIZE=40G
+SWIFT_LOOPBACK_DISK_SIZE=200G
 
 # Force checkout prerequsites
 # FORCE_PREREQ=1
@@ -18,7 +18,7 @@ VOLUME_BACKING_FILE_SIZE=100000M
 
 # keystone is now configured by default to use PKI as the token format which produces huge tokens.
 # set UUID as keystone token format which is much shorter and easier to work with.
-KEYSTONE_TOKEN_FORMAT=UUID
+#KEYSTONE_TOKEN_FORMAT=UUID
 
 # Change the FLOATING_RANGE to whatever IPs VM is working in.
 # In NAT mode it is subnet VMWare Fusion provides, in bridged mode it is your local network.
@@ -28,16 +28,8 @@ FIXED_NETWORK_SIZE=256
 FLOATING_RANGE=172.18.169.0/26
 PUBLIC_NETWORK_GATEWAY=172.18.169.1
 
-Q_PLUGIN=openvswitch
-#OVS_ENABLE_TUNNELING=True
-PUBLIC_BRIDGE=br-pub
-ENABLE_TENANT_VLANS=True
-TENANT_VLAN_RANGE=1:1000
-PHYSICAL_NETWORK=physnet1
-NOVA_VIF_DRIVER=nova.virt.libvirt.vif.LibvirtOpenVswitchDriver
-
 # Enable logging
-#SCREEN_LOGDIR=$DEST/logs/screen
+SCREEN_LOGDIR=$DEST/logs/screen
 
 # Set ``OFFLINE`` to ``True`` to configure ``stack.sh`` to run cleanly without
 # Internet access. ``stack.sh`` must have been previously run with Internet
@@ -50,9 +42,13 @@ enable_service q-dhcp
 enable_service q-l3
 enable_service q-meta
 enable_service neutron
+enable_service q-lbaas
 
 ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
 
+CINDER_PERIODIC_INTERVAL=10
+export OS_NO_CACHE=True
+CINDER_SECURE_DELETE=False
 
 RECLONE=yes
 API_RATE_LIMIT=False
