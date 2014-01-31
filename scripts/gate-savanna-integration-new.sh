@@ -10,7 +10,7 @@ if [ $JOB_TYPE == 'heat' ]
 then                                                                            
     HEAT_JOB=True
     HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
-    VANILLA_IMAGE=savanna-itests-ci-vanilla-image-heat
+    VANILLA_IMAGE=savanna-itests-ci-vanilla-image
     SSH_USERNAME=ec2-user
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
@@ -123,6 +123,7 @@ $COMMON_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[VANILLA]
+SSH_USERNAME = '$SSH_USERNAME'
 IMAGE_NAME = '$VANILLA_IMAGE'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
