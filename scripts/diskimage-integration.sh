@@ -1,7 +1,7 @@
 #!/bin/bash
 
-sudo sh -c 'grep -q controller /etc/hosts || echo 172.18.168.5 controller-13 >> /etc/hosts'
-sudo sh -c 'grep -q os4 /etc/hosts || echo 172.18.79.135 os4 >> /etc/hosts'
+#sudo sh -c 'grep -q controller /etc/hosts || echo 172.18.168.2 controller-13 >> /etc/hosts'
+#sudo sh -c 'grep -q os4 /etc/hosts || echo 172.18.79.135 os4 >> /etc/hosts'
 cd $WORKSPACE
 
 OS_USERNAME=$2
@@ -21,10 +21,10 @@ mkdir /tmp/cache
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
-os_auth_host=172.18.168.42
+os_auth_host=172.18.168.2
 os_auth_port=5000
 os_admin_username=ci-user
-os_admin_password=nova
+os_admin_password=swordfish
 os_admin_tenant_name=ci
 plugins=vanilla,hdp
 use_neutron=true
@@ -42,22 +42,23 @@ export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[COMMON]
 OS_USERNAME = 'ci-user'
-OS_PASSWORD = 'nova'
+OS_PASSWORD = 'swordfish'
 OS_TENANT_NAME = 'ci'
-OS_AUTH_URL = 'http://172.18.168.42:5000/v2.0/'
+OS_AUTH_URL = 'http://172.18.168.2:5000/v2.0/'
 SAVANNA_HOST = '$ADDR'
-FLAVOR_ID = '20'
+FLAVOR_ID = '22'
 CLUSTER_CREATION_TIMEOUT = 60
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-diskimage'
-FLOATING_IP_POOL = 'public'
+FLOATING_IP_POOL = 'net04_ext'
 NEUTRON_ENABLED = True
-INTERNAL_NEUTRON_NETWORK = 'private'
+INTERNAL_NEUTRON_NETWORK = 'net04'
 [VANILLA]
 PLUGIN_NAME = 'vanilla'
 IMAGE_NAME = '$VANILLA_IMAGE'
 NODE_USERNAME = '$OS_USERNAME'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
 SKIP_CLUSTER_CONFIG_TEST = True
+SKIP_EDP_TEST = True
 SKIP_MAP_REDUCE_TEST = False
 SKIP_SWIFT_TEST = True
 SKIP_SCALING_TEST = True
