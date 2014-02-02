@@ -5,7 +5,7 @@
 # os_auth_host=127.0.0.1
 # os_auth_port=35357
 # os_admin_password=swordfish
-# db_name=savanna-server.db
+db_name=savanna-server.db
 
 . $WORKSPACE/params
 
@@ -68,5 +68,6 @@ then
 fi
 screen -dmS savanna-master
 sleep 2
+tox -evenv -- savanna-db-manage --config-file etc/savanna/savanna.conf upgrade head
 screen -S savanna-master -p 0 -X stuff 'tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d
 '
