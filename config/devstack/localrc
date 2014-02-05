@@ -1,3 +1,6 @@
+DEST=/srv/stack
+DATA_DIR=/srv/stack/data
+
 ADMIN_PASSWORD=
 MYSQL_PASSWORD=
 RABBIT_PASSWORD=
@@ -8,8 +11,9 @@ SERVICE_TOKEN=
 enable_service swift
 SWIFT_HASH=66a3d6b56c1f479c8b4e70ab5c2000f5
 SWIFT_REPLICAS=1
-SWIFT_DATA_DIR=$DEST/data
-SWIFT_LOOPBACK_DISK_SIZE=200G
+SWIFT_LOOPBACK_DISK_SIZE=100G
+SWIFT_DATA_DIR=/opt/swift
+SWIFT_DISK_IMAGE=/opt/swift/drives/swift.img
 
 # Force checkout prerequsites
 # FORCE_PREREQ=1
@@ -29,7 +33,7 @@ FLOATING_RANGE=172.18.169.0/26
 PUBLIC_NETWORK_GATEWAY=172.18.169.1
 
 # Enable logging
-SCREEN_LOGDIR=$DEST/logs/screen
+SCREEN_LOGDIR=/var/log/devstack
 
 # Set ``OFFLINE`` to ``True`` to configure ``stack.sh`` to run cleanly without
 # Internet access. ``stack.sh`` must have been previously run with Internet
@@ -46,11 +50,7 @@ enable_service q-lbaas
 
 ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
 
-CINDER_PERIODIC_INTERVAL=10
-export OS_NO_CACHE=True
 CINDER_SECURE_DELETE=False
 
 RECLONE=yes
 API_RATE_LIMIT=False
-
-#LOGFILE=stack.sh.log
