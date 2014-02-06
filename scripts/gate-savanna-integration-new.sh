@@ -4,7 +4,7 @@
 sed 's/testtools>=0.9.32/testtools==0.9.34/' -i test-requirements.txt
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
-
+TIMEOUT=60
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
@@ -38,6 +38,7 @@ else
     if [ $JOB_TYPE == 'idh' ]
     then
        IDH_JOB=True 
+       TIMEOUT=120
        echo "IDH detected"
     fi    
 fi 
@@ -122,7 +123,7 @@ OS_TENANT_NAME = 'ci'
 OS_AUTH_URL = 'http://172.18.168.42:5000/v2.0'
 SAVANNA_HOST = '$ADDR'
 FLAVOR_ID = '20'
-CLUSTER_CREATION_TIMEOUT = 60
+CLUSTER_CREATION_TIMEOUT = $TIMEOUT
 CLUSTER_NAME = 'ci-$BUILD_NUMBER-$ZUUL_CHANGE-$ZUUL_PATCHSET'
 FLOATING_IP_POOL = 'public'
 NEUTRON_ENABLED = True
