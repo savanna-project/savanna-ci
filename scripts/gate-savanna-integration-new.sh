@@ -17,7 +17,6 @@ then
     if [ $JOB_TYPE == 'hdp'  ]                                                  
     then                                                                        
         HDP_JOB=True
-        HDP_PARAMS="SKIP_ALL_TESTS_FOR_PLUGIN = False" 
         echo "HDP detected"
     else                                                                        
         VANILLA_JOB=True
@@ -28,22 +27,11 @@ else
     then                                                                        
        HDP_JOB=True
        HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
-       HDP_PARAMS="SKIP_ALL_TESTS_FOR_PLUGIN = False"
        echo "HDP detected"
-    fi
-    if [ $JOB_TYPE == 'vanilla' ]       
-    then
+    else                                                                        
        VANILLA_JOB=True 
        VANILLA_IMAGE=savanna-itests-ci-vanilla-image
        echo "Vanilla detected"
-    fi
-    if [ $JOB_TYPE == 'idh' ]
-    then
-       IDH_JOB=True
-       IDH_IMAGE=intel-noepel
-       HDP_PARAMS="SKIP_ALL_TESTS_FOR_PLUGIN = True"
-       VANILLA_PARAMS="SKIP_ALL_TESTS_FOR_PLUGIN = True"
-       echo "IDH detected"
     fi                                                                          
 fi 
 
@@ -60,6 +48,7 @@ if [ -n "$SCR_CHECK" ]; then
      screen -S savanna-api -X quit
 fi
 
+sudo killall savanna-api
 
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
@@ -145,15 +134,8 @@ $VANILLA_PARAMS
 echo "[HDP]
 SSH_USERNAME = '$SSH_USERNAME'
 IMAGE_NAME = '$HDP_IMAGE'
+SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
-" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
-
-echo "[IDH]
-IMAGE_ID = 'e352731f-6211-4ed5-80d9-493292bd95c9'
-IDH_REPO_URL = 'http://172.18.168.109/inteldistribution-2.5.1'
-OS_REPO_URL = 'http://172.18.168.109/centos/base/'
-SSH_USERNAME = 'cloud-user'
-MANAGER_FLAVOR_ID = '3'
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
@@ -184,16 +166,10 @@ if [ "$FAILURE" = 0 ]; then
     then
         tox -e integration -- hdp
         STATUS=`echo $?`               
-    fi                               
+                                   
 
-    if [ $VANILLA_JOB ]
-    then
+    else
         tox -e integration -- vanilla
-        STATUS=`echo $?`
-    fi
-    if [ $IDH_JOB ]
-    then
-        tox -e integration
         STATUS=`echo $?`
     fi
 fi
