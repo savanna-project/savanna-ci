@@ -31,12 +31,14 @@ else
        HDP_PARAMS="SKIP_ALL_TESTS_FOR_PLUGIN = False"
        echo "HDP detected"
     fi
-    if [ $JOB_TYPE == 'vanilla' ]                                                                    
+    if [ $JOB_TYPE == 'vanilla' ]       
+    then
        VANILLA_JOB=True 
        VANILLA_IMAGE=savanna-itests-ci-vanilla-image
        echo "Vanilla detected"
     fi
     if [ $JOB_TYPE == 'idh' ]
+    then
        IDH_JOB=True
        IDH_IMAGE=intel-noepel
        HDP_PARAMS="SKIP_ALL_TESTS_FOR_PLUGIN = True"
