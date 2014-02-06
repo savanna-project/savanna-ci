@@ -8,4 +8,4 @@ echo "============= SAVANNA ============="
 ./ttx.sh -N savanna icehouse
 
 echo "========= SAVANNA CLIENT =========="
-./ttx.sh -N python-savannaclient 0.4.x
+./ttx.sh -N python-savannaclient 0.5.x
