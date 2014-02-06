@@ -87,7 +87,7 @@ os_admin_username=ci-user
 os_admin_password=nova
 os_admin_tenant_name=ci
 use_neutron=true
-plugins=vanilla,hdp
+plugins=vanilla,hdp,idh
 [cluster_node]
 [sqlalchemy]
 [plugin:vanilla]
