@@ -64,6 +64,9 @@ rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 rm -f $LOG_FILE
 
+mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
+mysql -usavanna-citest -psavanna-citest -Bse "create database savanna"
+
 BUILD_ID=dontKill
 
 #sudo pip install tox
@@ -97,7 +100,7 @@ plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 [plugin:hdp]
 plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
 [database]
-connection=sqlite://///tmp/savanna-server.db" >> etc/savanna/savanna.conf
+connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/savanna/savanna.conf
 #touch ~/.pip/pip.conf
 
 #echo "
