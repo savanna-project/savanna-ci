@@ -187,10 +187,12 @@ if [ "$FAILURE" = 0 ]; then
     fi                               
 
     if [ $VANILLA_JOB ]
+    then
         tox -e integration -- vanilla
         STATUS=`echo $?`
     fi
     if [ $IDH_JOB ]
+    then
         tox -e integration
         STATUS=`echo $?`
     fi
