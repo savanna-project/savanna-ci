@@ -28,11 +28,18 @@ else
        HDP_JOB=True
        HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
        echo "HDP detected"
-    else                                                                        
+    fi
+    if [ $JOB_TYPE == 'vanilla' ]
+    then
        VANILLA_JOB=True 
        VANILLA_IMAGE=savanna-itests-ci-vanilla-image
        echo "Vanilla detected"
-    fi                                                                          
+    fi
+    if [ $JOB_TYPE == 'idh' ]
+    then
+       IDH_JOB=True 
+       echo "IDH detected"
+    fi    
 fi 
 
 export PYTHONUNBUFFERED=1
@@ -47,8 +54,6 @@ SCR_CHECK=$(ps aux | grep screen | grep savanna)
 if [ -n "$SCR_CHECK" ]; then
      screen -S savanna-api -X quit
 fi
-
-sudo killall savanna-api
 
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
@@ -138,6 +143,14 @@ SKIP_ALL_TESTS_FOR_PLUGIN = False
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
+echo "[IDH]
+IMAGE_ID = 'e352731f-6211-4ed5-80d9-493292bd95c9'
+IDH_REPO_URL = 'http://172.18.169.33/inteldistribution-2.5.1'
+OS_REPO_URL = 'http://172.18.169.33/centos/base/'
+SSH_USERNAME = 'cloud-user'
+MANAGER_FLAVOR_ID = '3'
+" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+
 touch $TMP_LOG
 i=0
 
@@ -166,12 +179,20 @@ if [ "$FAILURE" = 0 ]; then
     then
         tox -e integration -- hdp
         STATUS=`echo $?`               
-                                   
+    fi                               
 
-    else
+    if [ $VANILLA_JOB ]
+    then
         tox -e integration -- vanilla
         STATUS=`echo $?`
     fi
+    
+    if [ $IDH_JOB ]
+    then
+        tox -e integration -- idh
+        STATUS=`echo $?`
+    fi    
+    
 fi
 
 echo "-----------Python integration env-----------"
