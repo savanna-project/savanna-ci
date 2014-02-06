@@ -24,6 +24,7 @@
      - hdp
      - heat-vanilla
      - heat-hdp
+     - idh
     jobs:
      - 'gate-savanna-integration-{plugin}'
 
