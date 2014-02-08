@@ -38,7 +38,9 @@ cd /home/ubuntu
 rm -rf savanna-venv
 virtualenv savanna-venv
 savanna-venv/bin/pip install -e git://github.com/openstack/savanna.git#egg=savanna
-savanna-venv/bin/python savanna-venv/bin/savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
+cd savanna-venv
+tox -evenv -- savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
+cd ..
 screen -dmS savanna /bin/bash -c "savanna-venv/bin/python savanna-venv/bin/savanna-api --config-file /home/ubuntu/savanna.conf -d --log-file /tmp/savanna.log"
 
 while true
