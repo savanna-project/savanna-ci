@@ -25,6 +25,9 @@ ps aux | grep Xvfb
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 
+mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
+mysql -usavanna-citest -psavanna-citest -Bse "create database savanna"
+
 BUILD_ID=dontKill
 
 screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x768x16
