@@ -27,6 +27,7 @@ rm -rf /tmp/cache
 
 mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
 mysql -usavanna-citest -psavanna-citest -Bse "create database savanna"
+tox -evenv -- savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
 
 BUILD_ID=dontKill
 
