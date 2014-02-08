@@ -35,13 +35,11 @@ screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x
 export DISPLAY=:22
 
 cd /home/ubuntu
-rm -rf savanna-venv
-virtualenv savanna-venv
-savanna-venv/bin/pip install -e git://github.com/openstack/savanna.git#egg=savanna
-cd savanna-venv
+rm -rf savanna
+git clone https://github.com/openstack/savanna
+cd savanna
 tox -evenv -- savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
-cd ..
-screen -dmS savanna /bin/bash -c "savanna-venv/bin/python savanna-venv/bin/savanna-api --config-file /home/ubuntu/savanna.conf -d --log-file /tmp/savanna.log"
+screen -dmS savanna /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file /home/ubuntu/savanna.conf -d --log-file /tmp/savanna.log"
 
 while true
 do
