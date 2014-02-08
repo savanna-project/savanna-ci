@@ -27,7 +27,6 @@ rm -rf /tmp/cache
 
 mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
 mysql -usavanna-citest -psavanna-citest -Bse "create database savanna"
-tox -evenv -- savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
 
 BUILD_ID=dontKill
 
@@ -39,6 +38,7 @@ cd /home/ubuntu
 rm -rf savanna-venv
 virtualenv savanna-venv
 savanna-venv/bin/pip install -e git://github.com/openstack/savanna.git#egg=savanna
+savanna-venv/bin/python savanna-venv/bin/savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
 screen -dmS savanna /bin/bash -c "savanna-venv/bin/python savanna-venv/bin/savanna-api --config-file /home/ubuntu/savanna.conf -d --log-file /tmp/savanna.log"
 
 while true
