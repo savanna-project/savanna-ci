@@ -145,9 +145,9 @@ $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[IDH]
-IMAGE_ID = 'e352731f-6211-4ed5-80d9-493292bd95c9'
-IDH_REPO_URL = 'http://172.18.169.33/inteldistribution-2.5.1'
-OS_REPO_URL = 'http://172.18.169.33/centos/base/'
+IMAGE_ID = '63b4bb5f-5b88-4a30-bb4d-f2f637a1ef88'
+IDH_REPO_URL = 'http://172.18.169.3/inteldistribution-2.5.1'
+OS_REPO_URL = 'http://172.18.169.3/centos/base/'
 SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
