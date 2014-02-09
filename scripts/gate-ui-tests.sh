@@ -10,10 +10,7 @@ if [ -n "$SCR_CHECK" ]; then
      screen -S display -X quit
 fi
 
-SCR_CHECK=$(ps aux | grep screen | grep savanna)
-if [ -n "$SCR_CHECK" ]; then
-     screen -S savanna -X quit
-fi
+screen -S savanna -X quit
 
 DETECT_XVFB=$(ps aux | grep Xvfb | grep -v grep)
 if [ -n "$DETECT_XVFB" ]; then
