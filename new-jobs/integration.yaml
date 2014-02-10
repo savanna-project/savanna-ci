@@ -1,7 +1,7 @@
 - job-template:
     name: 'gate-savanna-integration-{plugin}'
     defaults:
-    concurrent: true
+    concurrent: false
     builders:
       - gerrit-git-prep
       - shell: "rm -rf savanna-ci\

@@ -25,20 +25,28 @@
               \nsleep 60
               \ngit clone https://git.openstack.org/openstack/savanna-image-elements\
               \nsudo bash savanna-image-elements/diskimage-create/diskimage-create.sh\
-              \ncp ubuntu_savanna_latest.qcow2 ~/images/ci-ubuntu-$GERRIT_CHANGE_NUMBER.qcow2
-              \ncp fedora_savanna_latest.selinux-permissive.qcow2 ~/images/ci-fedora-$GERRIT_CHANGE_NUMBER.qcow2"
     publishers:
       - ssh:
           site: '172.18.168.2'
           target: 'jenkins_DIB_$BUILD_NUMBER'
-          source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.selinux-permissive.qcow2'
+          source: 'ubuntu_savanna_latest.qcow2, fedora_savanna_latest.selinux-permissive.qcow2, centos_savanna_latest.selinux-permissive.qcow2'
           remove-prefix:
           excludes:
           timeout: "1800000"
           command: "fedora_image_name=fedora_savanna_latest.selinux-permissive\
                    \nubuntu_image_name=ubuntu_savanna_latest\
-                   \nLatest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \ncentos_image_name=centos_savanna_latest.selinux-permissive\
+                   \nLatest_centos_image_cz=$(glance index | grep ci-centos-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \nif [ -z $Latest_centos_image_cz ]; then\
+                   \n    glance image-create --name=ci-centos-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='cloud-user' < jenkins_DIB_$BUILD_NUMBER/$centos_image_name.qcow2\
+                   \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \nelse
+                   \n    glance image-delete $Latest_centos_image_cz
+                   \n    glance image-create --name=ci-centos-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='cloud-user' < jenkins_DIB_$BUILD_NUMBER/$centos_image_name.qcow2\
+                   \n    echo \"Latest_centos_image_cz=\"$(glance index | grep ci-centos-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
+                   \nfi\
                    \n
+                   \nLatest_ubuntu_image_cz=$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
                    \nif [ -z $Latest_ubuntu_image_cz ]; then\
                    \n    glance image-create --name=ci-ubuntu-$GERRIT_CHANGE_NUMBER --disk-format=qcow2 --container-format=bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu' < jenkins_DIB_$BUILD_NUMBER/$ubuntu_image_name.qcow2\
                    \n    echo \"Latest_ubuntu_image_cz=\"$(glance index | grep ci-ubuntu-$GERRIT_CHANGE_NUMBER | cut -f 1 -d \" \")\
@@ -62,11 +70,22 @@
                     
 
       - trigger-parameterized-builds:
-          - project: "diskimage-prepare"
+          - project: "diskimage-integration"
             condition: SUCCESS
-            predefined-parameters: "BUILD_JOB=$JOB_NAME\
-                                   \nBUILD_ID=$BUILD_NUMBER\
-                                   \nCHANGE_NUMBER=$GERRIT_CHANGE_NUMBER"
+            predefined-parameters: "IMAGE_NAME=ci-ubuntu-$GERRIT_CHANGE_NUMBER\
+                                  \nUSERNAME=ubuntu
+                                  \n$OSNAME=ubuntu"
+          - project: "diskimage-integration"
+            condition: SUCCESS
+            predefined-parameters: "IMAGE_NAME=ci-fedora-$GERRIT_CHANGE_NUMBER\
+                                  \nUSERNAME=fedora\
+                                  \nOSNAME=fedora"
+          - project: "diskimage-integration"
+            condition: SUCCESS
+            predefined-parameters: "IMAGE_NAME=ci-centos-$GERRIT_CHANGE_NUMBER\
+                                  \nUSERNAME=cloud-user\
+                                  \nOSNAME=centos"
+
       - email:
           recipients: elastic-hadoop-eng@mirantis.com
       - workspace-cleanup:
