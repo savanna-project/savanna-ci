@@ -24,7 +24,7 @@
     - shell: "sudo rm -rf *
               \nsleep 60
               \ngit clone https://git.openstack.org/openstack/savanna-image-elements\
-              \nsudo bash savanna-image-elements/diskimage-create/diskimage-create.sh\
+              \nsudo bash savanna-image-elements/diskimage-create/diskimage-create.sh"
     publishers:
       - ssh:
           site: '172.18.168.2'
