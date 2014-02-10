@@ -59,15 +59,11 @@
       - ssh:
           site: '172.18.168.2'
           target:
-          source:
+          source: update-image.sh
           remove-prefix:
           excludes:
           timeout: "1800000"
           use-pty: true
-          command: "\
-                     id=$(glance index | grep $OSNAME_savanna_latest | cut -f 1 -d \" \")
-                   \nglance image-delete $id\
-                   \nid_new=$(glance index | grep $IMAGE_NAME | cut -f 1 -d \" \")
-                   \nglance image-update $id_new --name $USERNAME_savanna_latest"
+          command: "bash update-image.sh"
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
