@@ -119,9 +119,9 @@ then
     exit 1
 fi
 
-echo "
+cat > update-image.sh<<EOF
 id=$(glance index | grep $OSNAME_savanna_latest | cut -f 1 -d \" \")
 glance image-delete $id\
 id_new=$(glance index | grep $IMAGE_NAME | cut -f 1 -d \" \")
 glance image-update $id_new --name $USERNAME_savanna_latest
-rm -f $0" > update-image.sh
+EOF
