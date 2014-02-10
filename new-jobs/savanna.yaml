@@ -17,7 +17,7 @@
     node: 'precise-itests'
 
 - project:
-    name: gate-savanna-integration
+    name: savanna
     github-org: openstack
     plugin:
      - vanilla
@@ -51,3 +51,18 @@
                                                                                 
     builders:                                                                   
     - shell: "bash -x /opt/ci/jenkins-jobs/savanna-ci/scripts/integration-cleanup.sh"
+    
+- job:                                                                          
+    name: gate-savanna-pep8-trunk                                             
+    project-type: freestyle                                                     
+    defaults: global                                                            
+    description: "<b>This job is managed by Jenkins Job Builder, do not edit it through WebUI.\
+                  \n<p>Please use this repository to make changes: <a href=\"https://github.com/savanna-project/savanna-ci\">https://github.com/savanna-project/savanna-ci</a></b>\
+                 \n<p>This job runs pep8 check using trunk version of hacking"
+    disabled: false                                                             
+    concurrent: true
+    node: 'precise'                                                           
+                                                                                
+    builders:                                                                   
+    - shell: "bash -x /opt/ci/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8-trunk.sh"
+
