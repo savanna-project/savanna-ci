@@ -40,9 +40,3 @@ projects:
 jobs:
   - name: ^.*$
     parameter-function: set_log_url
-  - name: gate-savanna-integration-heat-hdp
-    voting: false
-  - name: gate-savanna-python27
-    voting: true
-  - name: savanna-coverage
-    voting: true
