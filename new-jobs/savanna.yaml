@@ -63,6 +63,9 @@
     concurrent: true
     node: 'precise'                                                           
                                                                                 
-    builders:                                                                   
+    builders:
+    - gerrit-git-prep
     - shell: "bash -x /opt/ci/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8-trunk.sh"
 
+    publishers:
+      - console-log
