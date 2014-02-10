@@ -61,7 +61,7 @@
                  \n<p>This job runs pep8 check using trunk version of hacking"
     disabled: false                                                             
     concurrent: true
-    node: 'precise'                                                           
+    node: 'precise-itests'                                                           
                                                                                 
     builders:
     - gerrit-git-prep
