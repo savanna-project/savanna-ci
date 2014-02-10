@@ -1,6 +1,6 @@
 #!/bin/bash -xe
 
-source /usr/local/jenkins/slave_scripts/select-mirror.sh $org $project
+source /usr/local/jenkins/slave_scripts/select-mirror.sh openstack savanna
 
 set -o pipefail
 
