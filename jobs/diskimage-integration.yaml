@@ -64,6 +64,7 @@
           excludes:
           timeout: "1800000"
           use-pty: true
-          command: "bash update-image.sh"
+          command: "bash update-image.sh\
+                  \nrm -f update-image.sh"
       - email:
           recipients: elastic-hadoop-eng@mirantis.com 
