@@ -31,6 +31,7 @@ projects:
       - gate-savanna-integration-vanilla
       - gate-savanna-integration-heat-vanilla
       - gate-savanna-integration-heat-hdp
+      - gate-savanna-pep8-latest
 
   - name: openstack/savanna-dashboard
     check:
