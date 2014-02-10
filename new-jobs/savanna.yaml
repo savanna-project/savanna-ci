@@ -65,7 +65,9 @@
                                                                                 
     builders:
     - gerrit-git-prep
-    - shell: "bash -x /opt/ci/jenkins-jobs/savanna-ci/scripts/gate-savanna-pep8-trunk.sh"
+    - shell: "rm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci\
+              \nbash -x savanna-ci/scripts/gate-savanna-pep8-trunk.sh"
 
     publishers:
       - console-log
