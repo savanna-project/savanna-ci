@@ -119,6 +119,7 @@ then
     exit 1
 fi
 
+touch $WORKSPACE/update-image.sh
 echo '
 id=$(glance index | grep $OSNAME_savanna_latest | cut -f 1 -d " ")
 glance image-delete $id
