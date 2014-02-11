@@ -4,7 +4,7 @@
 #sed 's/testtools>=0.9.32/testtools==0.9.34/' -i test-requirements.txt
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
-TIMEOUT=90
+TIMEOUT=60
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
