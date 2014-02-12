@@ -59,7 +59,7 @@
       - ssh:
           site: '172.18.168.2'
           target:
-          source: update-image.sh
+          source: /tmp/update-image.sh
           remove-prefix:
           excludes:
           timeout: "1800000"
