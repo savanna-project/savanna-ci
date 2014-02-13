@@ -1,7 +1,7 @@
 #!/bin/bash -e
 
+sudo iptables -F
 sudo pip install $WORKSPACE
-
 
 SAVANNA_LOG=/tmp/savanna.log 
 
@@ -31,12 +31,37 @@ screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x
 
 export DISPLAY=:22
 
-cd /home/ubuntu
+cd $HOME
 rm -rf savanna
+
+echo "
+[DEFAULT]
+
+os_auth_host=172.18.168.42
+os_auth_port=5000
+os_admin_username=ci-user
+os_admin_password=nova
+os_admin_tenant_name=ci
+use_floating_ips=true
+use_neutron=true
+
+plugins=vanilla,hdp
+
+
+[plugin:vanilla]
+plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
+
+[plugin:hdp]
+plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
+
+
+[database]
+connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8"  > savanna.conf
+
 git clone https://github.com/openstack/savanna
 cd savanna
-tox -evenv -- savanna-db-manage --config-file /home/ubuntu/savanna.conf upgrade head
-screen -dmS savanna /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file /home/ubuntu/savanna.conf -d --log-file /tmp/savanna.log"
+tox -evenv -- savanna-db-manage --config-file $HOME/savanna.conf upgrade head
+screen -dmS savanna /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file $HOME/savanna.conf -d --log-file /tmp/savanna.log"
 
 while true
 do
