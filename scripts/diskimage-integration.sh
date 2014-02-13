@@ -122,8 +122,8 @@ fi
 
 mkdir -p $WORKSPACE
 
-echo "
-id=$(glance index | grep $OS_NAME_savanna_latest | cut -f 1 -d ' ')
+echo "id=\$(glance index | grep $OS_NAME_savanna_latest | cut -f 1 -d ' ')
 glance image-delete $id
-id_new=$(glance index | grep $VANILLA_IMAGE | cut -f 1 -d ' ')
-glance image-update $id_new --name $OS_USERNAME_savanna_latest" > $WORKSPACE/update-image.sh
+id_new=\$(glance index | grep $VANILLA_IMAGE | cut -f 1 -d ' ')
+glance image-update $id_new --name $OS_USERNAME_savanna_latest
+" >> $WORKSPACE/update-image.sh
