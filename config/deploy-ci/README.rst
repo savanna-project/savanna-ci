@@ -7,7 +7,7 @@ SAVANNA-CI
 
     export zuul_ssh_private_key_contents=$(cat your_gerrit_ssh_private_key)`
 
-Then you need to configure nodepool.yaml for your ci. Our nodepool.yaml contains defaults for savanna-ci. For your CI you should edit '$SAVANNA_CI_REPO/modules/openstack_project/templates/nodepool/nodepool.yaml.erb' as you need (paste your credentials: username, password, auth-url, project-id; change count of servers, image name, min-ram and etc).
+Then you need to configure nodepool.yaml for your ci. Our nodepool.yaml contains defaults for savanna-ci. For your CI you should edit 'savanna-ci/config/deploy-ci/config/modules/openstack_project/templates/nodepool/nodepool.yaml.erb' as you need (paste your credentials: username, password, auth-url, project-id; change count of servers, image name, min-ram and etc).
 
 Then you are ready to run script 'deploy.sh':
 
@@ -22,11 +22,13 @@ First of all, this script will install jenkins on your host. Then you should ent
 2. jenkins-api-user
 
 3. jenkins-api-key
+
 1, 2 and 3 you should setup on jenkins UI. Use help message.
 
 4. network manager (neutron or nova)
 
 5. if your network is neutron, you should enter id of private network and name of public ip pool.
+
 If you set 'neutron' you should also specify network id and public ip pool. It'll be asked to input.
 
 At the end you will get ready to use environment with nodepool, jenkins and zuul.
