@@ -11,7 +11,7 @@
 
     triggers:
         - gerrit:
-            trigger-on-change-merged-event: true
+            trigger-on-patchset-uploaded-event: true 
             failure-message:
             successful-message:
             projects:
