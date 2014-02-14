@@ -3,8 +3,10 @@ export OS_USERNAME=
 export OS_TENANT_NAME=
 export OS_AUTH_URL=http://127.0.0.1:5000/v2.0/
 
-VANILLA_IMAGE_PATH=/home/ubuntu/images/savanna-itests-ci-vanilla-image.qcow2
-HDP_IMAGE_PATH=/home/ubuntu/images/savanna-itests-ci-hdp-image-jdk.qcow2
+VANILLA_IMAGE_PATH=/home/ubuntu/images/savanna-itests-ci-vanilla-image
+HDP_IMAGE_PATH=/home/ubuntu/images/savanna-itests-ci-hdp-image-jdk-iptables-off.qcow2
+UBUNTU_IMAGE_PATH=/home/ubuntu/images/ubuntu-12.04.qcow2
+IDH_IMAGE_PATH=/home/ubuntu/images/intel-noepel.qcow2
 
 # setup ci tenant and ci users
 
@@ -36,7 +38,9 @@ nova flavor-create --is-public true qa-flavor 20 2048 40 2
 # add images for tests
 
 glance image-create --name savanna-itests-ci-vanilla-image --file $VANILLA_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu'
-glance image-create --name savanna-itests-ci-hdp-image-jdk --file $HDP_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.3.2'='True' --property '_savanna_tag_hdp'='True' --property '_savanna_username'='root'
+glance image-create --name savanna-itests-ci-hdp-image-jdk-iptables-off --file $HDP_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.3.2'='True' --property '_savanna_tag_hdp'='True' --property '_savanna_username'='root'
+glance image-create --name ubuntu-12.04 --file $UBUNTU_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true
+glance image-create --name intel-noepel --file $IDH_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_2.5.1'='True' --property '_savanna_tag_idh'='True' --property '_savanna_username'='cloud-user'
 
 # make Neutron networks shared
 
@@ -48,6 +52,7 @@ neutron net-update $FORMAT $PRIVATE_NET_ID --shared True
 neutron net-update $FORMAT $PUBLIC_NET_ID --shared True
 
 neutron subnet-update private-subnet --dns_nameservers list=true 8.8.8.8 8.8.4.4
+
 
 # setup security groups (nova-network only)
 

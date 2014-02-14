@@ -1,6 +1,8 @@
 DEST=/srv/stack
 DATA_DIR=/srv/stack/data
 
+EXTRA_OPTS=(force_config_drive=true libvirt_images_type=qcow2 force_raw_images=false)
+
 ADMIN_PASSWORD=
 MYSQL_PASSWORD=
 RABBIT_PASSWORD=
@@ -33,7 +35,7 @@ FLOATING_RANGE=172.18.169.0/26
 PUBLIC_NETWORK_GATEWAY=172.18.169.1
 
 # Enable logging
-SCREEN_LOGDIR=/var/log/devstack
+#SCREEN_LOGDIR=/var/log/devstack
 
 # Set ``OFFLINE`` to ``True`` to configure ``stack.sh`` to run cleanly without
 # Internet access. ``stack.sh`` must have been previously run with Internet
@@ -46,7 +48,6 @@ enable_service q-dhcp
 enable_service q-l3
 enable_service q-meta
 enable_service neutron
-enable_service q-lbaas
 
 ENABLED_SERVICES+=,heat,h-api,h-api-cfn,h-api-cw,h-eng
 
@@ -54,3 +55,5 @@ CINDER_SECURE_DELETE=False
 
 RECLONE=yes
 API_RATE_LIMIT=False
+
+#LOGFILE=stack.sh.log

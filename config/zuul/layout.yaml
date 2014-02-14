@@ -31,7 +31,7 @@ projects:
       - gate-savanna-integration-vanilla
       - gate-savanna-integration-heat-vanilla
       - gate-savanna-integration-heat-hdp
-      - gate-savanna-pep8-trunk
+      - gate-savanna-integration-idh
 
   - name: openstack/savanna-dashboard
     check:
@@ -40,3 +40,5 @@ projects:
 jobs:
   - name: ^.*$
     parameter-function: set_log_url
+  - name: gate-savanna-integration-idh
+    voting: false
