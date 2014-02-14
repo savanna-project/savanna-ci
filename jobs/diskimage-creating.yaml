@@ -74,7 +74,7 @@
             condition: SUCCESS
             predefined-parameters: "IMAGE_NAME=ci-ubuntu-$GERRIT_CHANGE_NUMBER\
                                   \nUSERNAME=ubuntu
-                                  \n$OSNAME=ubuntu"
+                                  \nOSNAME=ubuntu"
           - project: "diskimage-integration"
             condition: SUCCESS
             predefined-parameters: "IMAGE_NAME=ci-fedora-$GERRIT_CHANGE_NUMBER\
