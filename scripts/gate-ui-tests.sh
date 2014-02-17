@@ -78,7 +78,7 @@ done
 
 echo "
 [common]
-base_url = 'http://127.0.0.1/horizon'
+base_url = 'http://127.0.0.1:8080'
 user = 'ci-user'
 password = 'nova'
 tenant = 'ci'
