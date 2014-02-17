@@ -1,10 +1,9 @@
 #!/bin/bash -e
 
 sudo iptables -F
+sudo pip install $WORKSPACE
 
 SAVANNA_LOG=/tmp/savanna.log 
-SAVANNA_URL=http://127.0.0.1:8386/v1.1
-OPENSTACK_HOST=172.18.168.42
 
 SCR_CHECK=$(ps aux | grep screen | grep display)
 if [ -n "$SCR_CHECK" ]; then
@@ -20,7 +19,7 @@ fi
 
 ps aux | grep Xvfb
 
-#rm -f /tmp/savanna-server.db
+rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 
 mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
@@ -73,12 +72,12 @@ do
         fi
 done
 
-#sudo service apache2 restart
-#sleep 20
+sudo service apache2 restart
+sleep 20
 
 echo "
 [common]
-base_url = 'http://127.0.0.1:8080'
+base_url = 'http://127.0.0.1/horizon'
 user = 'ci-user'
 password = 'nova'
 tenant = 'ci'
@@ -97,39 +96,5 @@ base_image = "savanna-itests-ci-vanilla-image"
 skip_plugin_tests = False
 hadoop_version = '1.3.2'
 " >> $WORKSPACE/savannadashboard/tests/configs/config.conf
-
-cd $WORKSPACE
-if [ -d horizon/ ]
-then
-    rm -rf horizon
-fi
-git clone https://git.openstack.org/openstack/horizon
-cd horizon
-cp openstack_dashboard/local/local_settings.py.example openstack_dashboard/local/local_settings.py
-
-
-sed -i "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"$OPENSTACK_HOST\"/g" openstack_dashboard/local/local_settings.py
-sed -i "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" openstack_dashboard/local/local_settings.py
-sed -i "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" openstack_dashboard/local/local_settings.py
-echo -e "SAVANNA_USE_NEUTRON = True" >> openstack_dashboard/local/local_settings.py
-echo -e "AUTO_ASSIGNMENT_ENABLED = False" >> openstack_dashboard/local/local_settings.py
-echo -e "SAVANNA_URL = \"$SAVANNA_URL\"" >> openstack_dashboard/local/local_settings.py
-
-sed -i "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g" openstack_dashboard/settings.py
-echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/settings.py
-
-python tools/install_venv.py
-.venv/bin/pip install ../
-ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
-
-exist=`screen -ls | grep savanna-dashboard-master`
-if ! [ -z "$exist" ]
-then
-    screen -X -S savanna-dashboard-master quit
-fi
-screen -dmS savanna-dashboard-master
-sleep 2
-screen -S savanna-dashboard-master -p 0 -X stuff  ".venv/bin/python ./manage.py runserver 0.0.0.0:8080
-"
 
 cd $WORKSPACE && tox -e uitests
