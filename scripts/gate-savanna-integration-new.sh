@@ -11,6 +11,7 @@ then
     HEAT_JOB=True
     HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
     VANILLA_IMAGE=savanna-itests-ci-vanilla-image
+    IDH_IMAGE=intel-noepel
     SSH_USERNAME=ec2-user
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
@@ -145,7 +146,7 @@ $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[IDH]
-IMAGE_ID = 'c0492fb9-a6b6-4d78-867b-b5be12fe6611'
+IMAGE_NAME = '$IDH_IMAGE'
 IDH_REPO_URL = 'http://172.18.87.221/mirror/inteldistribution-2.5.1'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
