@@ -5,7 +5,7 @@
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
 TIMEOUT=60
-CINDER_TEST=True
+CINDER_TEST=False
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
@@ -16,7 +16,7 @@ then
     SSH_USERNAME=ec2-user
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')
-    CINDER_TEST=False
+    CINDER_TEST=True
     if [ $JOB_TYPE == 'hdp'  ]                                                  
     then                                                                        
         HDP_JOB=True
