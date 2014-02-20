@@ -5,6 +5,7 @@
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
 TIMEOUT=60
+CINDER_TEST=True
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
@@ -14,7 +15,8 @@ then
     IDH_IMAGE=intel-noepel
     SSH_USERNAME=ec2-user
     echo "Heat detected"
-    JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')                             
+    JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')
+    CINDER_TEST=False
     if [ $JOB_TYPE == 'hdp'  ]                                                  
     then                                                                        
         HDP_JOB=True
@@ -135,6 +137,7 @@ $COMMON_PARAMS
 echo "[VANILLA]
 SSH_USERNAME = '$SSH_USERNAME'
 IMAGE_NAME = '$VANILLA_IMAGE'
+SKIP_CINDER_TEST = '$CINDER_TEST'
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
@@ -142,6 +145,7 @@ echo "[HDP]
 SSH_USERNAME = '$SSH_USERNAME'
 IMAGE_NAME = '$HDP_IMAGE'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
+SKIP_CINDER_TEST = '$CINDER_TEST'
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
