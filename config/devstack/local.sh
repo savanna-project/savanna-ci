@@ -53,7 +53,7 @@ neutron net-update $FORMAT $PUBLIC_NET_ID --shared True
 
 neutron subnet-update private-subnet --dns_nameservers list=true 8.8.8.8 8.8.4.4
 
-
+nova --os-username ci-user --os-password nova --os-tenant-name ci keypair-add public-jenkins > /dev/null
 # setup security groups (nova-network only)
 
 #nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
