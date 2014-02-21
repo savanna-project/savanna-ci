@@ -41,4 +41,4 @@ jobs:
   - name: ^.*$
     parameter-function: set_log_url
   - name: gate-savanna-integration-idh
-    voting: false
+    voting: true
