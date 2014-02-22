@@ -50,7 +50,7 @@ targets:
         providers:
           - name: ci-lab
       - name: precise-itests
-        min-ready: 6
+        min-ready: 5
         providers:
           - name: ci-lab
       - name: precise
