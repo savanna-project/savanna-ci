@@ -6,6 +6,7 @@
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
 TIMEOUT=60
 CINDER_TEST=False
+IDH_IMAGE=intel-noepel
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
