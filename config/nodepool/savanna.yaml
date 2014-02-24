@@ -16,11 +16,11 @@ providers:
     password: 'nova'
     auth-url: 'http://172.18.168.42:5000/v2.0'
     project-id: 'ci'
-    max-servers: 7
+    max-servers: 6
     boot-timeout: 120
     pool: public
     networks:
-      - net-id: 'a779c508-4e2f-4533-a380-7461f2fb38b9'
+      - net-id: '1db47722-f963-4aef-8141-0adf643e4d86'
     images:
       - name: precise-itests
         base-image: 'ubuntu-12.04'
@@ -50,7 +50,7 @@ targets:
         providers:
           - name: ci-lab
       - name: precise-itests
-        min-ready: 5
+        min-ready: 4
         providers:
           - name: ci-lab
       - name: precise
