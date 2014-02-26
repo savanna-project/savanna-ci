@@ -154,7 +154,7 @@ $HDP_PARAMS
 echo "[IDH]
 IMAGE_NAME = '$IDH_IMAGE'
 #IMAGE_ID = 'c0492fb9-a6b6-4d78-867b-b5be12fe6611'
-IDH_REPO_URL = 'http://172.18.87.221/mirror/inteldistribution-2.5.1'
+IDH_REPO_URL = 'file:///var/repo/intel'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
