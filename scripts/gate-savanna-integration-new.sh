@@ -91,6 +91,7 @@ os_auth_port=5000
 os_admin_username=ci-user
 os_admin_password=nova
 os_admin_tenant_name=ci
+use_identity_api_v3=true
 use_neutron=true
 plugins=vanilla,hdp,idh
 [cluster_node]
