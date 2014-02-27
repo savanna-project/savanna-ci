@@ -83,6 +83,9 @@ if [ $HEAT_JOB ]
 then
     echo "infrastructure_engine=heat
     " >> etc/savanna/savanna.conf
+else
+    echo "infrastructure_engine=savanna
+    " >> etc/savanna/savanna.conf
 fi
 
 echo "
@@ -102,6 +105,11 @@ plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/savanna/savanna.conf
+
+echo "----------- savanna.conf -----------"
+cat etc/savanna/savanna.conf
+echo "----------- end of savanna.conf -----------"
+
 #touch ~/.pip/pip.conf
 
 #echo "
