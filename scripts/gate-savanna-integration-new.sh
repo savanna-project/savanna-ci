@@ -5,47 +5,55 @@
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
 TIMEOUT=60
+
+#False value for this variables means that tests are enabled
 CINDER_TEST=False
+CLUSTER_CONFIG_TEST=False
+EDP_TEST=False
+MAP_REDUCE_TEST=False
+SWIFT_TEST=False
+SCALING_TEST=False
+HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH_IMAGE=intel-noepel-test
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
     HEAT_JOB=True
-    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
-    VANILLA_IMAGE=savanna-itests-ci-vanilla-image
-    IDH_IMAGE=intel-noepel
     SSH_USERNAME=ec2-user
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')
     CINDER_TEST=True
-    if [ $JOB_TYPE == 'hdp'  ]                                                  
-    then                                                                        
-        HDP_JOB=True
-        echo "HDP detected"
-    else                                                                        
-        VANILLA_JOB=True
-        echo "Vanilla detected"
-    fi                                                                          
-else                                                                            
-    if [ $JOB_TYPE == 'hdp' ]                                                   
-    then                                                                        
-       HDP_JOB=True
-       HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
-       echo "HDP detected"
-    fi
-    if [ $JOB_TYPE == 'vanilla' ]
-    then
-       VANILLA_JOB=True 
-       VANILLA_IMAGE=savanna-itests-ci-vanilla-image
-       echo "Vanilla detected"
-    fi
-    if [ $JOB_TYPE == 'idh' ]
-    then
-       IDH_JOB=True 
-       TIMEOUT=120
-       echo "IDH detected"
-    fi    
-fi 
+fi                                                                            
+
+if [ $JOB_TYPE == 'hdp' ]                                                   
+then                                                                        
+   HDP_JOB=True
+   HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
+   echo "HDP detected"
+fi
+if [ $JOB_TYPE == 'vanilla' ]
+then
+   VANILLA_JOB=True 
+   VANILLA_IMAGE=savanna-itests-ci-vanilla-image
+   echo "Vanilla detected"
+fi
+if [ $JOB_TYPE == 'idh' ]
+then
+   IDH_JOB=True 
+   TIMEOUT=120
+   echo "IDH detected"
+fi
+if [ $JOB_TYPE == 'transient' ]                                                   
+then                                                                        
+   CINDER_TEST=True                                                             
+   CLUSTER_CONFIG_TEST=True                                                      
+   EDP_TEST=True                                                        
+   MAP_REDUCE_TEST=True                                                          
+   SWIFT_TEST=True                                                            
+   SCALING_TEST=True 
+   TRANSIENT_JOB=True                                                         
+   echo "Transient detected"                                                      
+fi     
 
 export PYTHONUNBUFFERED=1
 
@@ -73,8 +81,6 @@ BUILD_ID=dontKill
 mkdir /tmp/cache
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
-
-infrastructure_engine=heat
 
 echo "[DEFAULT]
 " >> etc/savanna/savanna.conf
@@ -149,6 +155,11 @@ echo "[VANILLA]
 SSH_USERNAME = '$SSH_USERNAME'
 IMAGE_NAME = '$VANILLA_IMAGE'
 SKIP_CINDER_TEST = '$CINDER_TEST'
+SKIP_CLUSTER_CONFIG_TEST = $CLUSTER_CONFIG_TEST 
+SKIP_EDP_TEST = $EDP_TEST
+SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST
+SKIP_SWIFT_TEST = $SWIFT_TEST
+SKIP_SCALING_TEST = $SCALING_TEST
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
@@ -156,13 +167,16 @@ echo "[HDP]
 SSH_USERNAME = '$SSH_USERNAME'
 IMAGE_NAME = '$HDP_IMAGE'
 SKIP_ALL_TESTS_FOR_PLUGIN = False
-SKIP_CINDER_TEST = '$CINDER_TEST'
+SKIP_CINDER_TEST = '$CINDER_TEST'                                
+SKIP_EDP_TEST = $EDP_TEST                                                       
+SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST                                         
+SKIP_SWIFT_TEST = $SWIFT_TEST                                                   
+SKIP_SCALING_TEST = $SCALING_TEST 
 $HDP_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
 echo "[IDH]
 IMAGE_NAME = '$IDH_IMAGE'
-#IMAGE_ID = 'c0492fb9-a6b6-4d78-867b-b5be12fe6611'
 IDH_REPO_URL = 'file:///var/repo/intel'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
@@ -208,6 +222,12 @@ if [ "$FAILURE" = 0 ]; then
     if [ $IDH_JOB ]
     then
         tox -e integration -- idh
+        STATUS=`echo $?`
+    fi 
+   
+    if [ $TRANSIENT_JOB ]
+    then
+        tox -e integration -- vanilla
         STATUS=`echo $?`
     fi    
     
