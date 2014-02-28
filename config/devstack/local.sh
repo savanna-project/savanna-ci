@@ -39,7 +39,7 @@ nova flavor-create --is-public true qa-flavor 20 2048 40 2
 
 glance image-create --name savanna-itests-ci-vanilla-image --file $VANILLA_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.2.1'='True' --property '_savanna_tag_1.1.2'='True' --property '_savanna_tag_vanilla'='True' --property '_savanna_username'='ubuntu'
 glance image-create --name savanna-itests-ci-hdp-image-jdk-iptables-off --file $HDP_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_1.3.2'='True' --property '_savanna_tag_hdp'='True' --property '_savanna_username'='root'
-glance image-create --name ubuntu-12.04 --file $UBUNTU_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true
+glance image-create --name ubuntu-12.04 --location http://cloud-images.ubuntu.com/releases/precise/release/ubuntu-12.04-server-cloudimg-amd64-disk1.img --disk-format qcow2 --container-format bare --is-public=true
 glance image-create --name intel-noepel --file $IDH_IMAGE_PATH --disk-format qcow2 --container-format bare --is-public=true --property '_savanna_tag_ci'='True' --property '_savanna_tag_2.5.1'='True' --property '_savanna_tag_idh'='True' --property '_savanna_username'='cloud-user'
 
 # make Neutron networks shared
