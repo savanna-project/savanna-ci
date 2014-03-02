@@ -42,3 +42,5 @@ jobs:
     parameter-function: set_log_url
   - name: gate-savanna-integration-idh
     voting: true
+  - name: gate-ui-tests
+    parameter-function: single_use_node
