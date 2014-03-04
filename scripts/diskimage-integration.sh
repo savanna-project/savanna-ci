@@ -54,6 +54,8 @@ CLUSTER_NAME = 'ci-$BUILD_NUMBER-diskimage'
 FLOATING_IP_POOL = 'net04_ext'
 NEUTRON_ENABLED = True
 INTERNAL_NEUTRON_NETWORK = 'net04'
+USER_KEYPAIR_ID = 'public-jenkins'
+PATH_TO_SSH_KEY = '/home/ubuntu/.ssh/id_rsa'
 [VANILLA]
 PLUGIN_NAME = 'vanilla'
 IMAGE_NAME = '$VANILLA_IMAGE'
