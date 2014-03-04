@@ -10,6 +10,9 @@
     node: ui
     disabled: false
     concurrent: false
+    
+    properties:
+      - zeromq-event
 
     builders:
     - gerrit-git-prep
