@@ -45,6 +45,7 @@ echo "[COMMON]
 OS_USERNAME = 'ci-user'
 OS_PASSWORD = 'swordfish'
 OS_TENANT_NAME = 'ci'
+OS_TENANT_ID = 'fb35f224d9274d84866a77f887ea7b1c'
 OS_AUTH_URL = 'http://172.18.168.2:5000/v2.0/'
 SAVANNA_HOST = '$ADDR'
 FLAVOR_ID = '22'
