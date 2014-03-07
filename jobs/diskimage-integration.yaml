@@ -40,7 +40,8 @@
                \nif [ -z $IMAGE_NAME ]; then\
                \n    exit 1;\
                \nfi\
-               \nrm -rf savanna-ci\
+               \nrm -rf savanna-ci update-image.sh\
+               \ntouch update-image.sh\
                \ngit clone https://github.com/savanna-project/savanna-ci\
                \nbash savanna-ci/scripts/diskimage-integration.sh $IMAGE_NAME $USERNAME"
 
@@ -59,7 +60,7 @@
       - ssh:
           site: '172.18.168.2'
           target:
-          source: /tmp/update-image.sh
+          source: update-image.sh
           remove-prefix:
           excludes:
           timeout: "1800000"
