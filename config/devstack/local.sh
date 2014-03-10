@@ -12,7 +12,7 @@ IDH_IMAGE_PATH=/home/ubuntu/images/intel-noepel.qcow2
 
 CI_TENANT_ID=$(keystone tenant-create --name ci --description 'CI tenant' | grep id | awk '{print $4}')
 CI_USER_ID=$(keystone user-create --name ci-user --tenant_id $CI_TENANT_ID --pass nova |  grep id | awk '{print $4}')
-ADMIN_USER_ID=$(keystone user-list | grep admin | awk '{print $2}')
+ADMIN_USER_ID=$(keystone user-list | grep admin | awk '{print $2}' | head -n 1)
 MEMBER_ROLE_ID=$(keystone role-list | grep Member | awk '{print $2}')
 keystone user-role-add --user $CI_USER_ID --role $MEMBER_ROLE_ID --tenant $CI_TENANT_ID
 keystone user-role-add --user $ADMIN_USER_ID --role $MEMBER_ROLE_ID --tenant $CI_TENANT_ID
