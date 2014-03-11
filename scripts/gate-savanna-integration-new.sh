@@ -17,6 +17,7 @@ TRANSIENT_TEST=True
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH_IMAGE=intel-noepel
 VANILLA_IMAGE=savanna-itests-ci-vanilla-image
+HEAT_JOB=False
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
@@ -98,7 +99,7 @@ export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 echo "[DEFAULT]
 " >> etc/savanna/savanna.conf
 
-if [ $HEAT_JOB ]
+if [ "$HEAT_JOB" = True ]
 then
     echo "infrastructure_engine=heat
     " >> etc/savanna/savanna.conf
