@@ -13,6 +13,7 @@ EDP_TEST=False
 MAP_REDUCE_TEST=False
 SWIFT_TEST=False
 SCALING_TEST=False
+TRANSIENT_TEST=False
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH_IMAGE=intel-noepel
 VANILLA_IMAGE=savanna-itests-ci-vanilla-image
@@ -24,6 +25,7 @@ then
     echo "Heat detected"
     JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $5 }')
     CINDER_TEST=True
+    TRANSIENT_TEST=True
 fi                                                                            
 
 if [ $JOB_TYPE == 'hdp' ]                                                   
@@ -54,6 +56,7 @@ then
    SCALING_TEST=True 
    TRANSIENT_JOB=True    
    HEAT_JOB=False
+   
    echo "Transient detected"                                                      
 fi     
 
@@ -162,6 +165,7 @@ SKIP_EDP_TEST = $EDP_TEST
 SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST
 SKIP_SWIFT_TEST = $SWIFT_TEST
 SKIP_SCALING_TEST = $SCALING_TEST
+SKIP_TRANSIENT_CLUSTER_TEST = $TRANSIENT_TEST
 $VANILLA_PARAMS
 " >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
 
