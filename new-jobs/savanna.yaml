@@ -26,7 +26,6 @@
      - heat-hdp
      - idh
      - transient
-     - heat-transient
     jobs:
      - 'gate-savanna-integration-{plugin}'
 
