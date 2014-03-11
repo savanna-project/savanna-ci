@@ -43,7 +43,7 @@ fi
 if [ $JOB_TYPE == 'vanilla2' ]
 then
    VANILLA2_JOB=True 
-   VANILLA2_IMAGE=savanna-itests-ci-vanilla2-image
+   VANILLA2_IMAGE=ubuntu-vanilla-2.3-latest
    echo "Vanilla2 detected"
 fi
 if [ $JOB_TYPE == 'idh' ]
