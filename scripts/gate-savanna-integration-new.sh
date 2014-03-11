@@ -51,7 +51,8 @@ then
    MAP_REDUCE_TEST=True                                                          
    SWIFT_TEST=True                                                            
    SCALING_TEST=True 
-   TRANSIENT_JOB=True                                                         
+   TRANSIENT_JOB=True    
+   HEAT_JOB=False
    echo "Transient detected"                                                      
 fi     
 
