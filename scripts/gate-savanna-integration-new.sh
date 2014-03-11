@@ -63,6 +63,7 @@ then
    SCALING_TEST=True
    TRANSIENT_TEST=False
    HEAT_JOB=False
+   TRANSIENT_JOB=True
    
    echo "Transient detected"                                                      
 fi     
