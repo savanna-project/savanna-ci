@@ -40,6 +40,12 @@ then
    VANILLA_IMAGE=savanna-itests-ci-vanilla-image
    echo "Vanilla detected"
 fi
+if [ $JOB_TYPE == 'vanilla2' ]
+then
+   VANILLA2_JOB=True 
+   VANILLA2_IMAGE=savanna-itests-ci-vanilla2-image
+   echo "Vanilla2 detected"
+fi
 if [ $JOB_TYPE == 'idh' ]
 then
    IDH_JOB=True 
@@ -224,6 +230,12 @@ if [ "$FAILURE" = 0 ]; then
         tox -e integration -- vanilla
         STATUS=`echo $?`
     fi
+    
+    if [ $VANILLA2_JOB ]
+    then
+        tox -e integration -- vanilla2
+        STATUS=`echo $?`
+    fi    
     
     if [ $IDH_JOB ]
     then
