@@ -13,7 +13,7 @@ EDP_TEST=False
 MAP_REDUCE_TEST=False
 SWIFT_TEST=False
 SCALING_TEST=False
-TRANSIENT_TEST=False
+TRANSIENT_TEST=True
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH_IMAGE=intel-noepel
 VANILLA_IMAGE=savanna-itests-ci-vanilla-image
@@ -53,14 +53,15 @@ then
    echo "IDH detected"
 fi
 if [ $JOB_TYPE == 'transient' ]                                                   
-then                                                                        
+then         
+   SSH_USERNAME=ubuntu
    CINDER_TEST=True                                                             
    CLUSTER_CONFIG_TEST=True                                                      
    EDP_TEST=True                                                        
    MAP_REDUCE_TEST=True                                                          
    SWIFT_TEST=True                                                            
-   SCALING_TEST=True 
-   TRANSIENT_JOB=True    
+   SCALING_TEST=True
+   TRANSIENT_TEST=False
    HEAT_JOB=False
    
    echo "Transient detected"                                                      
