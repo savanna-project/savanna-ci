@@ -15,6 +15,7 @@ SWIFT_TEST=False
 SCALING_TEST=False
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH_IMAGE=intel-noepel
+VANILLA_IMAGE=savanna-itests-ci-vanilla-image
                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
 then                                                                            
