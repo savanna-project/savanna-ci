@@ -17,7 +17,7 @@
     node: 'precise-itests'
 
 - project:
-    name: sahara
+    name: savanna
     github-org: openstack
     plugin:
      - vanilla
