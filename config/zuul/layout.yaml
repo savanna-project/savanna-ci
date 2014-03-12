@@ -42,6 +42,7 @@ projects:
 jobs:
   - name: ^.*$
     parameter-function: set_log_url
+    branch: ^master$
   - name: gate-sahara-integration-transient
     voting: false
   - name: gate-sahara-integration-vanilla2
