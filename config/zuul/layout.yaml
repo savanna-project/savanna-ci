@@ -25,7 +25,7 @@ pipelines:
         verified: -1
 
 projects:
-  - name: openstack/savanna
+  - name: openstack/sahara
     check:
       - gate-sahara-integration-hdp
       - gate-sahara-integration-vanilla
@@ -35,7 +35,7 @@ projects:
       - gate-sahara-integration-transient
       - gate-sahara-integration-vanilla2
 
-  - name: openstack/savanna-dashboard
+  - name: openstack/sahara-dashboard
     check:
       - gate-ui-tests
 
