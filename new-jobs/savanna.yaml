@@ -1,5 +1,5 @@
 - job-template:
-    name: 'gate-savanna-integration-{plugin}'
+    name: 'gate-sahara-integration-{plugin}'
     defaults:
     concurrent: true
     builders:
@@ -17,7 +17,7 @@
     node: 'precise-itests'
 
 - project:
-    name: savanna
+    name: sahara
     github-org: openstack
     plugin:
      - vanilla
@@ -28,7 +28,7 @@
      - transient
      - vanilla2
     jobs:
-     - 'gate-savanna-integration-{plugin}'
+     - 'gate-sahara-integration-{plugin}'
 
 - job:                                                                          
     name: integration-cleanup                                              
