@@ -32,7 +32,7 @@ screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x
 export DISPLAY=:22
 
 cd $HOME
-rm -rf savanna
+rm -rf sahara
 
 echo "
 [DEFAULT]
@@ -58,8 +58,8 @@ plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8"  > savanna.conf
 
-git clone https://github.com/openstack/savanna
-cd savanna
+git clone https://github.com/openstack/sahara
+cd sahara
 tox -evenv -- savanna-db-manage --config-file $HOME/savanna.conf upgrade head
 screen -dmS savanna /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file $HOME/savanna.conf -d --log-file /tmp/savanna.log"
 
