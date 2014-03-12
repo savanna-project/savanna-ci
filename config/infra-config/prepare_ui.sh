@@ -14,8 +14,8 @@ sudo apt-get update
 sudo apt-get install libstdc++5 xvfb nodejs openstack-dashboard -y
 /usr/bin/yes | sudo pip install lesscpy
 sudo iptables -F
-sudo sed -i "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g" /usr/share/openstack-dashboard/openstack_dashboard/settings.py
-sudo su -c "echo \"HORIZON_CONFIG['dashboards'] += ('savanna',)\" >> /usr/share/openstack-dashboard/openstack_dashboard/settings.py"
+sudo sed -i "s/'openstack_dashboard'/'saharadashboard',\n    'openstack_dashboard'/g" /usr/share/openstack-dashboard/openstack_dashboard/settings.py
+sudo su -c "echo \"HORIZON_CONFIG['dashboards'] += ('sahara',)\" >> /usr/share/openstack-dashboard/openstack_dashboard/settings.py"
 sudo sed -i "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py
 sudo sed -i "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py
 sudo sed -i "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"172.18.168.42\"/g" /usr/share/openstack-dashboard/openstack_dashboard/local/local_settings.py
