@@ -27,13 +27,13 @@ pipelines:
 projects:
   - name: openstack/savanna
     check:
-      - gate-savanna-integration-hdp
-      - gate-savanna-integration-vanilla
-      - gate-savanna-integration-heat-vanilla
-      - gate-savanna-integration-heat-hdp
-      - gate-savanna-integration-idh
-      - gate-savanna-integration-transient
-      - gate-savanna-integration-vanilla2
+      - gate-sahara-integration-hdp
+      - gate-sahara-integration-vanilla
+      - gate-sahara-integration-heat-vanilla
+      - gate-sahara-integration-heat-hdp
+      - gate-sahara-integration-idh
+      - gate-sahara-integration-transient
+      - gate-sahara-integration-vanilla2
 
   - name: openstack/savanna-dashboard
     check:
@@ -42,9 +42,9 @@ projects:
 jobs:
   - name: ^.*$
     parameter-function: set_log_url
-  - name: gate-savanna-integration-transient
+  - name: gate-sahara-integration-transient
     voting: false
-  - name: gate-savanna-integration-vanilla2
+  - name: gate-sahara-integration-vanilla2
     voting: false
   - name: gate-ui-tests
     parameter-function: single_use_node
