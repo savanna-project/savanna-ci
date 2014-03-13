@@ -95,6 +95,6 @@ base_image = "savanna-itests-ci-vanilla-image"
 [hdp]
 skip_plugin_tests = False
 hadoop_version = '1.3.2'
-" >> $WORKSPACE/savannadashboard/tests/configs/config.conf
+" >> $WORKSPACE/saharadashboard/tests/configs/config.conf
 
 cd $WORKSPACE && tox -e uitests
