@@ -20,7 +20,7 @@ providers:
     boot-timeout: 120
     pool: public
     networks:
-      - net-id: 'e225bc6a-5b3c-4230-bf94-ea102be3993e'
+      - net-id: 'cdcea559-73fa-420a-9081-f88934022edd'
     images:
       - name: precise-itests
         base-image: 'ubuntu-12.04'
@@ -32,11 +32,6 @@ providers:
         min-ram: 4096
         private-key: '/etc/nodepool/id_dsa'
         setup: prepare_node_ui.sh
-      - name: precise
-        base-image: 'ubuntu-12.04'
-        min-ram: 1024
-        private-key: '/etc/nodepool/id_dsa'
-        setup: prepare_node_bare.sh        
 targets:
   - name: savanna-gate
     jenkins:
@@ -51,9 +46,5 @@ targets:
           - name: ci-lab
       - name: precise-itests
         min-ready: 4
-        providers:
-          - name: ci-lab
-      - name: precise
-        min-ready: 1
         providers:
           - name: ci-lab
