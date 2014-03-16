@@ -29,8 +29,6 @@ projects:
     check:
       - gate-sahara-integration-hdp
       - gate-sahara-integration-vanilla
-      - gate-sahara-integration-heat-vanilla
-      - gate-sahara-integration-heat-hdp
       - gate-sahara-integration-idh
       - gate-sahara-integration-transient
       - gate-sahara-integration-vanilla2
