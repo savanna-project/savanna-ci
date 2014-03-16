@@ -16,7 +16,7 @@ providers:
     password: 'nova'
     auth-url: 'http://172.18.168.42:5000/v2.0'
     project-id: 'ci'
-    max-servers: 5
+    max-servers: 7
     boot-timeout: 120
     pool: public
     networks:
@@ -45,6 +45,6 @@ targets:
         providers:
           - name: ci-lab
       - name: precise-itests
-        min-ready: 4
+        min-ready: 6
         providers:
           - name: ci-lab
