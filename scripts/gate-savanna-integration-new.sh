@@ -234,31 +234,31 @@ if [ "$FAILURE" = 0 ]; then
     cd $WORKSPACE
     if [ $HDP_JOB ]
     then
-        tox -e integration -- hdp
+        tox -e integration -- hdp --concurrency=1
         STATUS=`echo $?`               
     fi                               
 
     if [ $VANILLA_JOB ]
     then
-        tox -e integration -- vanilla
+        tox -e integration -- vanilla --concurrency=1
         STATUS=`echo $?`
     fi
     
     if [ $VANILLA2_JOB ]
     then
-        tox -e integration -- vanilla2
+        tox -e integration -- vanilla2 --concurrency=1
         STATUS=`echo $?`
     fi    
     
     if [ $IDH_JOB ]
     then
-        tox -e integration -- idh
+        tox -e integration -- idh --concurrency=1
         STATUS=`echo $?`
     fi 
    
     if [ $TRANSIENT_JOB ]
     then
-        tox -e integration -- vanilla
+        tox -e integration -- vanilla --concurrency=1
         STATUS=`echo $?`
     fi    
     
