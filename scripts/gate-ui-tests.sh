@@ -1,6 +1,7 @@
 #!/bin/bash -e
 
 sudo iptables -F
+sudo apt-get install xserver-xorg -y
 sudo pip install $WORKSPACE
 
 SAVANNA_LOG=/tmp/savanna.log 
