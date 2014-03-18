@@ -209,7 +209,7 @@ do
         let "i=$i+1"
         diff $TOX_LOG $TMP_LOG >> $LOG_FILE
         cp -f $TOX_LOG $TMP_LOG
-        if [ "$i" -gt "240" ]; then
+        if [ "$i" -gt "120" ]; then
                 cat $LOG_FILE
                 echo "project does not start" && FAILURE=1 && break
         fi
