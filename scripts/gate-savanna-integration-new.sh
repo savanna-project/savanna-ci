@@ -77,12 +77,11 @@ TOX_LOG=$WORKSPACE/.tox/venv/log/venv-1.log
 TMP_LOG=/tmp/tox.log
 LOG_FILE=/tmp/tox_log.log
 
-SCR_CHECK=$(ps aux | grep screen | grep savanna)
+SCR_CHECK=$(ps aux | grep screen | grep sahara)
 if [ -n "$SCR_CHECK" ]; then
-     screen -S savanna-api -X quit
+     screen -S sahara-api -X quit
 fi
 
-rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 rm -f $LOG_FILE
 
@@ -97,15 +96,15 @@ mkdir /tmp/cache
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
 echo "[DEFAULT]
-" >> etc/savanna/savanna.conf
+" >> etc/sahara/sahara.conf
 
 if [ "$HEAT_JOB" = True ]
 then
     echo "infrastructure_engine=heat
-    " >> etc/savanna/savanna.conf
+    " >> etc/sahara/sahara.conf
 else
-    echo "infrastructure_engine=savanna
-    " >> etc/savanna/savanna.conf
+    echo "infrastructure_engine=direct
+    " >> etc/sahara/sahara.conf
 fi
 
 echo "
@@ -117,18 +116,12 @@ os_admin_tenant_name=ci
 use_identity_api_v3=true
 use_neutron=true
 plugins=vanilla,hdp,idh
-[cluster_node]
-[sqlalchemy]
-[plugin:vanilla]
-plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
-[plugin:hdp]
-plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
 [database]
-connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/savanna/savanna.conf
+connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/sahara/sahara.conf
 
-echo "----------- savanna.conf -----------"
-cat etc/savanna/savanna.conf
-echo "----------- end of savanna.conf -----------"
+echo "----------- sahara.conf -----------"
+cat etc/sahara/sahara.conf
+echo "----------- end of sahara.conf -----------"
 
 #touch ~/.pip/pip.conf
 
@@ -142,9 +135,9 @@ echo "----------- end of savanna.conf -----------"
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 #" > ~/.pip/pip.conf
-tox -evenv -- savanna-db-manage --config-file etc/savanna/savanna.conf upgrade head
+tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
 
-screen -dmS savanna-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
+screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
@@ -163,7 +156,7 @@ FLOATING_IP_POOL = 'public'
 NEUTRON_ENABLED = True
 INTERNAL_NEUTRON_NETWORK = 'private'
 $COMMON_PARAMS
-" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 echo "[VANILLA]
 SSH_USERNAME = '$SSH_USERNAME'
@@ -176,7 +169,7 @@ SKIP_SWIFT_TEST = $SWIFT_TEST
 SKIP_SCALING_TEST = $SCALING_TEST
 SKIP_TRANSIENT_CLUSTER_TEST = $TRANSIENT_TEST
 $VANILLA_PARAMS
-" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 echo "[VANILLA_TWO]
 SSH_USERNAME = '$SSH_USERNAME'
@@ -186,7 +179,7 @@ SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST
 SKIP_SWIFT_TEST = $SWIFT_TEST
 SKIP_SCALING_TEST = $SCALING_TEST
 $VANILLA_PARAMS
-" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 echo "[HDP]
 SSH_USERNAME = '$SSH_USERNAME'
@@ -198,7 +191,7 @@ SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST
 SKIP_SWIFT_TEST = $SWIFT_TEST                                                   
 SKIP_SCALING_TEST = $SCALING_TEST 
 $HDP_PARAMS
-" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 echo "[IDH]
 IMAGE_NAME = '$IDH_IMAGE'
@@ -206,7 +199,7 @@ IDH_REPO_URL = 'file:///var/repo/intel'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
-" >> $WORKSPACE/savanna/tests/integration/configs/itest.conf
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
 i=0
@@ -267,12 +260,12 @@ fi
 echo "-----------Python integration env-----------"
 cd $WORKSPACE && .tox/integration/bin/pip freeze
 
-screen -S savanna-api -X quit
+screen -S sahara-api -X quit
 
-echo "-----------Python savanna env-----------"
+echo "-----------Python sahara env-----------"
 cd $WORKSPACE && .tox/venv/bin/pip freeze
 
-echo "-----------Savanna Log------------"
+echo "-----------Sahara Log------------"
 cat $WORKSPACE/log.txt
 rm -rf /tmp/workspace/
 rm -rf /tmp/cache/
@@ -281,7 +274,6 @@ echo "-----------Tox log-----------"
 cat /tmp/tox-log.txt
 rm -f /tmp/tox-log.txt
 
-rm -f /tmp/savanna-server.db
 rm $TMP_LOG
 rm -f $LOG_FILE
 
