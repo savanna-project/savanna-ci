@@ -4,14 +4,14 @@ sudo iptables -F
 sudo apt-get install xserver-xorg -y
 sudo pip install $WORKSPACE
 
-SAVANNA_LOG=/tmp/savanna.log 
+SAVANNA_LOG=/tmp/sahara.log 
 
 SCR_CHECK=$(ps aux | grep screen | grep display)
 if [ -n "$SCR_CHECK" ]; then
      screen -S display -X quit
 fi
 
-screen -S savanna -X quit
+screen -S sahara -X quit
 
 #DETECT_XVFB=$(ps aux | grep Xvfb | grep -v grep)
 DETECT_XVFB=$(ps aux | grep X | grep -v grep)
@@ -21,7 +21,7 @@ fi
 
 ps aux | grep X
 
-rm -f /tmp/savanna-server.db
+#rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
 
 mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
@@ -48,23 +48,15 @@ os_admin_tenant_name=ci
 use_floating_ips=true
 use_neutron=true
 
-plugins=vanilla,hdp
-
-
-[plugin:vanilla]
-plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
-
-[plugin:hdp]
-plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin
-
+plugins=vanilla,hdp,idh
 
 [database]
-connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8"  > savanna.conf
+connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8"  > sahara.conf
 
 git clone https://github.com/openstack/sahara
 cd sahara
-tox -evenv -- savanna-db-manage --config-file $HOME/savanna.conf upgrade head
-screen -dmS savanna /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- savanna-api --config-file $HOME/savanna.conf -d --log-file /tmp/savanna.log"
+tox -evenv -- sahara-db-manage --config-file $HOME/sahara.conf upgrade head
+screen -dmS sahara /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file $HOME/sahara.conf -d --log-file /tmp/sahara.log"
 
 while true
 do
