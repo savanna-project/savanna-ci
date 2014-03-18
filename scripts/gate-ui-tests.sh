@@ -12,12 +12,13 @@ fi
 
 screen -S savanna -X quit
 
-DETECT_XVFB=$(ps aux | grep Xvfb | grep -v grep)
+#DETECT_XVFB=$(ps aux | grep Xvfb | grep -v grep)
+DETECT_XVFB=$(ps aux | grep X | grep -v grep)
 if [ -n "$DETECT_XVFB" ]; then
-     sudo killall Xvfb
+     sudo killall X
 fi
 
-ps aux | grep Xvfb
+ps aux | grep X
 
 rm -f /tmp/savanna-server.db
 rm -rf /tmp/cache
@@ -27,9 +28,10 @@ mysql -usavanna-citest -psavanna-citest -Bse "create database savanna"
 
 BUILD_ID=dontKill
 
-screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x768x16
+#screen -dmS display sudo Xvfb -fp /usr/share/fonts/X11/misc/ :22 -screen 0 1024x768x16
+screen -dmS display sudo X
 
-export DISPLAY=:22
+export DISPLAY=:0
 
 cd $HOME
 rm -rf sahara
