@@ -39,6 +39,7 @@ if [ $JOB_TYPE == 'vanilla' ]
 then
    VANILLA_JOB=True 
    VANILLA_IMAGE=savanna-itests-ci-vanilla-image
+   VANILLA_TWO_IMAGE=ubuntu-vanilla-2.3-latest
    echo "Vanilla detected"
 fi
 if [ $JOB_TYPE == 'vanilla2' ]
@@ -173,7 +174,7 @@ $VANILLA_PARAMS
 
 echo "[VANILLA_TWO]
 SSH_USERNAME = '$SSH_USERNAME'
-IMAGE_NAME = '$VANILLA_IMAGE'
+IMAGE_NAME = '$VANILLA_TWO_IMAGE'
 SKIP_CINDER_TEST = '$CINDER_TEST'
 SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST
 SKIP_SWIFT_TEST = $SWIFT_TEST
