@@ -3,7 +3,8 @@
 image_type=$1
 GERRIT_CHANGE_NUMBER=$ZUUL_CHANGE
 
-sudo bash diskimage-create/diskimage-create.sh -p vanilla -i $image_type
+
+SIM_REPO_PATH=$WORKSPACE && sudo bash diskimage-create/diskimage-create.sh -p vanilla -i $image_type
 
 if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 -a ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ]; then
   echo "Images aren't built"
