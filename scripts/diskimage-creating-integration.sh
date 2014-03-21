@@ -229,7 +229,11 @@ if [ "$FAILURE" != 0 ]; then
 fi
 
 if [[ "$STATUS" != 0 ]]        
-then                               
+then       
+    id_del=\$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep $VANILLA__IMAGE | cut -f 1 -d ' ')
+    glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete \$id_del
+    id_del=\$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep $VANILLA_TWO_IMAGE | cut -f 1 -d ' ')
+    glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete \$id_del    
     exit 1                    
 fi
 
