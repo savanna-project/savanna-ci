@@ -1,0 +1,20 @@
+- job-template:
+    name: 'diskimage-integration-{image}'
+    defaults:
+    concurrent: true
+    builders:
+      - gerrit-git-prep
+      - shell: "rm -rf savanna-ci\
+              \ngit clone https://github.com/savanna-project/savanna-ci\
+              \nbash -x savanna-ci/scripts/diskimage-creating-integration.sh {image}"
+    node: 'precise'
+
+- project:
+    name: sahara-image-elements
+    github-org: openstack
+    image:
+     - ubuntu
+     - fedora
+     - centos
+    jobs:
+     - 'diskimage-integration-{image}'

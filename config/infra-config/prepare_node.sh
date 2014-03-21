@@ -47,6 +47,10 @@ mysql -uroot -p$MYSQL_PASS -Bse "GRANT ALL ON savanna.* TO 'savanna-citest'@'loc
 mysql -uroot -p$MYSQL_PASS -Bse "flush privileges"
 sudo service mysql stop
 
+#glance-client is required for diskimage-integration jobs
+sudo pip install python-glanceclient
+sudo apt-get install qemu kpartx -y
+
 sudo su - jenkins -c "echo '$JENKINS_PUBLIC_KEY' >> /home/jenkins/.ssh/authorized_keys"
 sync
 sleep 20
