@@ -238,12 +238,12 @@ then
 fi
 
 
-id=$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 | cut -f 1 -d ' ')
+id=$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep ${image_type}_sahara_vanilla_hadoop_1_latest | cut -f 1 -d ' ')
 glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete $id
 id_new=$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep $VANILLA_IMAGE | cut -f 1 -d ' ')
 glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-update $id_new --name ${image_type}_sahara_vanilla_hadoop_1_latest
 
-id=$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 | cut -f 1 -d ' ')
+id=$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep ${image_type}_sahara_vanilla_hadoop_2_latest | cut -f 1 -d ' ')
 glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete $id
 id_new=$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep $VANILLA_TWO_IMAGE | cut -f 1 -d ' ')
 glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-update $id_new --name ${image_type}_sahara_vanilla_hadoop_2_latest
