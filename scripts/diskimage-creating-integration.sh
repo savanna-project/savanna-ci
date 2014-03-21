@@ -73,7 +73,7 @@ mkdir /tmp/cache
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
-git clone https://github.com/openstack/sahara                                   
+git clone https://review.openstack.org/openstack/sahara                                   
 cd sahara                                                                       
                                                                                 
 echo "[DEFAULT]
