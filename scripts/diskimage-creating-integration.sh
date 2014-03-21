@@ -188,7 +188,7 @@ do
                 cat $LOG_FILE
                 echo "project does not start" && FAILURE=1 && break
         fi
-        if [ ! -f $WORKSPACE/log.txt ]; then
+        if [ ! -f /tmp/sahara/log.txt ]; then
                 sleep 10
         else
                 echo "project is started" && FAILURE=0 && break
@@ -205,7 +205,7 @@ if [ "$FAILURE" = 0 ]; then
 fi
 
 echo "-----------Python integration env-----------"
-cd $WORKSPACE && .tox/integration/bin/pip freeze
+cd /tmp/sahara && .tox/integration/bin/pip freeze
 
 screen -S sahara-api -X quit
 
@@ -232,3 +232,14 @@ if [[ "$STATUS" != 0 ]]
 then                               
     exit 1                    
 fi
+
+
+id=\$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 | cut -f 1 -d ' ')
+glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete \$id
+id_new=\$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep $VANILLA_IMAGE | cut -f 1 -d ' ')
+glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-update \$id_new --name ${image_type}_sahara_vanilla_hadoop_1_latest
+
+id=\$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 | cut -f 1 -d ' ')
+glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete \$id
+id_new=\$(glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova index | grep $VANILLA_TWO_IMAGE | cut -f 1 -d ' ')
+glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-update \$id_new --name ${image_type}_sahara_vanilla_hadoop_2_latest
