@@ -226,6 +226,7 @@ rm -f /tmp/tox-log.txt
 
 rm $TMP_LOG
 rm -f $LOG_FILE
+cd $HOME
 
 if [ "$FAILURE" != 0 ]; then
     exit 1
