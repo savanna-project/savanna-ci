@@ -26,7 +26,7 @@
           description: 
     scm:
      - git:
-        url: https://git.openstack.org/openstack/savanna
+        url: https://git.openstack.org/openstack/sahara
         refspec: $GERRIT_REFSPEC
         name:
         skip-tag: true
@@ -43,7 +43,7 @@
             successful-message: "Savanna is running successfully and available by address: 172.18.168.236:8386 - Czech lab"
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'openstack/savanna'
+                  project-pattern: 'openstack/sahara'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
