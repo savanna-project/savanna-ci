@@ -26,11 +26,11 @@
 
     scm:
      - git:
-        url: https://git.openstack.org/openstack/savanna-dashboard
+        url: https://git.openstack.org/openstack/sahara-dashboard
         refspec: $GERRIT_REFSPEC
         name:
         skip-tag: true
-        basedir: "savanna-dashboard"
+        basedir: "sahara-dashboard"
         wipe-workspace: false
         choosing-strategy: gerrit
         branches:
@@ -43,7 +43,7 @@
             successful-message: "Savanna dashboard is running successfully and available by address: 172.18.168.236:8080 - Czech lab"
             projects:
                 - project-compare-type: 'PLAIN'
-                  project-pattern: 'openstack/savanna-dashboard'
+                  project-pattern: 'openstack/sahara-dashboard'
                   branch-compare-type: 'PLAIN'
                   branch-pattern: 'master'
 
