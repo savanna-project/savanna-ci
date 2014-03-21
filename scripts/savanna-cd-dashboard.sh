@@ -21,7 +21,7 @@ BUILD_ID=dontKill
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
-cd $WORKSPACE/savanna-dashboard
+cd $WORKSPACE/sahara-dashboard
 if [ -d horizon/ ]
 then
     rm -rf horizon
@@ -42,19 +42,19 @@ sed -i "s/OPENSTACK_HOST = \"127.0.0.1\"/OPENSTACK_HOST = \"$OPENSTACK_HOST\"/g"
 sed -i "s/#from horizon.utils import secret_key/from horizon.utils import secret_key/g" openstack_dashboard/local/local_settings.py
 sed -i "s/#OPENSTACK_ENDPOINT_TYPE = \"publicURL\"/OPENSTACK_ENDPOINT_TYPE = \"publicURL\"/g" openstack_dashboard/local/local_settings.py
 sed -i "s/#SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/SECRET_KEY = secret_key.generate_or_read_from_file(os.path.join(LOCAL_PATH, '.secret_key_store'))/g" openstack_dashboard/local/local_settings.py
-echo -e "SAVANNA_USE_NEUTRON = True" >> openstack_dashboard/local/local_settings.py
+echo -e "SAHARA_USE_NEUTRON = True" >> openstack_dashboard/local/local_settings.py
 echo -e "AUTO_ASSIGNMENT_ENABLED = False" >> openstack_dashboard/local/local_settings.py
-echo -e "SAVANNA_URL = \"$SAVANNA_URL\"" >> openstack_dashboard/local/local_settings.py
+echo -e "SAHARA_URL = \"$SAVANNA_URL\"" >> openstack_dashboard/local/local_settings.py
 
-sed -i "s/'openstack_dashboard'/'savannadashboard',\n    'openstack_dashboard'/g" openstack_dashboard/settings.py
-echo "HORIZON_CONFIG['dashboards'] += ('savanna',)" >> openstack_dashboard/settings.py
+sed -i "s/'openstack_dashboard'/'saharadashboard',\n    'openstack_dashboard'/g" openstack_dashboard/settings.py
+echo "HORIZON_CONFIG['dashboards'] += ('sahara',)" >> openstack_dashboard/settings.py
 
 python tools/install_venv.py
 .venv/bin/pip install ../
 # Horizon doesn't start with Django==1.6 which is installed by default
 .venv/bin/pip uninstall Django -y
 .venv/bin/pip install Django==1.5
-ln -s $WORKSPACE/savanna-dashboard/savannadashboard .venv/lib/python2.7/site-packages/savannadashboard
+ln -s $WORKSPACE/sahara-dashboard/saharadashboard .venv/lib/python2.7/site-packages/saharadashboard
 
 exist=`screen -ls | grep savanna-dashboard-master`
 if ! [ -z "$exist" ]
