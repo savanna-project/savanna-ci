@@ -26,7 +26,6 @@
      - heat-hdp
      - idh
      - transient
-     - vanilla2
     jobs:
      - 'gate-sahara-integration-{plugin}'
 
