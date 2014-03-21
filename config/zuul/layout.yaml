@@ -36,9 +36,6 @@ projects:
     check:
       - gate-ui-tests
       
-  - name: openstack/sahara-image-elements
-    check:
-      - diskimage-integration-ubuntu
 
 jobs:
   - name: ^.*$
