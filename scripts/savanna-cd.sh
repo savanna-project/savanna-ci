@@ -21,7 +21,7 @@ BUILD_ID=dontKill
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
-cd $WORKSPACE/savanna
+cd $WORKSPACE/sahara
 
 git fetch origin $GERRIT_BRANCH
 git rebase origin/$GERRIT_BRANCH
@@ -40,7 +40,7 @@ else
     os_auth_host=172.18.168.2
 fi
 
-cd $WORKSPACE/savanna
+cd $WORKSPACE/sahara
 
 
 echo -e "[DEFAULT]
@@ -49,14 +49,14 @@ os_admin_tenant_name=ci
 os_auth_host=$os_auth_host
 os_auth_port=5000
 os_admin_password=$os_admin_password
-plugins=vanilla,hdp
+plugins=vanilla,hdp,idh
 use_neutron=True
 [database]
 connection=sqlite:////$WORKSPACE/$db_name
 [plugin:vanilla]
 plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
 [plugin:hdp]
-plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" > etc/savanna/savanna.conf
+plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" > etc/sahara/sahara.conf
 
 rm -rf .tox
 
@@ -68,6 +68,6 @@ then
 fi
 screen -dmS savanna-master
 sleep 2
-tox -evenv -- savanna-db-manage --config-file etc/savanna/savanna.conf upgrade head
-screen -S savanna-master -p 0 -X stuff 'tox -evenv -- savanna-api --config-file etc/savanna/savanna.conf -d
+tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
+screen -S savanna-master -p 0 -X stuff 'tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d
 '
