@@ -36,6 +36,11 @@ projects:
     check:
       - gate-ui-tests
       
+  - name: openstack/sahara-image-elements
+    check:
+      - diskimage-integration-ubuntu   
+      - diskimage-integration-fedora
+      - diskimage-integration-centos
 
 jobs:
   - name: ^.*$
@@ -45,7 +50,7 @@ jobs:
     voting: false
   - name: gate-sahara-integration-vanilla2
     voting: false
-  - name: diskimage-integration-ubuntu
-    voting: false    
   - name: gate-ui-tests
+    parameter-function: single_use_node
+  - name: diskimage*
     parameter-function: single_use_node
