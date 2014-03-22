@@ -6,10 +6,19 @@ GERRIT_CHANGE_NUMBER=$ZUUL_CHANGE
 
 sudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh -p vanilla -i $image_type
 
-if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 -a ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ]; then
-  echo "Images aren't built"
-  exit 1
+if [ ${image_type} == "ubuntu"
+then
+     if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 -a ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ]; then
+       echo "Images aren't built"
+       exit 1
+     fi
+else
+     if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.selinux-permissive.qcow2 -a ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.selinux-permissive.qcow2 ]; then
+       echo "Images aren't built"
+       exit 1
+     fi
 fi
+
 
 mv ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 ci-${image_type}-${GERRIT_CHANGE_NUMBER}-hadoop_1.qcow2
 mv ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ci-${image_type}-${GERRIT_CHANGE_NUMBER}-hadoop_2.qcow2
