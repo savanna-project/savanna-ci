@@ -50,7 +50,5 @@ jobs:
     voting: false
   - name: gate-sahara-integration-vanilla2
     voting: false
-  - name: gate-ui-tests
-    parameter-function: single_use_node
-  - name: diskimage*$
+  - name: name: ^.*$
     parameter-function: single_use_node
