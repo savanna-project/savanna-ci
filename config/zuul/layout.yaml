@@ -48,7 +48,11 @@ jobs:
     branch: ^master$
   - name: gate-sahara-integration-transient
     voting: false
-  - name: gate-sahara-integration-vanilla2
-    voting: false
-  - name: ^.*$
+  - name: gate-ui-tests
+    parameter-function: single_use_node    
+  - name: diskimage-integration-ubuntu
     parameter-function: single_use_node
+  - name: diskimage-integration-fedora
+    parameter-function: single_use_node
+  - name: diskimage-integration-centos
+    parameter-function: single_use_node    
