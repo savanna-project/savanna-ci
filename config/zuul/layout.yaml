@@ -52,5 +52,5 @@ jobs:
     voting: false
   - name: gate-ui-tests
     parameter-function: single_use_node
-  - name: diskimage*
+  - name: diskimage*$
     parameter-function: single_use_node
