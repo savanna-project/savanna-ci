@@ -50,5 +50,5 @@ jobs:
     voting: false
   - name: gate-sahara-integration-vanilla2
     voting: false
-  - name: name: ^.*$
+  - name: ^.*$
     parameter-function: single_use_node
