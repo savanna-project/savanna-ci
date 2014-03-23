@@ -23,6 +23,20 @@ pipelines:
     failure:
       gerrit:
         verified: -1
+  - name: post
+    manager: IndependentPipelineManager
+    trigger:
+      gerrit:
+        - event: change-merged
+    start:
+      gerrit:
+        verified: 0
+    success:
+      gerrit:
+        verified: 1
+    failure:
+      gerrit:
+        verified: -1        
 
 projects:
   - name: openstack/sahara
@@ -41,6 +55,10 @@ projects:
       - diskimage-integration-ubuntu   
       - diskimage-integration-fedora
       - diskimage-integration-centos
+    post:
+      - diskimage-integration-ubuntu   
+      - diskimage-integration-fedora
+      - diskimage-integration-centos      
 
 jobs:
   - name: ^.*$
