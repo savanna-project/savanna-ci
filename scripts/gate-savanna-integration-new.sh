@@ -15,7 +15,8 @@ SWIFT_TEST=False
 SCALING_TEST=False
 TRANSIENT_TEST=True
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
-IDH_IMAGE=intel-noepel
+IDH2_IMAGE=intel-noepel
+IDH3_IMAGE=centos-6.4
 VANILLA_IMAGE=savanna-itests-ci-vanilla-image
 HEAT_JOB=False
                                                                                 
@@ -195,11 +196,19 @@ $HDP_PARAMS
 " >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 echo "[IDH]
-IMAGE_NAME = '$IDH_IMAGE'
+IMAGE_NAME = '$IDH2_IMAGE'
 IDH_REPO_URL = 'file:///var/repo/intel'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
+
+echo "[IDH3]
+IMAGE_NAME = '$IDH3_IMAGE'
+SSH_USERNAME = 'cloud-user'
+MANAGER_FLAVOR_ID = '3'
+SKIP_SWIFT_TEST = $SWIFT_TEST                                                   
+SKIP_SCALING_TEST = $SCALING_TEST 
 " >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
