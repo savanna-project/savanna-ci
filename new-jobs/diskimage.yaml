@@ -7,9 +7,14 @@
       - shell: "rm -rf savanna-ci\
               \ngit clone https://github.com/savanna-project/savanna-ci\
               \nbash -x savanna-ci/scripts/diskimage-creating-integration.sh {image}"
+              
+    properties:
+      - zeromq-event 
+      
     publishers:
       - console-log
     node: 'precise-itests'
+    
 
 - project:
     name: sahara-image-elements
