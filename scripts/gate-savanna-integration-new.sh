@@ -52,7 +52,6 @@ fi
 if [ $JOB_TYPE == 'idh' ]
 then
    IDH_JOB=True 
-   TIMEOUT=120
    echo "IDH detected"
 fi
 if [ $JOB_TYPE == 'transient' ]                                                   
