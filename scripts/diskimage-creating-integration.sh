@@ -8,14 +8,14 @@ sudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh -p vanil
 
 if [ ${image_type} == "ubuntu" ]
 then
-     if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 -a ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ]; then
+     if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 -o ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ]; then
        echo "Images aren't built"
        exit 1
      fi
      mv ${image_type}_sahara_vanilla_hadoop_1_latest.qcow2 ci-${image_type}-${GERRIT_CHANGE_NUMBER}-hadoop_1.qcow2
      mv ${image_type}_sahara_vanilla_hadoop_2_latest.qcow2 ci-${image_type}-${GERRIT_CHANGE_NUMBER}-hadoop_2.qcow2
 else
-     if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.selinux-permissive.qcow2 -a ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.selinux-permissive.qcow2 ]; then
+     if [ ! -f ${image_type}_sahara_vanilla_hadoop_1_latest.selinux-permissive.qcow2 -o ! -f ${image_type}_sahara_vanilla_hadoop_2_latest.selinux-permissive.qcow2 ]; then
        echo "Images aren't built"
        exit 1
      fi
