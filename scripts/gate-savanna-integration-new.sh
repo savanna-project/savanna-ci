@@ -16,7 +16,7 @@ SCALING_TEST=False
 TRANSIENT_TEST=True
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH2_IMAGE=intel-noepel
-IDH3_IMAGE=centos-6.4
+IDH3_IMAGE=centos-idh-3.0.2
 VANILLA_IMAGE=savanna-itests-ci-vanilla-image
 HEAT_JOB=False
                                                                                 
