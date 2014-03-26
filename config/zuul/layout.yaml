@@ -47,6 +47,7 @@ projects:
       - gate-sahara-integration-vanilla
       - gate-sahara-integration-idh
       - gate-sahara-integration-transient
+      - gate-sahara-integration-heat-vanilla
 
   - name: openstack/sahara-dashboard
     check:
@@ -75,4 +76,6 @@ jobs:
   - name: diskimage-integration-fedora
     parameter-function: single_use_node
   - name: diskimage-integration-centos
-    parameter-function: single_use_node    
+    parameter-function: single_use_node
+  - name: gate-sahara-integration-heat-vanilla
+    voting: false
