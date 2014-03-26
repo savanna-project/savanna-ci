@@ -14,6 +14,7 @@ MAP_REDUCE_TEST=False
 SWIFT_TEST=False
 SCALING_TEST=False
 TRANSIENT_TEST=True
+ONLY_TRANSIENT_TEST=False
 HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
 IDH2_IMAGE=intel-noepel
 IDH3_IMAGE=centos-6.4
@@ -64,6 +65,7 @@ then
    SWIFT_TEST=True                                                            
    SCALING_TEST=True
    TRANSIENT_TEST=False
+   ONLY_TRANSIENT_TEST=True
    HEAT_JOB=False
    TRANSIENT_JOB=True
    
@@ -116,6 +118,7 @@ os_admin_password=nova
 os_admin_tenant_name=ci
 use_identity_api_v3=true
 use_neutron=true
+min_transient_cluster_active_time=120
 plugins=vanilla,hdp,idh
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/sahara/sahara.conf
@@ -169,6 +172,7 @@ SKIP_MAP_REDUCE_TEST = $MAP_REDUCE_TEST
 SKIP_SWIFT_TEST = $SWIFT_TEST
 SKIP_SCALING_TEST = $SCALING_TEST
 SKIP_TRANSIENT_CLUSTER_TEST = $TRANSIENT_TEST
+ONLY_TRANSIENT_CLUSTER_TEST = $ONLY_TRANSIENT_TEST
 $VANILLA_PARAMS
 " >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
