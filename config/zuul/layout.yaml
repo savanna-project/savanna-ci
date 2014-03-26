@@ -9,7 +9,7 @@ pipelines:
         - event: patchset-created
         - event: change-restored
         - event: comment-added
-          comment_filter: (?i)^\s*recheck(( (?:bug|lp)[\s#:]*(\d+))|( no bug)|( savanna-ci))\s*$
+          comment_filter: (?i)^\s*recheck(( (?:bug|lp)[\s#:]*(\d+))|( no bug)|( savanna-ci)|( sahara-ci))\s*$
         - event: comment-added
           require-approval:
             - username: savanna-ci
@@ -23,22 +23,6 @@ pipelines:
     failure:
       gerrit:
         verified: -1
-  - name: post
-    manager: IndependentPipelineManager
-    trigger:
-      gerrit:
-        - event: change-merged
-        - event: comment-added
-          comment_filter: (?i)^\s*reverify(( (?:bug|lp)[\s#:]*(\d+))|( no bug)|( savanna-ci))\s*$        
-    start:
-      gerrit:
-        verified: 0
-    success:
-      gerrit:
-        verified: 1
-    failure:
-      gerrit:
-        verified: -1        
 
 projects:
   - name: openstack/sahara
