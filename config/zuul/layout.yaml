@@ -23,6 +23,11 @@ pipelines:
     failure:
       gerrit:
         verified: -1
+  - name: post
+    manager: IndependentPipelineManager
+    trigger:
+      gerrit:
+        - event: change-merged
 
 projects:
   - name: openstack/sahara
