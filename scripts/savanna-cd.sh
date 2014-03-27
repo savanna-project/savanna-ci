@@ -21,7 +21,7 @@ BUILD_ID=dontKill
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
-cd $WORKSPACE/sahara
+cd $WORKSPACE/savanna
 
 git fetch origin $GERRIT_BRANCH
 git rebase origin/$GERRIT_BRANCH
