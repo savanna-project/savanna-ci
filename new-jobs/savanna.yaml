@@ -21,6 +21,7 @@
     github-org: openstack
     plugin:
      - vanilla
+     - vanilla2
      - hdp
      - heat-vanilla
      - heat-hdp
