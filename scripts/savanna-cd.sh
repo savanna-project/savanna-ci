@@ -21,7 +21,7 @@ BUILD_ID=dontKill
 #use-mirrors = true
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/" > ~/.pip/pip.conf
 
-cd $WORKSPACE/savanna
+cd $WORKSPACE/sahara
 
 git fetch origin $GERRIT_BRANCH
 git rebase origin/$GERRIT_BRANCH
@@ -40,7 +40,7 @@ else
     os_auth_host=172.18.168.2
 fi
 
-cd $WORKSPACE/savanna
+#cd $WORKSPACE/savanna
 
 
 echo -e "[DEFAULT]
