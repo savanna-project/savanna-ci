@@ -65,6 +65,7 @@ connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8"
 
 git clone https://github.com/openstack/sahara
 cd sahara
+export PIP_USE_MIRRORS=True
 tox -evenv -- sahara-db-manage --config-file $HOME/sahara.conf upgrade head
 screen -dmS sahara /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file $HOME/sahara.conf -d --log-file /tmp/sahara.log"
 
