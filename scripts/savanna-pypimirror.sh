@@ -6,11 +6,11 @@ cache-root: /var/pypimirror/cache
 mirrors:
    - name: savanna
      projects:
-       - https://git.openstack.org/openstack/sahara
-       - https://git.openstack.org/openstack/sahara-dashboard
-       - https://git.openstack.org/openstack/sahara-image-elements
-       - https://git.openstack.org/openstack/sahara-extra
-       - https://git.openstack.org/openstack/python-saharaclient
+       - https://git.openstack.org/openstack/savanna
+       - https://git.openstack.org/openstack/savanna-dashboard
+       - https://git.openstack.org/openstack/savanna-image-elements
+       - https://git.openstack.org/openstack/savanna-extra
+       - https://git.openstack.org/openstack/python-savannaclient
      output: /var/pypimirror/savanna
 EOF
 
