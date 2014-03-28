@@ -20,10 +20,11 @@
     name: savanna
     github-org: openstack
     plugin:
-     - vanilla
+     - vanilla1
      - vanilla2
      - hdp
-     - heat-vanilla
+     - heat-vanilla1
+     - heat-vanilla2
      - heat-hdp
      - idh
      - transient
