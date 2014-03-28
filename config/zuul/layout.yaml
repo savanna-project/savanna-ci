@@ -33,10 +33,11 @@ projects:
   - name: openstack/sahara
     check:
       - gate-sahara-integration-hdp
-      - gate-sahara-integration-vanilla
+      - gate-sahara-integration-vanilla1
+      - gate-sahara-integration-vanilla2
       - gate-sahara-integration-idh
       - gate-sahara-integration-transient
-      - gate-sahara-integration-heat-vanilla
+      - gate-sahara-integration-heat-vanilla1
 
   - name: openstack/sahara-dashboard
     check:
