@@ -142,6 +142,16 @@ echo "----------- end of sahara.conf -----------"
 #find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 #" > ~/.pip/pip.conf
 
+echo "
+[global] 
+timeout = 60
+index-url = https://sahara.mirantis.com/pypi/
+extra-index-url = https://pypi.python.org/simple/
+download-cache = /home/ubuntu/.pip/cache/
+[install]
+use-mirrors = true
+" > ~/.pip/pip.conf
+
 tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
 
 screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
