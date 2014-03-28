@@ -40,8 +40,8 @@ touch ~/.pip/pip.conf
 echo "
 [global] 
 timeout = 60
-index-url = https://sahara.mirantis.com/pypi/
-extra-index-url = https://pypi.python.org/simple/
+index-url = http://pypi.openstack.org/openstack/
+extra-index-url = http://pypi.openstack.org/openstack/
 download-cache = /home/jenkins/.pip/cache/
 [install]
 use-mirrors = true
@@ -49,7 +49,7 @@ use-mirrors = true
 
 echo "
 [easy_install]
-index_url = https://sahara.mirantis.com/pypi/
+index_url = http://pypi.openstack.org/openstack/
 " > ~/.pydistutils.cfg
 
 cd $HOME
