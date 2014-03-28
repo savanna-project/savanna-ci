@@ -58,6 +58,7 @@ cd sahara
 tox -evenv -- sahara-db-manage --config-file $HOME/sahara.conf upgrade head
 screen -dmS sahara /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file $HOME/sahara.conf -d --log-file /tmp/sahara.log"
 
+i=0
 while true
 do
         let "i=$i+1"
