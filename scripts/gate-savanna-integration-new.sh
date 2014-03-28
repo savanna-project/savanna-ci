@@ -144,7 +144,7 @@ echo "----------- end of sahara.conf -----------"
 echo "
 [global] 
 timeout = 60
-index-url = https://sahara.mirantis.com/pypi/
+index-url = http://pypi.openstack.org/openstack/
 extra-index-url = http://pypi.openstack.org/openstack/
 download-cache = /home/jenkins/.pip/cache/
 [install]
