@@ -37,14 +37,10 @@ export DISPLAY=:0
 touch ~/.pip/pip.conf
 
 echo "
-[global] 
-timeout = 60
-index-url = http://savanna-ci.vm.mirantis.net/pypi/savanna/
-extra-index-url = https://pypi.python.org/simple/
-download-cache = /home/jenkins/.pip/cache/
+[global]
+index-url = http://pypi.openstack.org/openstack
 [install]
 use-mirrors = true
-find-links = http://savanna-ci.vm.mirantis.net:8181/simple/
 " > ~/.pip/pip.conf
 
 cd $HOME
