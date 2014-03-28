@@ -20,7 +20,7 @@ providers:
     boot-timeout: 120
     pool: public
     networks:
-      - net-id: 'd6bb78df-c146-4ac4-9511-e3ecc9f37f79'
+      - net-id: 'c57fe9db-370a-4e54-b81e-cb26395df2d3'
     images:
       - name: precise-itests
         base-image: 'ubuntu-12.04'
