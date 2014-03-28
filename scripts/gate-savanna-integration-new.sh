@@ -146,7 +146,7 @@ echo "
 [global] 
 timeout = 60
 index-url = https://sahara.mirantis.com/pypi/
-extra-index-url = https://pypi.python.org/simple/
+extra-index-url = http://pypi.openstack.org/openstack/
 download-cache = /home/jenkins/.pip/cache/
 [install]
 use-mirrors = true
