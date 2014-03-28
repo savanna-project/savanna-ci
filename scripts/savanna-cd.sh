@@ -37,26 +37,23 @@ lab=$(pwd | grep cz)
 if [ -z $lab ]; then
     os_auth_host=172.18.79.139
 else
-    os_auth_host=172.18.168.2
+    os_auth_host=172.18.168.4
 fi
 
 #cd $WORKSPACE/savanna
-
+mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
+mysql -usavanna-citest -psavanna-citest -Bse "create database savanna"
 
 echo -e "[DEFAULT]
-os_admin_username=ci-user
-os_admin_tenant_name=ci
+os_admin_username=dep-user
+os_admin_tenant_name=dep
 os_auth_host=$os_auth_host
 os_auth_port=5000
 os_admin_password=$os_admin_password
 plugins=vanilla,hdp,idh
 use_neutron=True
 [database]
-connection=sqlite:////$WORKSPACE/$db_name
-[plugin:vanilla]
-plugin_class=savanna.plugins.vanilla.plugin:VanillaProvider
-[plugin:hdp]
-plugin_class=savanna.plugins.hdp.ambariplugin:AmbariPlugin" > etc/sahara/sahara.conf
+connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" > etc/sahara/sahara.conf
 
 rm -rf .tox
 
