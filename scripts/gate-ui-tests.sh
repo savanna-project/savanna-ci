@@ -47,6 +47,11 @@ download-cache = /home/jenkins/.pip/cache/
 use-mirrors = true
 " > ~/.pip/pip.conf
 
+echo "
+[easy_install]
+index_url = https://sahara.mirantis.com/pypi/
+" > ~/.pydistutils.cfg
+
 cd $HOME
 rm -rf sahara
 
