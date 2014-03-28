@@ -39,17 +39,16 @@ then
    HDP_IMAGE=savanna-itests-ci-hdp-image-jdk-iptables-off
    echo "HDP detected"
 fi
-if [ $JOB_TYPE == 'vanilla' ]
+if [ $JOB_TYPE == 'vanilla1' ]
 then
    VANILLA_JOB=True 
    VANILLA_IMAGE=savanna-itests-ci-vanilla-image
-   VANILLA_TWO_IMAGE=ubuntu-vanilla-2.3-latest
    echo "Vanilla detected"
 fi
 if [ $JOB_TYPE == 'vanilla2' ]
 then
    VANILLA2_JOB=True 
-   VANILLA_IMAGE=ubuntu-vanilla-2.3-latest
+   VANILLA_TWO_IMAGE=ubuntu-vanilla-2.3-latest
    echo "Vanilla2 detected"
 fi
 if [ $JOB_TYPE == 'idh' ]
@@ -264,7 +263,7 @@ if [ "$FAILURE" = 0 ]; then
 
     if [ $VANILLA_JOB ]
     then
-        tox -e integration -- vanilla --concurrency=1
+        tox -e integration -- vanilla1 --concurrency=1
         STATUS=`echo $?`
     fi
     
