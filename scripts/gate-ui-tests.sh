@@ -34,6 +34,14 @@ screen -dmS display sudo X
 
 export DISPLAY=:0
 
+touch ~/.pip/pip.conf
+
+echo "
+[global]
+index-url = http://pypi.openstack.org/openstack
+timeout = 60
+" > ~/.pip/pip.conf
+
 cd $HOME
 rm -rf sahara
 
