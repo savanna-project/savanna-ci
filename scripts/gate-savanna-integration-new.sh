@@ -152,6 +152,11 @@ download-cache = /home/jenkins/.pip/cache/
 use-mirrors = true
 " > ~/.pip/pip.conf
 
+echo "
+[easy_install]
+index_url = https://sahara.mirantis.com/pypi/
+" > ~/.pydistutils.cfg
+
 tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
 
 screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
