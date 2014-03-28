@@ -3,6 +3,8 @@
 #this is to fix bug with testtools==0.9.35
 #sed 's/testtools>=0.9.32/testtools==0.9.34/' -i test-requirements.txt
 
+export PIP_USE_MIRRORS=True
+
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
 TIMEOUT=60
 
