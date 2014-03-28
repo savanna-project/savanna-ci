@@ -153,7 +153,7 @@ use-mirrors = true
 
 echo "
 [easy_install]
-index_url = https://sahara.mirantis.com/pypi/
+index_url = http://pypi.openstack.org/openstack/
 " > ~/.pydistutils.cfg
 
 tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
