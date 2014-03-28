@@ -38,8 +38,11 @@ mkdir ~/.pip
 touch ~/.pip/pip.conf
 
 echo "
-[global]
-index-url = http://pypi.openstack.org/openstack
+[global] 
+timeout = 60
+index-url = https://sahara.mirantis.com/pypi/
+extra-index-url = https://pypi.python.org/simple/
+download-cache = /home/jenkins/.pip/cache/
 [install]
 use-mirrors = true
 " > ~/.pip/pip.conf
