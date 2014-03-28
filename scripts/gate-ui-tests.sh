@@ -60,12 +60,20 @@ screen -dmS sahara /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --c
 
 while true
 do
+        let "i=$i+1"
+        if [ "$i" -gt "120" ]; then
+                echo "project does not start" && FAILURE=1 && break
+        fi        
         if [ ! -f $SAVANNA_LOG ]; then
                 sleep 10
         else
                 echo "project is started" && FAILURE=0 && break
         fi
 done
+
+if [ "$FAILURE" != 0 ]; then
+    exit 1
+fi
 
 sudo service apache2 restart
 sleep 20
