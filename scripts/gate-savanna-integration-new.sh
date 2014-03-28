@@ -282,7 +282,7 @@ if [ "$FAILURE" = 0 ]; then
    
     if [ $TRANSIENT_JOB ]
     then
-        tox -e integration -- vanilla --concurrency=1
+        tox -e integration -- transient --concurrency=1
         STATUS=`echo $?`
     fi    
     
