@@ -34,6 +34,7 @@ screen -dmS display sudo X
 
 export DISPLAY=:0
 
+mkdir ~/.pip
 touch ~/.pip/pip.conf
 
 echo "
