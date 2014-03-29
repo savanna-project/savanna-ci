@@ -223,6 +223,14 @@ SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
 " >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
+echo "[IDH2]
+IMAGE_NAME = '$IDH2_IMAGE'
+IDH_REPO_URL = 'file:///var/repo/intel'
+OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
+SSH_USERNAME = 'cloud-user'
+MANAGER_FLAVOR_ID = '3'
+" >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
+
 echo "[IDH3]
 IMAGE_NAME = '$IDH3_IMAGE'
 SSH_USERNAME = 'cloud-user'
