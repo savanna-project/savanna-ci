@@ -126,7 +126,7 @@ echo "----------- end of sahara.conf -----------"
 echo "
 [global] 
 timeout = 60
-index-url = http://pypi.openstack.org/openstack/
+index-url = https://sahara.mirantis.com/pypi/
 extra-index-url = http://pypi.openstack.org/openstack/
 download-cache = /home/jenkins/.pip/cache/
 [install]
@@ -135,7 +135,7 @@ use-mirrors = true
 
 echo "
 [easy_install]
-index_url = http://pypi.openstack.org/openstack/
+index_url = https://sahara.mirantis.com/pypi/
 " > ~/.pydistutils.cfg
 
 tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
