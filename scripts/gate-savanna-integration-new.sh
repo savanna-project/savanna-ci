@@ -51,10 +51,15 @@ then
    VANILLA_TWO_IMAGE=ubuntu-vanilla-2.3-latest
    echo "Vanilla2 detected"
 fi
-if [ $JOB_TYPE == 'idh' ]
+if [ $JOB_TYPE == 'idh2' ]
 then
-   IDH_JOB=True 
-   echo "IDH detected"
+   IDH2_JOB=True 
+   echo "IDH2 detected"
+fi
+if [ $JOB_TYPE == 'idh3' ]
+then
+   IDH3_JOB=True 
+   echo "IDH3 detected"
 fi
 if [ $JOB_TYPE == 'transient' ]                                                   
 then         
@@ -282,11 +287,17 @@ if [ "$FAILURE" = 0 ]; then
         STATUS=`echo $?`
     fi    
     
-    if [ $IDH_JOB ]
+    if [ $IDH2_JOB ]
     then
-        tox -e integration -- idh --concurrency=1
+        tox -e integration -- idh2 --concurrency=1
         STATUS=`echo $?`
     fi 
+    
+    if [ $IDH3_JOB ]
+    then
+        tox -e integration -- idh2 --concurrency=1
+        STATUS=`echo $?`
+    fi
    
     if [ $TRANSIENT_JOB ]
     then
