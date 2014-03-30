@@ -32,12 +32,12 @@ pipelines:
 projects:
   - name: openstack/sahara
     check:
-      - gate-sahara-integration-hdp
       - gate-sahara-integration-vanilla1
       - gate-sahara-integration-vanilla2
-      - gate-sahara-integration-idh
-      - gate-sahara-integration-transient
       - gate-sahara-integration-heat-vanilla1
+      - gate-sahara-integration-hdp
+      - gate-sahara-integration-transient
+      - gate-sahara-integration-idh2
 
   - name: openstack/sahara-dashboard
     check:
