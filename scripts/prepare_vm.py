@@ -10,6 +10,7 @@ import requests
 from random import randint
 from keystoneclient.v2_0 import client as kc
 from heatclient import client as hc
+from cinderclient import client as cc
 
 CONF = dict()
 CONF_FILE = '/var/lib/jenkins/ci-python-scripts/resources/credentials.conf'
@@ -45,6 +46,8 @@ def get_auth_token():
     return keystone.auth_token
 def get_heat_client():
     return hc.Client('1', endpoint=CONF["os_image_endpoint"], token=get_auth_token())
+def get_cinder_client():                                                          
+    return cc.Client('1', CONF["os_username"], CONF["os_password"], CONF["os_tenant_name"], CONF["os_auth_url"])
 def get_jenkins():
     return Jenkins(baseurl="http://" + CONF["jenkins_host_port"],
         username=CONF["jenkins_username"],
@@ -223,6 +226,14 @@ def cleanup():
             for fl_ip in fl_ips:
                     client.floating_ips.delete(fl_ip.id)
             client.servers.delete(server.id)
+
+    cinder_client = get_cinder_client()
+    volumes = cinder_client.volumes.list()
+    for volume in volumes:
+        if current_name in volume.display_name :
+           print volume.display_name
+           volume.delete()
+        
 
 def wait_vm_up(ip):
     while True:
