@@ -38,6 +38,7 @@ projects:
       - gate-sahara-integration-hdp
       - gate-sahara-integration-transient
       - gate-sahara-integration-idh2
+      - gate-sahara-integration-idh3
 
   - name: openstack/sahara-dashboard
     check:
@@ -68,4 +69,6 @@ jobs:
   - name: diskimage-integration-centos
     parameter-function: single_use_node
   - name: gate-sahara-integration-heat-vanilla
+    voting: false
+  - name: gate-sahara-integration-idh3
     voting: false
