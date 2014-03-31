@@ -223,6 +223,7 @@ $HDP_PARAMS
 
 echo "[IDH]
 IMAGE_NAME = '$IDH2_IMAGE'
+IDH_TARBALL_URL = 'http://repo2.intelhadoop.com/setup/setup-intelhadoop-2.5.1-en-evaluation.RHEL.tar.gz'
 IDH_REPO_URL = 'file:///var/repo/intel'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
@@ -231,6 +232,7 @@ MANAGER_FLAVOR_ID = '3'
 
 echo "[IDH2]
 IMAGE_NAME = '$IDH2_IMAGE'
+IDH_TARBALL_URL = 'http://repo2.intelhadoop.com/setup/setup-intelhadoop-2.5.1-en-evaluation.RHEL.tar.gz'
 IDH_REPO_URL = 'file:///var/repo/intel'
 OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
@@ -239,6 +241,7 @@ MANAGER_FLAVOR_ID = '3'
 
 echo "[IDH3]
 IMAGE_NAME = '$IDH3_IMAGE'
+IDH_TARBALL_URL = 'http://repo2.intelhadoop.com/setup/setup-intelhadoop-3.0.2-en-evaluation.RHEL.tar.gz'
 SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
 SKIP_SWIFT_TEST = $SWIFT_TEST                                                   
