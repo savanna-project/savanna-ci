@@ -298,7 +298,7 @@ if [ "$FAILURE" = 0 ]; then
     
     if [ $IDH3_JOB ]
     then
-        tox -e integration -- idh2 --concurrency=1
+        tox -e integration -- idh3 --concurrency=1
         STATUS=`echo $?`
     fi
    
