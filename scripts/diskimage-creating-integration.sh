@@ -228,10 +228,8 @@ if [ "$FAILURE" = 0 ]; then
     export PYTHONUNBUFFERED=1
    
     cd /tmp/sahara
-    tox -e integration -- vanilla1 --concurrency=1
-    STATUS1=`echo $?`
-    tox -e integration -- vanilla2 --concurrency=1
-    STATUS2=`echo $?`    
+    tox -e integration -- vanilla --concurrency=1
+    STATUS=`echo $?`
 fi
 
 echo "-----------Python integration env-----------"
@@ -259,7 +257,7 @@ if [ "$FAILURE" != 0 ]; then
     exit 1
 fi
 
-if [ "$STATUS1" != 0 ] || [ "$STATUS2" != 0 ]        
+if [[ "$STATUS" != 0 ]]       
 then       
     glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete $VANILLA_IMAGE
     glance --os-username ci-user --os-auth-url http://172.18.168.42:5000/v2.0/ --os-tenant-name ci --os-password nova image-delete $VANILLA_TWO_IMAGE  
