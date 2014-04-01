@@ -19,7 +19,7 @@
 HOSTNAME=$1
 SUDO=$2
 BARE=$3
-MYSQL_PASS=<MYSQL_ROOT_PASSWORD>
+MYSQL_PASS=MYSQL_ROOT_PASSWORD
 
 sudo hostname $HOSTNAME
 wget https://git.openstack.org/cgit/openstack-infra/config/plain/install_puppet.sh
@@ -51,6 +51,6 @@ sudo service mysql stop
 sudo pip install python-glanceclient
 sudo apt-get install qemu kpartx -y
 
-sudo su - jenkins -c "echo '$JENKINS_PUBLIC_KEY' >> /home/jenkins/.ssh/authorized_keys"
+sudo su - jenkins -c "echo 'JENKINS_PUBLIC_KEY' >> /home/jenkins/.ssh/authorized_keys"
 sync
 sleep 20
