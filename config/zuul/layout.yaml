@@ -28,6 +28,8 @@ pipelines:
     trigger:
       gerrit:
         - event: change-merged
+        - event: comment-added
+          comment_filter: (?i)^\s*rebuild(( sahara-ci))\s*$        
 
 projects:
   - name: openstack/sahara
