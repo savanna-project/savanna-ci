@@ -13,7 +13,7 @@
     concurrent: false
 
     triggers:
-        - timed: '0 */1 * * *'
+        - timed: '0 */3 * * *'
 
     builders:
     - shell: "cd /opt/ci/pypi-mirror/pypi-mirror && tox -e venv -- run-mirror -c mirror.yaml"
