@@ -24,12 +24,12 @@ providers:
     images:
       - name: precise-itests
         base-image: 'ubuntu-12.04'
-        min-ram: 1024
+        min-ram: 2048
         private-key: '/etc/nodepool/id_dsa'
         setup: prepare_node_bare.sh
       - name: precise
         base-image: 'ubuntu-12.04'
-        min-ram: 1024
+        min-ram: 2048
         private-key: '/etc/nodepool/id_dsa'
         setup: prepare_node_bare.sh        
       - name: ui
