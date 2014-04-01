@@ -1,5 +1,6 @@
 #!/bin/bash
 
+sleep 20
 JOB_TYPE=$(echo $PREV_JOB | awk -F '-' '{ print $4 }')                          
                                                                                                                                                                 
 if [ $JOB_TYPE == 'heat' ]                                                      
