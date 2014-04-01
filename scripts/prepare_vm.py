@@ -227,6 +227,7 @@ def cleanup():
                     client.floating_ips.delete(fl_ip.id)
             client.servers.delete(server.id)
 
+    time.sleep(20)
     cinder_client = get_cinder_client()
     volumes = cinder_client.volumes.list()
     for volume in volumes:
