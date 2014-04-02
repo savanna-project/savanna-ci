@@ -162,6 +162,11 @@ index_url = https://sahara.mirantis.com/pypi/
 " > ~/.pydistutils.cfg
 
 tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
+STATUS=`echo $?`
+if [[ "$STATUS" != 0 ]]        
+then                               
+    exit 1                    
+fi
 
 screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
