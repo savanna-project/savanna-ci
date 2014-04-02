@@ -4,7 +4,8 @@ image_type=$1
 GERRIT_CHANGE_NUMBER=$ZUUL_CHANGE
 
 
-sudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh -p vanilla -i $image_type
+sudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh -p vanilla -i $image_type -v 1
+sudo SIM_REPO_PATH=$WORKSPACE bash diskimage-create/diskimage-create.sh -p vanilla -i $image_type -v 2
 
 if [ ${image_type} == "ubuntu" ]
 then
