@@ -160,6 +160,7 @@ FLOATING_IP_POOL = 'public'
 NEUTRON_ENABLED = True
 INTERNAL_NEUTRON_NETWORK = 'private'
 JOB_LAUNCH_TIMEOUT = 15
+HDFS_INITIALIZATION_TIMEOUT = 10
 $COMMON_PARAMS
 " >> sahara/tests/integration/configs/itest.conf
 
