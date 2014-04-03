@@ -159,6 +159,7 @@ CLUSTER_NAME = 'img-$BUILD_NUMBER-$ZUUL_CHANGE-$ZUUL_PATCHSET'
 FLOATING_IP_POOL = 'public'
 NEUTRON_ENABLED = True
 INTERNAL_NEUTRON_NETWORK = 'private'
+JOB_LAUNCH_TIMEOUT = 15
 $COMMON_PARAMS
 " >> sahara/tests/integration/configs/itest.conf
 
