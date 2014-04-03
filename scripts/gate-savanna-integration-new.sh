@@ -241,7 +241,7 @@ OS_REPO_URL = 'http://172.18.87.221/mirror/centos/base/'
 SSH_USERNAME = 'cloud-user'
 MANAGER_FLAVOR_ID = '3'
 SKIP_SWIFT_TEST = $SWIFT_TEST                                                   
-SKIP_SCALING_TEST = $SCALING_TEST 
+SKIP_SCALING_TEST = True 
 " >> $WORKSPACE/sahara/tests/integration/configs/itest.conf
 
 touch $TMP_LOG
