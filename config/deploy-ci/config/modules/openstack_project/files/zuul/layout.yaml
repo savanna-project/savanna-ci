@@ -14,25 +14,16 @@ pipelines:
           require-approval:
             - username: savanna-ci
               older-than: 48h
-    start:
-      gerrit:
-        verified: 0
-    success:
-      gerrit:
-        verified: 1
-    failure:
-      gerrit:
-        verified: -1
 
 projects:
-  - name: openstack/savanna
+  - name: openstack/sahara
     check:
-      - gate-savanna-integration-hdp
-      - gate-savanna-integration-vanilla
-      - gate-savanna-integration-heat-vanilla
-      - gate-savanna-integration-heat-hdp
+      - gate-sahara-integration-hdp
+      - gate-sahara-integration-vanilla
+      - gate-sahara-integration-heat-vanilla
+      - gate-sahara-integration-heat-hdp
 
-  - name: openstack/savanna-dashboard
+  - name: openstack/sahara-dashboard
     check:
       - gate-ui-tests
 

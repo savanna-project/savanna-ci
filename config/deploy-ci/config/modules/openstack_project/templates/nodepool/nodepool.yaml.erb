@@ -10,13 +10,20 @@ zmq-publishers:
 gearman-servers:
   - host: 127.0.0.1
 
+labels:
+  - name: precise-itests
+    image: precise-itests
+    min-ready: 1
+    providers:
+      - name: ci-lab
+
 providers:
   - name: ci-lab
     username: 'ci-user'
     password: 'nova'
     auth-url: 'http://172.18.168.42:5000/v2.0'
     project-id: 'ci'
-    max-servers: 4
+    max-servers: 1
     boot-timeout: 120
     pool: <%= ip_pool %>
     networks:
@@ -27,11 +34,6 @@ providers:
         min-ram: 2048
         private-key: '/home/nodepool/.ssh/id_rsa'
         setup: prepare_node.sh
-      - name: gate-ui-tests
-        base-image: 'ubuntu-12.04'
-        min-ram: 4096
-        private-key: '/home/nodepool/.ssh/id_rsa'
-        setup: prepare_node.sh
 
 targets:
   - name: savanna-gate
@@ -40,12 +42,3 @@ targets:
       user: '<%= jenkins_api_user %>'
       apikey: '<%= jenkins_api_key %>'
       credentials-id: '<%= jenkins_credentials_id %>'
-    images:
-      - name: precise-itests
-        min-ready: 3
-        providers:
-          - name: ci-lab
-      - name: gate-ui-tests
-        min-ready: 1
-        providers:
-          - name: ci-lab

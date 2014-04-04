@@ -64,7 +64,7 @@ class openstack_project::base(
     }
 
     realize (
-      User::Virtual::Localuser['ivan'],
+      User::Virtual::Localuser['ci'],
     )
   }
 

@@ -27,6 +27,8 @@ class openstack_project::zuul_prod(
     statsd_host          => $statsd_host,
   }
 
+  class { '::zuul::server': }
+
   file { '/etc/zuul/layout.yaml':
     ensure => present,
     source => 'puppet:///modules/openstack_project/zuul/layout.yaml',

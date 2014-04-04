@@ -85,6 +85,12 @@ class openstack_project::jenkins (
   jenkins::plugin { 'postbuild-task':
     version => '1.8',
   }
+  jenkins::plugin { 'zmq-event-publisher':
+    local_dir => '/home/ubuntu/',
+  }
+  jenkins::plugin { 'scp':
+    local_dir => '/home/ubuntu/',
+  }
 #  TODO(clarkb): release
 #  jenkins::plugin { 'zmq-event-publisher':
 #    version => '1.0',
@@ -93,9 +99,9 @@ class openstack_project::jenkins (
     version => '2.3.1',
   }
 #  TODO(jeblair): release
-  jenkins::plugin { 'scp':
-    version => '1.8',
-  }
+#  jenkins::plugin { 'scp':
+#    version => '1.8',
+#  }
   jenkins::plugin { 'violations':
     version => '0.7.11',
   }

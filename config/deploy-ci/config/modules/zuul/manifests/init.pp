@@ -32,6 +32,8 @@ class zuul (
   $push_change_refs = false,
   $job_name_in_report = false,
   $revision = 'master',
+  $git_email = '',                                                              
+  $git_name = '',
   $statsd_host = ''
 ) {
   include apache
@@ -236,35 +238,43 @@ class zuul (
     source => 'puppet:///modules/zuul/zuul.init',
   }
 
-  exec { 'zuul-reload':
-    command     => '/etc/init.d/zuul reload',
-    require     => File['/etc/init.d/zuul'],
-    refreshonly => true,
-    notify      => Exec['jenkins-restart'],
-  }
+  file { '/etc/init.d/zuul-merger':                                             
+    ensure => present,                                                          
+    owner  => 'root',                                                           
+    group  => 'root',                                                           
+    mode   => '0555',                                                           
+    source => 'puppet:///modules/zuul/zuul-merger.init',                        
+  }                                                       
 
-  exec { 'jenkins-restart':
-    command     => '/etc/init.d/jenkins restart',
-    refreshonly => true,
-  }
+#  exec { 'zuul-reload':
+#    command     => '/etc/init.d/zuul reload',
+#    require     => File['/etc/init.d/zuul'],
+#    refreshonly => true,
+#    notify      => Exec['jenkins-restart'],
+#  }
 
-  service { 'zuul':
-    name       => 'zuul',
-    enable     => true,
-    hasrestart => true,
-    require    => File['/etc/init.d/zuul'],
-  }
+#  exec { 'jenkins-restart':
+#    command     => '/etc/init.d/jenkins restart',
+#    refreshonly => true,
+#  }
 
-  cron { 'zuul_repack':
-    user        => 'zuul',
-    weekday     => '0',
-    hour        => '4',
-    minute      => '7',
-    command     => 'find /var/lib/zuul/git/ -maxdepth 3 -type d -name ".git" -exec git --git-dir="{}" pack-refs --all \;',
-    environment => 'PATH=/usr/bin:/bin:/usr/sbin:/sbin',
-    require     => [User['zuul'],
-                    File['/var/lib/zuul/git']],
-  }
+#  service { 'zuul':
+#    name       => 'zuul',
+#    enable     => true,
+#    hasrestart => true,
+#    require    => File['/etc/init.d/zuul'],
+#  }
+
+#  cron { 'zuul_repack':
+#    user        => 'zuul',
+#    weekday     => '0',
+#    hour        => '4',
+#    minute      => '7',
+#    command     => 'find /var/lib/zuul/git/ -maxdepth 3 -type d -name ".git" -exec git --git-dir="{}" pack-refs --all \;',
+#    environment => 'PATH=/usr/bin:/bin:/usr/sbin:/sbin',
+#    require     => [User['zuul'],
+#                    File['/var/lib/zuul/git']],
+#  }
 
   apache::vhost { $vhost_name:
     port     => 443,
