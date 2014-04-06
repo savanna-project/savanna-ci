@@ -3,6 +3,12 @@
 #this is to fix bug with testtools==0.9.35
 #sed 's/testtools>=0.9.32/testtools==0.9.34/' -i test-requirements.txt
 
+#This delay is added to avoid overload when integration tests are executed in parallel
+#Potentially it can reduce the number of Cinder failures
+RANGE=60
+DELAY=$RANDOM
+let "DELAY %= $RANGE"
+
 export PIP_USE_MIRRORS=True
 
 JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')                                 
@@ -262,6 +268,8 @@ do
                 echo "project is started" && FAILURE=0 && break
         fi
 done
+
+sleep $DELAY
 
 if [ "$FAILURE" = 0 ]; then
    
