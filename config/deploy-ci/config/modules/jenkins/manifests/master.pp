@@ -255,4 +255,30 @@ class jenkins::master(
     replace => true,
     require => File['/home/jenkins/.ssh/'],
   }
+  user { 'jenkins':
+    ensure     => present,
+    comment    => 'Jenkins User',
+    home       => '/home/jenkins',
+    gid        => 'jenkins',
+    shell      => '/bin/bash',
+    membership => 'minimum',
+    groups     => $groups,
+    require    => Group['jenkins'],
+  }
+
+  file { '/home/jenkins/.pip':
+    ensure  => directory,
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    require => File['/home/jenkins'],
+  }
+
+  file { '/home/jenkins/.gitconfig':
+    ensure  => present,
+    owner   => 'jenkins',
+    group   => 'jenkins',
+    mode    => '0640',
+    source  => 'puppet:///modules/jenkins/gitconfig',
+    require => File['/home/jenkins'],
+  }
 }

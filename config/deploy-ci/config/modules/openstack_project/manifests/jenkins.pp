@@ -145,6 +145,12 @@ class openstack_project::jenkins (
   jenkins::plugin { 'urltrigger':
     version => '0.24',
   }
+  jenkins::plugin { 'ws-cleanup':
+    version => '0.20',
+  }
+  jenkins::plugin { 'build-blocker-plugin':
+    version => '1.4.1',
+  }
 
   if $manage_jenkins_jobs == true {
     class { '::jenkins::job_builder':

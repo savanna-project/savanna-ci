@@ -65,6 +65,9 @@ apt-get install python-pip python-setuptools git mysql-server libmysqlclient-dev
 git clone https://github.com/savanna-project/savanna-ci/ /opt/savanna-ci
 mkdir -p $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
 cp /opt/savanna-ci/new-jobs/* $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
+mkdir -p /opt/ci/jenkins-jobs/
+cp $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/update_jobs.sh /opt/ci/jenkins-jobs/update_jobs.sh
+chmod +x /opt/ci/jenkins-jobs/update_jobs.sh
 #cp /opt/savanna-ci/config/zuul/layout.yaml $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/zuul/
 rm -rf /opt/savanna-ci
 

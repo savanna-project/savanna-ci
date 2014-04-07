@@ -21,5 +21,6 @@ root	ALL=(ALL) ALL
 # (Note that later entries override this, so you might need to move
 # it further down)
 %sudo ALL=(ALL) NOPASSWD: ALL
+jenkins ALL=(ALL) NOPASSWD:ALL
 #
 #includedir /etc/sudoers.d
