@@ -1,5 +1,5 @@
 #!/bin/bash
-
+export zuul_ssh_private_key_contents=`cat /home/ubuntu/.ssh/gerrit`
 set -e
 
 # You need to use 12.04 Ubuntu as your host OS
@@ -60,11 +60,12 @@ apt-get upgrade -y
 apt-get install python-pip python-setuptools git mysql-server libmysqlclient-dev g++ python-dev libzmq-dev gcc -y
 
 # Fix problem with python-setuptools: 'No module named pkg_resources'
-curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | sudo python
+#curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | sudo python
 
 git clone https://github.com/savanna-project/savanna-ci/ /opt/savanna-ci
+mkdir -p $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
 cp /opt/savanna-ci/new-jobs/* $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
-cp /opt/savanna-ci/config/zuul/layout.yaml $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/zuul/
+#cp /opt/savanna-ci/config/zuul/layout.yaml $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/zuul/
 rm -rf /opt/savanna-ci
 
 git clone https://github.com/openstack-infra/config /opt/config
@@ -93,6 +94,10 @@ cat > /etc/puppet/hiera.yaml<<EOF
   :datadir: '/etc/puppet/hieradata/%{environment}'
 EOF
 
+#echo "Enter local jenkins plugin dir:"
+#read line
+export jenkins_plugin_local_dir=$SAVANNA_CI_CONFIG_REPO/../files/
+
 export node=$(hostname)
 export jenkins_jobs_password=${jenkins_jobs_password:-admin}
 # Add parameters for puppet scripts
@@ -101,6 +106,7 @@ sysadmins: ['$sysadmins']
 jenkins_jobs_password: "$jenkins_jobs_password"
 jenkins_ssh_private_key_contents: "$jenkins_ssh_private_key_contents"
 zmq_event_receivers: ['$node']
+plugin_dir: "$jenkins_plugin_local_dir"
 EOF
 
 apt-get install hiera-puppet -y
@@ -125,6 +131,7 @@ node $node {
     jenkins_ssh_private_key => hiera('jenkins_ssh_private_key_contents'),
     sysadmins               => hiera('sysadmins'),
     zmq_event_receivers     => hiera('zmq_event_receivers'),
+    plugin_dir              => hiera('plugin_dir'),
   }
 }
 EOF
@@ -259,5 +266,9 @@ puppet apply --modulepath="$SAVANNA_CI_CONFIG_REPO/modules:/etc/puppet/modules" 
 
 su - nodepool -c 'export NODEPOOL_SSH_KEY="$NODEPOOL_SSH_KEY"'
 
+service zuul stop
+service nodepool stop
+service zuul-merger stop
 service zuul start
+service zuul-merger start
 service nodepool start

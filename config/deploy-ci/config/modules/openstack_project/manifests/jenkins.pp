@@ -10,6 +10,7 @@ class openstack_project::jenkins (
   $ssl_key_file_contents = '',
   $ssl_chain_file_contents = '',
   $jenkins_ssh_private_key = '',
+  $plugin_dir = '',
   $zmq_event_receivers = [],
   $sysadmins = []
 ) {
@@ -86,10 +87,10 @@ class openstack_project::jenkins (
     version => '1.8',
   }
   jenkins::plugin { 'zmq-event-publisher':
-    local_dir => '/home/ubuntu/',
+    local_dir => $plugin_dir,
   }
   jenkins::plugin { 'scp':
-    local_dir => '/home/ubuntu/',
+    local_dir => $plugin_dir,
   }
 #  TODO(clarkb): release
 #  jenkins::plugin { 'zmq-event-publisher':
