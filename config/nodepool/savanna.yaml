@@ -49,11 +49,7 @@ targets:
         min-ready: 1
         providers:
           - name: ci-lab
-      - name: precise-itests
-        min-ready: 5
-        providers:
-          - name: ci-lab
       - name: precise
-        min-ready: 1
+        min-ready: 5
         providers:
           - name: ci-lab
