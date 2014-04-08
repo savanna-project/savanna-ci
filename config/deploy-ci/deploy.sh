@@ -66,7 +66,7 @@ git clone https://github.com/savanna-project/savanna-ci/ /opt/savanna-ci
 mkdir -p $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
 cp /opt/savanna-ci/new-jobs/* $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
 mkdir -p /opt/ci/jenkins-jobs/
-cp $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/update_jobs.sh /opt/ci/jenkins-jobs/update_jobs.sh
+cp $SAVANNA_CI_CONFIG_REPO/../files/update_jobs.sh /opt/ci/jenkins-jobs/update_jobs.sh
 chmod +x /opt/ci/jenkins-jobs/update_jobs.sh
 #cp /opt/savanna-ci/config/zuul/layout.yaml $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/zuul/
 rm -rf /opt/savanna-ci
@@ -154,6 +154,7 @@ EOF
 puppet apply --modulepath="$SAVANNA_CI_CONFIG_REPO/modules:/etc/puppet/modules" $SAVANNA_CI_CONFIG_REPO/manifests/site.pp
 
 iptables -F
+chown -R jenkins:jenkins /opt/ci/jenkins-jobs/
 
 echo -e "
 ##########################################################
@@ -175,6 +176,7 @@ export jenkins_api_user=$line
 echo "Enter jenkins api key"
 read line
 export jenkins_api_key=$line
+export jenkins_jobs_password=$line
 echo "Enter network"
 read line
 export network=$line
@@ -268,6 +270,7 @@ echo -e "sudo su - jenkins -c \"echo '$jenkins_ssh_public_key_contents' >> /home
 puppet apply --modulepath="$SAVANNA_CI_CONFIG_REPO/modules:/etc/puppet/modules" $SAVANNA_CI_CONFIG_REPO/manifests/site.pp
 
 su - nodepool -c 'export NODEPOOL_SSH_KEY="$NODEPOOL_SSH_KEY"'
+sed -i "s%password=admin%password=$jenkins_jobs_password%g" /etc/jenkins_jobs/jenkins_jobs.ini
 
 service zuul stop
 service nodepool stop
