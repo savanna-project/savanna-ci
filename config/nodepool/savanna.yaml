@@ -22,11 +22,6 @@ providers:
     networks:
       - net-id: 'c57fe9db-370a-4e54-b81e-cb26395df2d3'
     images:
-      - name: precise-itests
-        base-image: 'ubuntu-12.04'
-        min-ram: 2048
-        private-key: '/etc/nodepool/id_dsa'
-        setup: prepare_node_bare.sh
       - name: precise
         base-image: 'ubuntu-12.04'
         min-ram: 2048
@@ -50,6 +45,6 @@ targets:
         providers:
           - name: ci-lab
       - name: precise
-        min-ready: 5
+        min-ready: 6
         providers:
           - name: ci-lab
