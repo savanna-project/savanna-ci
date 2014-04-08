@@ -14,7 +14,7 @@
             predefined-parameters:
                "PREV_BUILD=$BUILD_NUMBER-$ZUUL_CHANGE-$ZUUL_PATCHSET\
                \nPREV_JOB=$JOB_NAME"
-    node: 'precise-itests'
+    node: 'precise'
 
 - project:
     name: savanna
@@ -65,7 +65,7 @@
                  \n<p>This job runs pep8 check using trunk version of hacking"
     disabled: false                                                             
     concurrent: true
-    node: 'precise-itests'                                                           
+    node: 'precise'                                                           
                                                                                 
     builders:
     - gerrit-git-prep
