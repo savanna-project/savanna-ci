@@ -58,5 +58,5 @@ projects:
 
 jobs:
   - name: ^.*$
-    parameter-function: single_use_node
+    parameter-function: set_ci_tenant
     branch: ^(master|milestone-proposed)$
