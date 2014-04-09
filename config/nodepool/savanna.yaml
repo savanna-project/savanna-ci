@@ -20,7 +20,7 @@ providers:
     boot-timeout: 120
     pool: public
     networks:
-      - net-id: 'c57fe9db-370a-4e54-b81e-cb26395df2d3'
+      - net-id: 'PRIVATE_NETWORK_ID'
     images:
       - name: precise
         base-image: 'ubuntu-12.04'
