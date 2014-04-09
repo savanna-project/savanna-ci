@@ -2,6 +2,7 @@
 
 source $JENKINS_HOME/credentials
 sed "s%-CI_TENANT_ID-%$CI_TENANT_ID%g" -i $WORKSPACE/config/zuul/openstack_functions.py
+sed "s%-CI_TENANT_ID-%$CI_TENANT_ID%g" -i $WORKSPACE/scripts/credentials.conf
 sudo su - zuul -c "cat $WORKSPACE/config/zuul/zuul.conf > /etc/zuul/zuul.conf"
 sudo su - zuul -c "cat $WORKSPACE/config/zuul/gearman-logging.conf > /etc/zuul/gearman-logging.conf"
 sudo su - zuul -c "cat $WORKSPACE/config/zuul/layout.yaml > /etc/zuul/layout.yaml"
