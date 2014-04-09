@@ -11,7 +11,7 @@ from heatclient import client as hc
 from cinderclient import client as cc
 
 CONF = dict()
-CONF_FILE = 'credentials.conf'
+CONF_FILE = '/opt/ci/jenkins_jobs/credentials.conf'
 
 def load_conf():
     # load credentials and configs
