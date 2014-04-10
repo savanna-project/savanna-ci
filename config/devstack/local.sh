@@ -77,3 +77,19 @@ nova --os-username ci-user --os-password nova --os-tenant-name ci keypair-add pu
 #nova secgroup-add-rule default icmp -1 -1 0.0.0.0/0
 #nova secgroup-add-rule default tcp 22 22 0.0.0.0/0
 
+#setup the default security group for Neutron
+
+for group in $(neutron security-group-list | grep default | awk -F '|' '{ print $2 }')
+do
+    neutron security-group-show $group | grep $CI_TENANT_ID > /dev/null
+    if [ $? == 0 ]
+    then
+        neutron security-group-rule-create --protocol icmp --direction ingress $group
+        neutron security-group-rule-create --protocol icmp --direction egress $group
+        neutron security-group-rule-create --protocol tcp --port-range-min 1 --port-range-max 65535 --direction ingress $group
+        neutron security-group-rule-create --protocol tcp --port-range-min 1 --port-range-max 65535 --direction egress $group
+        neutron security-group-rule-create --protocol udp --port-range-min 1 --port-range-max 65535 --direction egress $group
+        neutron security-group-rule-create --protocol udp --port-range-min 1 --port-range-max 65535 --direction ingress $group
+        break
+    fi
+done
