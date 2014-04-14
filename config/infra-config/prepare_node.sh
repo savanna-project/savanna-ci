@@ -51,6 +51,7 @@ sudo service mysql stop
 sudo pip install python-glanceclient
 sudo apt-get install qemu kpartx -y
 
-sudo su - jenkins -c "echo 'JENKINS_PUBLIC_KEY' >> /home/jenkins/.ssh/authorized_keys"
+sudo su - jenkins -c "echo '
+JENKINS_PUBLIC_KEY' >> /home/jenkins/.ssh/authorized_keys"
 sync
 sleep 20
