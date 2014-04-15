@@ -39,8 +39,6 @@ projects:
       - gate-sahara-integration-heat-vanilla1
       - gate-sahara-integration-hdp
       - gate-sahara-integration-transient
-      - gate-sahara-integration-idh2
-      - gate-sahara-integration-idh3
 
   - name: openstack/sahara-dashboard
     check:
