@@ -10,7 +10,7 @@ JOB_TYPE=$(echo $JOB_NAME | awk -F '-' '{ print $4 }')
 TIMEOUT=60
 
 #False value for this variables means that tests are enabled
-CINDER_TEST=False
+CINDER_TEST=True
 CLUSTER_CONFIG_TEST=False
 EDP_TEST=False
 MAP_REDUCE_TEST=False
