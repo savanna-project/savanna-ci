@@ -66,7 +66,6 @@ os_admin_tenant_name=ci
 use_floating_ips=true
 use_neutron=true
 
-plugins=vanilla,hdp,idh
 
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8"  > sahara.conf
