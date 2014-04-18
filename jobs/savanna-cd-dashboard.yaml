@@ -21,7 +21,7 @@
       - text:                                                                   
           name: SAVANNA_UI_CONF                                               
           default: "SAVANNA_URL=http://127.0.0.1:8386/v1.1\
-                  \nBRANCH=stable/havana"                                                             
+                  \nBRANCH=stable/icehouse"                                                             
           description: 
 
     scm:
