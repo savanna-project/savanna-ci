@@ -5,7 +5,7 @@ cd $WORKSPACE
 export PYTHONUNBUFFERED=1
 
 echo "============= SAVANNA ============="
-./ttx.sh -N savanna icehouse
+./ttx.sh -N savanna juno
 
 echo "========= SAVANNA CLIENT =========="
-./ttx.sh -N python-savannaclient 0.5.x
+./ttx.sh -N python-savannaclient 0.7.x
