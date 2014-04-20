@@ -131,6 +131,9 @@ connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8
 [keystone_authtoken]
 auth_uri=http://172.18.168.42:5000/
 identity_uri=http://172.18.168.42:5000/
+admin_user=ci-user
+admin_password=nova
+admin_tenant_name=ci
 " >> etc/sahara/sahara.conf
 
 echo "----------- sahara.conf -----------"
