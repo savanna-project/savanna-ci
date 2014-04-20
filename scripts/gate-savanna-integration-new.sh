@@ -127,7 +127,10 @@ use_identity_api_v3=true
 use_neutron=true
 min_transient_cluster_active_time=30
 [database]
-connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/sahara/sahara.conf
+connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8
+[keystone_authtoken]
+auth_uri=http://172.18.168.42:5000/
+" >> etc/sahara/sahara.conf
 
 echo "----------- sahara.conf -----------"
 cat etc/sahara/sahara.conf
