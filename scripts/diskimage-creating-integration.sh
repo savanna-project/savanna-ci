@@ -104,7 +104,6 @@ os_admin_password=nova
 os_admin_tenant_name=ci
 use_identity_api_v3=true
 use_neutron=true
-plugins=vanilla,hdp,idh
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" >> etc/sahara/sahara.conf
 
