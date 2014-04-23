@@ -129,8 +129,8 @@ min_transient_cluster_active_time=30
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8
 [keystone_authtoken]
-auth_uri=http://172.18.168.42:5000/
-identity_uri=http://172.18.168.42:5000/
+auth_uri=http://172.18.168.42:5000/v2.0/
+identity_uri=http://172.18.168.42:35357/
 admin_user=ci-user
 admin_password=nova
 admin_tenant_name=ci
