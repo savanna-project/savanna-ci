@@ -8,7 +8,12 @@
               \ngit clone https://github.com/savanna-project/savanna-ci\
               \nbash -x savanna-ci/scripts/gate-savanna-integration-new.sh"
     properties:
-      - zeromq-event               
+      - zeromq-event
+    wrappers:
+      - timeout:
+          timeout: 120
+          fail: true
+      - timestamps      
     publishers:
       - console-log
       - trigger-parameterized-builds:
