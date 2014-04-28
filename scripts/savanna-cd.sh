@@ -37,7 +37,7 @@ lab=$(pwd | grep cz)
 if [ -z $lab ]; then
     os_auth_host=172.18.79.139
 else
-    os_auth_host=172.18.168.4
+    os_auth_host=172.18.168.2
 fi
 
 #cd $WORKSPACE/savanna
