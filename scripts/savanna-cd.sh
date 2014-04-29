@@ -50,7 +50,7 @@ os_admin_tenant_name=dep
 os_auth_host=$os_auth_host
 os_auth_port=5000
 os_admin_password=$os_admin_password
-plugins=vanilla,hdp,idh
+plugins=vanilla,hdp
 use_neutron=True
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" > etc/sahara/sahara.conf
