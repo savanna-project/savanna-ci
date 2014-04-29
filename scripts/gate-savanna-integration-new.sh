@@ -64,13 +64,7 @@ then
 fi
 if [ $JOB_TYPE == 'transient' ]                                                   
 then         
-   SSH_USERNAME=ubuntu
-   CINDER_TEST=True                                                             
-   CLUSTER_CONFIG_TEST=True                                                      
-   EDP_TEST=True                                                        
-   MAP_REDUCE_TEST=True                                                          
-   SWIFT_TEST=True                                                            
-   SCALING_TEST=True
+   EDP_TEST=False
    TRANSIENT_TEST=False
    ONLY_TRANSIENT_TEST=True
    HEAT_JOB=False
