@@ -27,13 +27,13 @@ sudo bash -xe install_puppet.sh
 sudo git clone https://review.openstack.org/p/openstack-infra/config.git \
     /root/config
 sudo /bin/bash /root/config/install_modules.sh
-if [ -z "$NODEPOOL_SSH_KEY" ] ; then
-    sudo puppet apply --modulepath=/root/config/modules:/etc/puppet/modules \
+#if [ -z "$NODEPOOL_SSH_KEY" ] ; then
+sudo puppet apply --modulepath=/root/config/modules:/etc/puppet/modules \
 	-e "class {'openstack_project::single_use_slave': sudo => $SUDO, bare => $BARE, }"
-else
-    sudo puppet apply --modulepath=/root/config/modules:/etc/puppet/modules \
-	-e "class {'openstack_project::single_use_slave': install_users => false, sudo => $SUDO, bare => $BARE, ssh_key => '$NODEPOOL_SSH_KEY', }"
-fi
+#else
+#    sudo puppet apply --modulepath=/root/config/modules:/etc/puppet/modules \
+#	-e "class {'openstack_project::single_use_slave': install_users => false, sudo => $SUDO, bare => $BARE, ssh_key => '$NODEPOOL_SSH_KEY', }"
+#fi
 
 sudo mkdir -p /opt/git
 #sudo -i python /opt/nodepool-scripts/cache_git_repos.py
