@@ -3,6 +3,8 @@
 #this is to fix bug with testtools==0.9.35
 #sed 's/testtools>=0.9.32/testtools==0.9.34/' -i test-requirements.txt
 
+sudo pip install .
+sudo pip install mysql-python
 
 export PIP_USE_MIRRORS=True
 
@@ -162,15 +164,16 @@ echo "
 index_url = https://sahara.mirantis.com/pypi/
 " > ~/.pydistutils.cfg
 
-tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
+#tox -evenv -- sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
+sahara-db-manage --config-file etc/sahara/sahara.conf upgrade head
 STATUS=`echo $?`
 if [[ "$STATUS" != 0 ]]        
 then                               
     exit 1                    
 fi
 
-screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
-
+#screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 tox -evenv -- sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
+screen -dmS sahara-api /bin/bash -c "PYTHONUNBUFFERED=1 sahara-api --config-file etc/sahara/sahara.conf -d --log-file log.txt | tee /tmp/tox-log.txt"
 
 export ADDR=`ifconfig eth0| awk -F ' *|:' '/inet addr/{print $4}'`
 
