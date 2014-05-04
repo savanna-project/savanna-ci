@@ -51,6 +51,11 @@ sudo service mysql stop
 sudo pip install python-glanceclient
 sudo apt-get install qemu kpartx -y
 
+#install Sahara requirements
+sudo pip install python-mysql
+cd /tmp && git clone https://github.com/openstack/sahara
+cd sahara && sudo pip install -U -r requirements.txt
+
 sudo su - jenkins -c "echo '
 JENKINS_PUBLIC_KEY' >> /home/jenkins/.ssh/authorized_keys"
 sync
