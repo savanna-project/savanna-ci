@@ -317,8 +317,8 @@ cd $WORKSPACE && .tox/integration/bin/pip freeze
 screen -S sahara-api -X quit
 
 echo "-----------Python sahara env-----------"
-cd $WORKSPACE && .tox/venv/bin/pip freeze
-
+#cd $WORKSPACE && .tox/venv/bin/pip freeze
+pip freeze
 echo "-----------Sahara Log------------"
 cat $WORKSPACE/log.txt
 rm -rf /tmp/workspace/
