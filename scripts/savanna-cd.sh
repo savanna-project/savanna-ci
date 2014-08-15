@@ -5,7 +5,6 @@
 # os_auth_host=127.0.0.1
 # os_auth_port=35357
 # os_admin_password=swordfish
-db_name=savanna-server.db
 
 . $WORKSPACE/params
 
@@ -33,12 +32,7 @@ then
     exit 1
 fi
 
-lab=$(pwd | grep cz)
-if [ -z $lab ]; then
-    os_auth_host=172.18.79.139
-else
-    os_auth_host=172.18.168.5
-fi
+os_auth_host=172.18.168.5
 
 #cd $WORKSPACE/savanna
 mysql -usavanna-citest -psavanna-citest -Bse "DROP DATABASE IF EXISTS savanna"
@@ -50,8 +44,13 @@ os_admin_tenant_name=dep
 os_auth_host=$os_auth_host
 os_auth_port=5000
 os_admin_password=$os_admin_password
-plugins=vanilla,hdp
 use_neutron=True
+[keystone_authtoken]
+auth_uri=http://$os_auth_host:5000/v2.0/
+identity_uri=http://$os_auth_host:35357/
+admin_user=dep-user
+admin_password=swordfish
+admin_tenant_name=dep
 [database]
 connection=mysql://savanna-citest:savanna-citest@localhost/savanna?charset=utf8" > etc/sahara/sahara.conf
 
