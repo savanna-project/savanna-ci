@@ -61,7 +61,6 @@ exist=`screen -ls | grep savanna-master`
 if ! [ -z "$exist" ]
 then
     screen -X -S savanna-master quit
-    rm $WORKSPACE/$db_name
 fi
 screen -dmS savanna-master
 sleep 2
