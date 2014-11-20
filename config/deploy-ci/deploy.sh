@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 export zuul_ssh_private_key_contents=`cat /home/ubuntu/.ssh/gerrit`
 set -e
 
@@ -62,16 +62,16 @@ apt-get install python-pip python-setuptools git mysql-server libmysqlclient-dev
 # Fix problem with python-setuptools: 'No module named pkg_resources'
 #curl https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py | sudo python
 
-git clone https://github.com/savanna-project/savanna-ci/ /opt/savanna-ci
+git clone http://github.com/stackforge/sahara-ci-config /opt/sahara-ci
 mkdir -p $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
-cp /opt/savanna-ci/new-jobs/* $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_builder/config/
+cp /opt/sahara-ci/jenkins_job_builder/* $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/jenkins_job_build
 mkdir -p /opt/ci/jenkins-jobs/
 cp $SAVANNA_CI_CONFIG_REPO/../files/update_jobs.sh /opt/ci/jenkins-jobs/update_jobs.sh
 chmod +x /opt/ci/jenkins-jobs/update_jobs.sh
 #cp /opt/savanna-ci/config/zuul/layout.yaml $SAVANNA_CI_CONFIG_REPO/modules/openstack_project/files/zuul/
-rm -rf /opt/savanna-ci
+rm -rf /opt/sahara-ci
 
-git clone https://github.com/openstack-infra/config /opt/config
+git clone https://github.com/openstack-infra/system-config /opt/config
 bash /opt/config/install_puppet.sh
 bash /opt/config/install_modules.sh
 rm -rf /opt/config
@@ -89,12 +89,12 @@ mkdir -p /etc/puppet/hieradata/production/
 cat > /etc/puppet/hiera.yaml<<EOF
 ---
 :hierarchy:
-  - %{operatingsystem}
+  - "%{::operatingsystem}"
   - common
 :backends:
   - yaml
 :yaml:
-  :datadir: '/etc/puppet/hieradata/%{environment}'
+  :datadir: '/etc/puppet/hieradata/%{::environment}'
 EOF
 
 #echo "Enter local jenkins plugin dir:"
@@ -271,6 +271,10 @@ puppet apply --modulepath="$SAVANNA_CI_CONFIG_REPO/modules:/etc/puppet/modules" 
 
 su - nodepool -c 'export NODEPOOL_SSH_KEY="$NODEPOOL_SSH_KEY"'
 sed -i "s%password=admin%password=$jenkins_jobs_password%g" /etc/jenkins_jobs/jenkins_jobs.ini
+echo -e "[job_builder]
+ignore_cache=True
+" >> /etc/jenkins_jobs/jenkins_jobs.ini
+chown -R jenkins:jenkins /etc/jenkins_jobs
 
 service zuul stop
 service nodepool stop

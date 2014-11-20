@@ -1,6 +1,6 @@
 #!/bin/bash
 cd /opt/ci/jenkins-jobs
-rm -rf savanna-ci
-git clone https://github.com/savanna-project/savanna-ci.git
-cd savanna-ci
-sudo jenkins-jobs update new-jobs
+rm -rf sahara-ci-config
+git clone https://github.com/stackforge/sahara-ci-config
+cd sahara-ci-config
+sudo jenkins-jobs update jenkins_job_builder
